@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test.c                                             :+:    :+:            */
+/*   readline.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/10 14:34:50 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/10 18:37:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,29 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
-
+#include <unistd.h>
+#include <signal.h>
+	
 void 	rl_clear_history(void);
-// char *var = read_the_line()
-// wil wait for and return the line
+void	rl_replace_line (const char *, int );
+#define empty 1
+#define full 0
+/* 
+char *var = read_the_line()
+wil wait for and return the line
+*/
+int	empty_line(char *line)
+{
+	if (!line)
+		return (empty);
+	while (*line)
+	{
+		if (*line > 32)
+			return (full);
+		line++;
+	}
+	return (empty);
+}
 char	*read_the_line(void)
 {
 	char	*line;
@@ -32,14 +51,16 @@ static void	sighandler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		(void)signum;
+		rl_replace_line("", 0);
+		rl_redisplay();
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line();
-		rl_redisplay();
-		exit(1);
 	}
 	if (signum == SIGQUIT)
-	{}
+	{
+		exit(1);
+	}
 	// if (signum ==)
 
 }
@@ -58,21 +79,14 @@ int	main(void)
 
 	while (1)
 	{
+		printf("type your comment bellow;%d\n", i);
 		line = read_the_line();
-		printf("%s   %d\n", line, i);
 		system(line);
-		if (line[1])
+		if (empty_line(line) == full)
 			add_history(line);
-		if (i == 3)
-		{
-			printf("\n");
-			rl_on_new_line();
-			// rl_replace_line();
-			rl_redisplay();
-		}
 		if (i == 4)
 		{
-			// rl_clear_history();
+			rl_clear_history();
 			i = 0;
 		}
 		i++;
