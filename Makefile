@@ -1,10 +1,10 @@
 NAME= minishell
 
-SRC= 
+SRC= readline.c signals.c main.c
 
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)
 
-HEADER= builtins_data_struct.h
+HEADER= builtins_data_struct.h all.h
 
 UTIL=
 
@@ -28,14 +28,14 @@ OO= -O3
 all:$(NAME)
 
 $(NAME): $(OBF_DIR) $(OBF)
-	$(CC) $(CFLAGS) $@ $(OBF)
+	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE)
 
 $(lib):
 
 $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
-$(OBF_DIR)%o: %c $(HEADERS)
+$(OBF_DIR)/%o: %c $(HEADERS)
 	$(CC) -c $(CFLAGS) $@ $<
 
 clean:
@@ -46,15 +46,14 @@ fclean:
 
 f: fclean
 
+r:$(NAME)
+	./$(NAME)
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
 
-norm:
+Norm:
 	norminette $(SRC) $(UTIL) $(HEADERS)
 
 .PHONY: all re fclean clean f norm
 
-t:
-	gcc $(CFLAGS) rr readline.c $(RLINE) 
-	./rr
