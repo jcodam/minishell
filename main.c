@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/11 15:02:43 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/11 16:29:07 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	is_exit(char *line)
 int	main(void)
 {
 	char				*line;
-	static int			i = 0;
 	struct termios		term_struct;
 
 	tcgetattr(STDIN_FILENO, &term_struct);
@@ -39,7 +38,6 @@ int	main(void)
 	set_signal_parrent();
 	while (1)
 	{
-		printf("type your comment bellow;%d\n", i);
 		line = read_the_line();
 		is_exit(line);
 		system(line);
