@@ -16,9 +16,8 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror -o
 
-USER= jbax
-
-RLINE= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib/
+#USER= Users/curent_user/ = ~/
+RLINE= -lreadline -L ~/.brew/opt/readline/lib/
 
 SAN= -fsanitize=adres
 
@@ -35,7 +34,7 @@ $(lib):
 $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
-$(OBF_DIR)/%o: %c $(HEADERS)
+$(OBF_DIR)/%o: %c $(HEADER)
 	$(CC) -c $(CFLAGS) $@ $<
 
 clean:
@@ -53,7 +52,7 @@ re:
 	@$(MAKE) all
 
 Norm:
-	norminette $(SRC) $(UTIL) $(HEADERS)
+	norminette $(SRC) $(HEADER)
 
 .PHONY: all re fclean clean f norm
 
