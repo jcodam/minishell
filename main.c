@@ -25,6 +25,9 @@ static void	is_exit(char *line)
 		exit(0);
 }
 
+printf("hello");
+
+
 int	main(void)
 {
 	char				*line;
