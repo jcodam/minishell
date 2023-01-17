@@ -16,7 +16,6 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror -o
 
-#USER= Users/curent_user/ = ~/
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/
 
 SAN= -fsanitize=adres
@@ -35,7 +34,7 @@ $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
 $(OBF_DIR)/%o: %c $(HEADER)
-	$(CC) -c $(CFLAGS) $@ $<
+	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/
 
 clean:
 	@rm -f $(OBF) $(OBF_DIR)

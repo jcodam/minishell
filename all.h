@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/16 18:02:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/17 16:19:31 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
+# include "libft/libft.h"	
 /* NOT OURS BUT MUST BE DECLARED*/
 void	rl_clear_history(void);
 void	rl_replace_line(const char *text, int clear_undo);
@@ -28,6 +29,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 # define FULL 0
 /* OUR FUNCTIONS*/
 void	set_signal_parrent(void);
+void	block_signal(void);
 char	*read_the_line(void);
 
 #endif

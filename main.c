@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/11 16:29:07 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/17 16:46:43 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ int	main(void)
 	tcgetattr(STDERR_FILENO, &term_struct);
 	term_struct.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
-	set_signal_parrent();
 	while (1)
 	{
+		set_signal_parrent();
 		line = read_the_line();
 		is_exit(line);
+		block_signal();
 		system(line);
 		free(line);
 	}
