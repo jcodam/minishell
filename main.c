@@ -6,33 +6,19 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/17 16:46:43 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/18 18:22:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-static void	is_exit(char *line)
-{
-	char	*s;
-	int		i;
-
-	i = 0;
-	s = "exit";
-	while (s[i] && s[i] == line[i])
-		i++;
-	if (i == 4)
-		exit(0);
-}
-
-printf("hello");
-
-
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
 	struct termios		term_struct;
 
+	(void)argc;
+	(void)argv;
 	tcgetattr(STDIN_FILENO, &term_struct);
 	tcgetattr(STDOUT_FILENO, &term_struct);
 	tcgetattr(STDERR_FILENO, &term_struct);
@@ -42,9 +28,9 @@ int	main(void)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		is_exit(line);
 		block_signal();
-		system(line);
+		what_cmd(line, envp);
+		// system(line);
 		free(line);
 	}
 	return (0);

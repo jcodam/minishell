@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_lstlast.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2021/04/26 17:36:58 by jbax          #+#    #+#                 */
+/*   Updated: 2021/11/26 13:57:56 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft.h"
 
-void	ft_pwd(int output_fd)
+t_list	*ft_lstlast(t_list *lst)
 {
-	char	*cwd;
-	int		len;
+	int	i;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	i = 0;
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }

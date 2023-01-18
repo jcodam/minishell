@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_lstsize.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2021/04/26 17:36:13 by jbax          #+#    #+#                 */
+/*   Updated: 2021/11/24 12:35:50 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft.h"
 
-void	ft_pwd(int output_fd)
+int	ft_lstsize(t_list *lst)
 {
-	char	*cwd;
-	int		len;
+	t_list	*temp;
+	int		i;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	if (lst == NULL)
+		return (0);
+	temp = lst;
+	i = 1;
+	while (temp->next != NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (i);
 }

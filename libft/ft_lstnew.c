@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2021/04/26 17:37:25 by jbax          #+#    #+#                 */
+/*   Updated: 2021/11/22 14:07:46 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft.h"
 
-void	ft_pwd(int output_fd)
+t_list	*ft_lstnew(void *content)
 {
-	char	*cwd;
-	int		len;
+	t_list	*element;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	element = malloc(1 * sizeof(struct s_list));
+	if (element == NULL)
+		return (NULL);
+	element->content = content;
+	element->next = NULL;
+	return (element);
 }

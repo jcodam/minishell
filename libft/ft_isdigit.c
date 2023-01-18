@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_isdigit.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jordan <jordan@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2021/02/01 16:18:12 by jordan        #+#    #+#                 */
+/*   Updated: 2021/03/25 12:54:00 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
-
-void	ft_pwd(int output_fd)
+int	ft_isdigit(int c)
 {
-	char	*cwd;
-	int		len;
+	int	i;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	if (c >= '0' && c <= '9')
+		i = 3;
+	else
+		i = 0;
+	return (i);
 }

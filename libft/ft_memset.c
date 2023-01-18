@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_memset.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jbax <jbax@student.42.fr>                    +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2020/11/05 12:06:43 by jbax          #+#    #+#                 */
+/*   Updated: 2021/12/03 15:31:07 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft.h"
 
-void	ft_pwd(int output_fd)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char	*cwd;
-	int		len;
+	unsigned int	count;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	count = 0;
+	while (count < len)
+	{
+		((char *)b)[count] = c;
+		count++;
+	}
+	return (b);
 }

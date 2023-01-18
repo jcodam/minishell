@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_memcpy.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jbax <jbax@student.codam.nl>                 +#+                     */
+/*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2020/11/21 09:43:04 by jbax          #+#    #+#                 */
+/*   Updated: 2021/12/01 12:13:03 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft.h"
 
-void	ft_pwd(int output_fd)
+void	*ft_memcpy(void *dest, const void *stc, size_t n)
 {
-	char	*cwd;
-	int		len;
+	unsigned int	count;
 
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	count = 0;
+	if (!dest && !stc)
+	{
+		return (dest);
+	}
+	while (count < n)
+	{
+		((char *)dest)[count] = ((char *)stc)[count];
+		count++;
+	}
+	return (dest);
 }

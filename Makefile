@@ -1,6 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: jbax <jbax@student.codam.nl>                 +#+                      #
+#                                                    +#+                       #
+#    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
+#    Updated: 2023/01/18 18:01:24 by jbax          ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 NAME= minishell
 
-SRC= readline.c signals.c main.c
+SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
+	echo.c
 
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)
 
@@ -8,7 +21,7 @@ HEADER= builtins_data_struct.h all.h
 
 UTIL=
 
-lib=libft.a
+lib=libft/libft.a
 
 OBF_DIR= OBF
 
@@ -16,7 +29,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror -o
 
-RLINE= -lreadline -L ~/.brew/opt/readline/lib/
+RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
 
 SAN= -fsanitize=adres
 
@@ -29,18 +42,20 @@ $(NAME): $(OBF_DIR) $(OBF)
 	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE)
 
 $(lib):
+	$(MAKE) -C libft
 
 $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
-$(OBF_DIR)/%o: %c $(HEADER)
-	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/
+$(OBF_DIR)/%o: %c $(HEADER) $(lib)
+	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/ -I $(lib)
 
 clean:
 	@rm -f $(OBF) $(OBF_DIR)
 
 fclean:
 	@rm -rf $(OBF) $(OBF_DIR) $(NAME)
+	$(MAKE) -C libft fclean
 
 f: fclean
 

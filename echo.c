@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   echo.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 17:47:22 by jbax          ########   odam.nl         */
+/*   Created: 2022/12/23 17:22:51 by jbax          #+#    #+#                 */
+/*   Updated: 2023/01/18 19:05:03 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "libft/libft.h"
 
-void	ft_pwd(int output_fd)
+void	ft_echo(char *str, int argument, int output_fd)
 {
-	char	*cwd;
-	int		len;
-
-	cwd = ft_calloc(100, 1);
-	getcwd(cwd, 100);
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	str += 5;
+	if (argument)
+	{
+		str += 2;
+		ft_putstr_fd(str, output_fd);
+	}
+	else
+		ft_putendl_fd(str, output_fd);
 }
