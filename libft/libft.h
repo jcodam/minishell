@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 16:21:15 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/20 17:27:27 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 /* Adds the node ’new’ at the end of the list. */
 void	ft_lstadd_back(t_list **lst, t_list *new);
-/* Allocates (with malloc(3)) and returns a new node.
+/* Allocates (with malloc(3)) and returns a new node t_list.
 The member variable ’content’ is initialized with
 the value of the parameter ’content’. The variable
 ’next’ is initialized to NULL. */

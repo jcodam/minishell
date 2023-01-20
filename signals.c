@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/17 16:27:57 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/20 20:15:29 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	sighandler_parent(int signum)
 	if (signum == SIGQUIT)
 	{
 		rl_clear_history();
+		exit(0);
 	}
 }
 
