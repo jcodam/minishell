@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/20 17:27:27 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/24 17:15:08 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,13 +170,12 @@ t_list	*ft_lstlast(t_list *lst);
 /* Takes as a parameter a node and frees the memory of
 the node’s content using the function ’del’ given
 as a parameter and free the node. The memory of
-’next’ must not be freed. */
+’next’ is not freed. */
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 /* Deletes and frees the given node and every
 successor of that node, using the function ’del’
 and free(3).
-Finally, the pointer to the list must be set to
-NULL. */
+And, the pointer to the list is set to NULL. */
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 /* Iterates the list ’lst’ and applies the function
 ’f’ on the content of each node. */
@@ -187,4 +186,32 @@ list resulting of the successive applications of
 the function ’f’. The ’del’ function is used to
 delete the content of a node if needed. */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/* extra functions made by jordan */
+
+/* Takes a char array and the lengt of the arry as argument.
+returns a null termenated malloc't array thats a copy of the first array.
+NULL if allocation failed*/
+char	**ft_arrdup_c(char **arr, size_t len);
+/* Takes a char array and the lengt of the arry as argument.
+And uses free to free all of the arrays content and the pionter */
+void	ft_arrclear_c(char **arr, size_t len);
+/* Takes a null termneted char array as a argument.
+And returns the size of the array */
+size_t	ft_arrlen_c(char **arr);
+
+/* replaces free when you use a function that takes free as a argument.
+But you don't want to free the content */
+void	ft_not_free(void *content);
+
+/* prints the content of a list full of strings to fd */
+int		ft_lstputs_fd(t_list *head, int fd);
+/* prints the promt before every content of a list full of strings to fd */
+int		ft_lstput_promts_fd(t_list *head, char *promt, int fd);
+/* adds a node to a list in the index given place */
+void	ft_lstinsert(t_list **head, t_list *new, int index);
+/* adds a node to a list of strings in ascii order */
+void	ft_lstadd_ascii(t_list **head, t_list *new);
+/* makes a new list from the char array */
+t_list	*ft_lstnew_ascii(char **arr);
 #endif

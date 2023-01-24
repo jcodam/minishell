@@ -6,14 +6,14 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/01/20 20:05:43 by jbax          ########   odam.nl          #
+#    Updated: 2023/01/24 16:01:28 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= minishell
 
 SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
-	echo.c export.c
+	echo.c export.c environment.c
 
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)
 
