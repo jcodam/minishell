@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/26 14:34:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/01/26 16:20:19 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,8 @@ int			print_all_tokens(t_tokens *list);
 int			tokanize_main(char *input, t_tokens *list);
 t_tokens	*init_list(void);
 t_tokens	*new_node(char *input, t_tokens *prev);
+
+void	ft_export_no_arguments(char **env, int output_fd);
+char	**copy_env(char **env);
 
 #endif

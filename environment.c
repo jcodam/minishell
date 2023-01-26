@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_data_struct.h                             :+:    :+:            */
+/*   environment.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/20 14:48:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/23 14:22:50 by jbax          ########   odam.nl         */
+/*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
+/*   Updated: 2023/01/26 14:31:42 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_DATA_STRUCT_H
-# define BUILTINS_DATA_STRUCT_H
+#include "libft/libft.h"
 
-typedef struct s_builtins
+char	**copy_env(char **env)
 {
-	char	*cmd;
-	char	*options;
-	char	*args;
-}	t_builtins;
+	int		len;
+	char	**dest;
 
-// typedef struct s_environment
-// {
-// 	/* data */
-// };	
-
-#endif
+	len = ft_arrlen_c(env);
+	dest = ft_arrdup_c(env, len);
+	if (!dest)
+		exit(0);
+	return (dest);
+}

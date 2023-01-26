@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_data_struct.h                             :+:    :+:            */
+/*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/20 14:48:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/23 14:22:50 by jbax          ########   odam.nl         */
+/*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
+/*   Updated: 2023/01/24 17:30:29 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_DATA_STRUCT_H
-# define BUILTINS_DATA_STRUCT_H
+#include "all.h"
 
-typedef struct s_builtins
+void	ft_export_no_arguments(char **env, int output_fd)
 {
-	char	*cmd;
-	char	*options;
-	char	*args;
-}	t_builtins;
+	t_list	*head;
 
-// typedef struct s_environment
-// {
-// 	/* data */
-// };	
-
-#endif
+	head = ft_lstnew_ascii(env);
+	if (!head)
+		exit(1);
+	ft_lstput_promts_fd(head, "declare -x ", output_fd);
+	(void)output_fd;
+	ft_lstclear(&head, ft_not_free);
+}

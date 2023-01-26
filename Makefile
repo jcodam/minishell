@@ -6,14 +6,14 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/01/22 19:20:28 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/01/26 16:18:21 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= minishell
 
 SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
-	echo.c parse_input.c list.c 
+	echo.c parse_input.c list.c  export.c environment.c
 
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)
 
@@ -42,7 +42,7 @@ $(NAME): $(OBF_DIR) $(OBF)
 	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE)
 
 $(lib):
-	$(MAKE) -C libft
+	$(MAKE) -C libft bonus
 
 $(OBF_DIR):
 	mkdir $(OBF_DIR)
