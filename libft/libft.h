@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/24 17:15:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/26 14:28:47 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,16 @@ void	ft_arrclear_c(char **arr, size_t len);
 /* Takes a null termneted char array as a argument.
 And returns the size of the array */
 size_t	ft_arrlen_c(char **arr);
+/* makes new array whitout content in position index and uses del (free if allocated else ft_not_free)
+on content and frees old pointer. NULL if mem aloc failed (you should quit program)*/
+char	**ft_arrdell_index(char **arr, int index, void (*del)(void*));
+/* makes new array with string s in index and frees old pionter. NULL if mem aloc failed  (you should quit program)*/
+char	**ft_arradd_index(char **arr, char *s, int index);
+/* searches array haystack for string needle and returns the pointer if found. NULL if not found */
+char	*ft_arrnstr(char **haystack, char *needle, int *index);
+/* prints the char arry in full with newlines in betwine to file descriptor */
+void	ft_putarrs_fd(char **arr, int fd);
+
 
 /* replaces free when you use a function that takes free as a argument.
 But you don't want to free the content */
