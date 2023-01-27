@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/26 14:26:27 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/26 14:30:48 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/26 18:01:02 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*ft_arrnstr(char **haystack, char *needle, int *index)
 	int	len;
 
 	*index = 0;
+	if (!haystack || !needle)
+		return (NULL);
 	len = ft_strlen(needle);
 	while (haystack[*index])
 	{

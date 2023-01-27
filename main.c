@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/26 14:33:47 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/27 16:48:04 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,12 @@ int	main(int argc, char **argv, char **envp)
 	term_struct.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 	env = copy_env(envp);
-	ft_arrclear_c(env, ft_arrlen_c(env));
-	env = copy_env(envp);
-	env = test(env);
 	while (1)
 	{
 		set_signal_parrent();
 		line = read_the_line();
 		// block_signal();
-		what_cmd(line, env);
+		what_cmd(line, &env);
 		// system(line);
 		free(line);
 	}

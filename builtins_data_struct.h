@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/20 14:48:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/23 14:22:50 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/27 14:18:07 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,5 @@ typedef struct s_builtins
 	char	*options;
 	char	*args;
 }	t_builtins;
-
-// typedef struct s_environment
-// {
-// 	/* data */
-// };	
 
 #endif

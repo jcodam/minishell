@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/20 19:58:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/27 16:47:55 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	look_for_cmd(char **cmd, char *line, int *found, char *commend)
 	return (1);
 }
 
-int	what_cmd(char *line, char **envp)
+int	what_cmd(char *line, char ***env)
 {
 	int		found;
 	char	*cmd;
@@ -40,12 +40,7 @@ int	what_cmd(char *line, char **envp)
 		ft_change_dir(cmd);
 	if (look_for_cmd(&cmd, line, &found, "env"))
 	{
-		int i = 0;
-		while (envp[i])
-		{
-			ft_putendl_fd(envp[i], 1);
-			i++;
-		}
+		ft_put_env(*env, 1);
 	}
 	if (look_for_cmd(&cmd, line, &found, "echo -n "))
 	{
@@ -55,7 +50,9 @@ int	what_cmd(char *line, char **envp)
 	{
 		ft_echo(cmd, 0, 1);
 	}
-	if (look_for_cmd(&cmd, line, &found, "export"))
-		ft_export_no_arguments(envp, 1);
+	if (look_for_cmd(&cmd, line, &found, "export "))
+		ft_export(env, line + 7,1);
+	else if (look_for_cmd(&cmd, line, &found, "export"))
+		ft_export(env, 0,1);
 	return (found);
 }

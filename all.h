@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/26 15:03:19 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/27 16:48:27 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include "libft/libft.h"
+# include "builtins_data_struct.h"
 
 /* NOT OURS BUT MUST BE DECLARED*/
 void	rl_clear_history(void);
@@ -47,10 +48,11 @@ void	block_signal(void);
  */
 char	*read_the_line(void);
 void	ft_pwd(int output_fd);
-int		what_cmd(char *line, char **envp);
+int		what_cmd(char *line, char ***env);
 void	ft_change_dir(char *path);
 void	ft_echo(char *str, int argument, int output_fd);
-void	ft_export_no_arguments(char **env, int output_fd);
+void	ft_export(char ***env, char *arg,int output_fd);
 char	**copy_env(char **env);
+void	ft_put_env(char **env, int fd);
 
 #endif
