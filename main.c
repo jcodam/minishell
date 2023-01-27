@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/27 16:48:04 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/27 18:11:40 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
 	struct termios		term_struct;
+	t_tokens			*splitted;
 	char				**env;
 
 	(void)argc;
@@ -30,10 +31,30 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
+		splitted = tokanize(line);
+		print_all_tokens(splitted);
 		// block_signal();
 		what_cmd(line, &env);
 		// system(line);
 		free(line);
 	}
 	return (0);
+}
+
+int	print_all_tokens(t_tokens *list)
+{
+	t_tokens	*tmp;
+
+	tmp = list;
+	if (!list)
+		return (0);
+	while (tmp->next)
+	{
+		write(1, tmp->content, sizeof(tmp->content));
+		write(1, "\n", 1);
+		tmp = tmp->next;
+	}
+	if (tmp->content)
+		write(1, tmp->content, sizeof(tmp->content));
+	return (1);
 }
