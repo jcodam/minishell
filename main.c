@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/27 18:11:40 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/29 14:33:06 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		splitted = tokanize(line);
-		print_all_tokens(splitted);
+		// splitted = tokanize(line);
+		// print_all_tokens(splitted);
 		// block_signal();
 		what_cmd(line, &env);
 		// system(line);
 		free(line);
 	}
+	(void)splitted;
 	return (0);
 }
 

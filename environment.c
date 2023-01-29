@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/27 14:40:56 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/29 16:44:32 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,33 @@ char	**copy_env(char **env)
 	if (!dest)
 		exit(0);
 	return (dest);
+}
+
+char	*ft_env_name(char *env)
+{
+	char	*temp;
+
+	env = ft_strdup(env);
+	if (!env)
+		exit(1);
+	temp = ft_strchr(env, '=');
+	if (temp)
+		ft_bzero(temp, 1);
+	return (env);
+}
+
+char	*ft_env_content(char *env)
+{
+	char *temp;
+
+	temp = ft_strchr(env, '=');
+	if (!temp)
+	{
+		env = ft_strdup("");
+		return (env);
+	}
+	env = ft_strdup(&temp[1]);
+	return (env);
 }
 
 void	ft_put_env(char **env, int fd)
