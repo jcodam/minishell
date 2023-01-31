@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/29 16:44:32 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/31 16:23:31 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_env_name(char *env)
 
 char	*ft_env_content(char *env)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strchr(env, '=');
 	if (!temp)
@@ -49,6 +49,33 @@ char	*ft_env_content(char *env)
 	}
 	env = ft_strdup(&temp[1]);
 	return (env);
+}
+
+int	ft_env_index(char **env, char *var)
+{
+	char	*d;
+	int		index;
+	int		i;
+
+	i = 0;
+	var = ft_env_name(var);
+	d = ft_arrnstr(&env[i], var, &index);
+	while (d)
+	{
+		d = ft_env_name(d);
+		if (!ft_strncmp(var, d, ft_strlen(d)))
+		{
+			free(var);
+			free(d);
+			return (i + index);
+		}
+		i += index + 1;
+		free(d);
+		d = ft_arrnstr(&env[i], var, &index);
+	}
+	free(d);
+	free(var);
+	return (0);
 }
 
 void	ft_put_env(char **env, int fd)

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/29 16:49:19 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/31 16:25:08 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,15 @@ t_tokens	*new_node(char *input, t_tokens *prev);
 
 char		**copy_env(char **env);
 void		ft_put_env(char **env, int fd);
-/* splits the string in a malloc'ed copy of the content of the env string */
+/* splits the string in a malloc'ed copy of the content 
+of the env string */
 char		*ft_env_content(char *env);
-/* splits the string in a malloc'ed copy of the variable name of the env string */
+/* splits the string in a malloc'ed copy of the variable name 
+of the env string */
 char		*ft_env_name(char *env);
+/* gives the env array index of the exact match of var names 
+null if there isn't */
+int			ft_env_index(char **env, char *var);
+void		arglist(t_list **head, char *arg);
+void		ft_unset(char ***env, char *arg, int output_fd);
 #endif

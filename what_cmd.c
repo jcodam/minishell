@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/27 16:47:55 by jbax          ########   odam.nl         */
+/*   Updated: 2023/01/31 16:19:24 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ int	what_cmd(char *line, char ***env)
 		ft_echo(cmd, 0, 1);
 	}
 	if (look_for_cmd(&cmd, line, &found, "export "))
-		ft_export(env, line + 7,1);
+		ft_export(env, line + 7, 1);
 	else if (look_for_cmd(&cmd, line, &found, "export"))
-		ft_export(env, 0,1);
+		ft_export(env, 0, 1);
+	if (look_for_cmd(&cmd, line, &found, "unset"))
+		ft_unset(env, line + 5, 1);
 	return (found);
 }
