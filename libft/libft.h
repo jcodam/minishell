@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/31 16:44:50 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/02 14:32:53 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ int		ft_isascii(int c);
 returns 12 for true
 returns 0 if not true */
 int		ft_isprint(int c);
+/* checks if a character is a white space 
+returns 4 if space 5 if other spaces(taps cr and others)
+returnst 0 if not true */
+int		ft_iswhite_space(char c);
 
 /* Allocates (with malloc(3)) and returns a substring
 from the string ’s’.

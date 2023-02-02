@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/31 16:25:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/02 15:29:28 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include "libft/libft.h"
 # include "structures.h"
+
 /* NOT OURS BUT MUST BE DECLARED*/
 void		rl_clear_history(void);
 void		rl_replace_line(const char *text, int clear_undo);
@@ -71,4 +72,6 @@ null if there isn't */
 int			ft_env_index(char **env, char *var);
 void		arglist(t_list **head, char *arg);
 void		ft_unset(char ***env, char *arg, int output_fd);
+void		ft_exit_builtin(char *arg, int exit_code);
+char		*singlearg(char *arg, int *index);
 #endif
