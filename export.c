@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/31 17:20:03 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/07 13:48:59 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ char	*singlearg(char *arg, int *index)
 	{
 		if (arg[*index] == '"')
 			k++;
-		if (arg[*index] == ' ' && (k % 2) == 0)
+		if (ft_iswhite_space(arg[*index]) && (k % 2) == 0)
 			j = 1;
 		*index += 1;
 	}
 	if ((k % 2))
 		return (NULL);
+	if (ft_iswhite_space(arg[i]))
+		return ("\0");
 	dest = ft_calloc((*index - i) + 1, 1);
 	ft_strlcpy(dest, &arg[i], (*index - i - j) + 1);
 	return (dest);
@@ -85,8 +87,11 @@ void	arglist(t_list **head, char *arg)
 	var = singlearg(arg, &index);
 	while (var)
 	{
-		temp = ft_lstnew(var);
-		ft_lstadd_back(head, temp);
+		if (var && *var)
+		{
+			temp = ft_lstnew(var);
+			ft_lstadd_back(head, temp);
+		}
 		var = singlearg(arg, &index);
 	}
 }
@@ -98,7 +103,7 @@ char	**checkandadd(char **env, t_list *head)
 	while (head)
 	{
 		index = ft_env_index(env, head->content);
-		if (index)
+		if (index != -1)
 			env = ft_arrdell_index(env, index, free);
 		if (!ft_isdigit(*(char *)(head->content)))
 			env = ft_arradd_index(env, head->content, 100);

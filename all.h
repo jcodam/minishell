@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/02 15:29:28 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/07 14:14:08 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ null if there isn't */
 int			ft_env_index(char **env, char *var);
 void		arglist(t_list **head, char *arg);
 void		ft_unset(char ***env, char *arg, int output_fd);
-void		ft_exit_builtin(char *arg, int exit_code);
+void		ft_exit_builtin(char **arg, int exit_code);
 char		*singlearg(char *arg, int *index);
+/* returns (malloct) content of var in string of pointer, 
+pointer points to the first char of the var
+retuns empty string if var has no content but is still malloct
+returns 0 if no match can be found.
+ */
+char		*ft_getvar(char *ptr, char **env);
 #endif

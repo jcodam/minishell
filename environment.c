@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/31 16:23:31 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/07 14:05:09 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_env_index(char **env, char *var)
 	}
 	free(d);
 	free(var);
-	return (0);
+	return (-1);
 }
 
 void	ft_put_env(char **env, int fd)
@@ -86,4 +86,26 @@ void	ft_put_env(char **env, int fd)
 			ft_putendl_fd(*env, fd);
 		env++;
 	}
+}
+
+char	*ft_getvar(char *ptr, char **env)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (ft_isalnum(ptr[i]) || ptr[i] == '_')
+		i++;
+	str = malloc((i + 1) * sizeof(char));
+	if (!str)
+		return (0);
+	ft_strlcpy(str, ptr, i + 1);
+	printf("%s\n", str);
+	i = ft_env_index(env, str);
+	free(str);
+	if (i != -1)
+		str = ft_env_content(env[i]);
+	else
+		return (0);
+	return (str);
 }

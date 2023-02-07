@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/02 17:27:17 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/07 14:02:35 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char **mkarg(char *line)
 	temp = singlearg(line, &i);
 	while (temp)
 	{
-		args = ft_arradd_index(args, temp, 100);
+		if (*temp)
+			args = ft_arradd_index(args, temp, 100);
 		temp = singlearg(line, &i);
 	}
-	// ft_putarrs_fd(args, 1);
-	ft_arrclear_c(args, ft_arrlen_c(args));
-	return (0);
+	ft_putarrs_fd(args, 1);
+	return (args);
 }
 
 int	what_cmd(char *line, char ***env)
@@ -53,7 +53,7 @@ int	what_cmd(char *line, char ***env)
 		ft_pwd(STDOUT_FILENO);
 	}
 	if (look_for_cmd(&cmd, line, &found, "exit"))
-		ft_exit_builtin(line + 5, 1);
+		ft_exit_builtin(args, 1);
 	if (look_for_cmd(&cmd, line, &found, "cd "))
 		ft_change_dir(cmd);
 	if (look_for_cmd(&cmd, line, &found, "env"))
@@ -74,5 +74,8 @@ int	what_cmd(char *line, char ***env)
 		ft_export(env, 0, 1);
 	if (look_for_cmd(&cmd, line, &found, "unset"))
 		ft_unset(env, line + 5, 1);
+	if (look_for_cmd(&cmd, line, &found, "var") && ft_arrlen_c(args) == 2)
+		printf("%s\n", ft_getvar(args[1], *env));
+	ft_arrclear_c(args, ft_arrlen_c(args));
 	return (found);
 }
