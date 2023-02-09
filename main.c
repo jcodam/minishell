@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/29 14:33:06 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/09 14:42:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	char				*line;
 	struct termios		term_struct;
 	t_tokens			*splitted;
-	char				**env;
+	t_super				*super;
 
 	(void)argc;
 	(void)argv;
@@ -26,7 +26,9 @@ int	main(int argc, char **argv, char **envp)
 	tcgetattr(STDERR_FILENO, &term_struct);
 	term_struct.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
-	env = copy_env(envp);
+	super = malloc(sizeof(t_super));
+	super->env = copy_env(envp);
+	super->exit_code = 0;
 	while (1)
 	{
 		set_signal_parrent();
@@ -34,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		// splitted = tokanize(line);
 		// print_all_tokens(splitted);
 		// block_signal();
-		what_cmd(line, &env);
+		what_cmd(line, super);
 		// system(line);
 		free(line);
 	}

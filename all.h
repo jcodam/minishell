@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/07 14:14:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/09 14:26:41 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include "libft/libft.h"
 # include "structures.h"
+# include "builtins_data_struct.h"
 
 /* NOT OURS BUT MUST BE DECLARED*/
 void		rl_clear_history(void);
@@ -46,13 +47,17 @@ void		block_signal(void);
  * use the readline and handels eof and history
  * @return char* line read
  */
-int			what_cmd(char *line, char ***env);
-void		ft_export(char ***env, char *arg, int output_fd);
-
 char		*read_the_line(void);
+/* builtins */
+int			what_cmd(char *line, t_super *super);
+void		ft_export(t_super *super, char **args, int output_fd);
+void		ft_unset(t_super *super, char **arg, int output_fd);
+void		ft_exit_builtin(char **arg, t_super *super);
 void		ft_pwd(int output_fd);
 void		ft_change_dir(char *path);
 void		ft_echo(char *str, int argument, int output_fd);
+void		ft_put_env(char **env, int fd);
+
 t_tokens	*tokanize(char *input);
 int			print_all_tokens(t_tokens *list);
 int			tokanize_main(char *input, t_tokens *list);
@@ -60,7 +65,6 @@ t_tokens	*init_list(void);
 t_tokens	*new_node(char *input, t_tokens *prev);
 
 char		**copy_env(char **env);
-void		ft_put_env(char **env, int fd);
 /* splits the string in a malloc'ed copy of the content 
 of the env string */
 char		*ft_env_content(char *env);
@@ -68,16 +72,13 @@ char		*ft_env_content(char *env);
 of the env string */
 char		*ft_env_name(char *env);
 /* gives the env array index of the exact match of var names 
-null if there isn't */
+-1 if there isn't */
 int			ft_env_index(char **env, char *var);
 void		arglist(t_list **head, char *arg);
-void		ft_unset(char ***env, char *arg, int output_fd);
-void		ft_exit_builtin(char **arg, int exit_code);
 char		*singlearg(char *arg, int *index);
 /* returns (malloct) content of var in string of pointer, 
 pointer points to the first char of the var
 retuns empty string if var has no content but is still malloct
-returns 0 if no match can be found.
- */
+returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 #endif

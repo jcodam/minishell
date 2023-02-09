@@ -6,33 +6,77 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/29 14:35:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/07 13:49:15 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/09 16:10:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-static char	**check_for_del(char **env, t_list *head)
+static int	is_valid(char *arg)
+{
+	if (ft_isdigit(*arg))
+		return (1);
+	while (ft_isalnum(*arg) || *arg == '_')
+		arg++;
+	if (*arg)
+		return (1);
+	return (0);
+}
+
+static void	check_for_dell(t_super *super, char **args)
 {
 	int	index;
 
-	while (head)
+	while (*args)
 	{
-		index = ft_env_index(env, head->content);
+		index = -1;
+		if (is_valid(*args))
+		{
+			ft_putstr_fd("minishel: unset: `", 1);
+			ft_putstr_fd(*args, 1);
+			ft_putstr_fd("': not a valid identifier\n", 1);
+			super->exit_code = 1;
+		}
+		else
+			index = ft_env_index(super->env, *args);
 		if (index != -1)
-			env = ft_arrdell_index(env, index, free);
-		head = head->next;
+			super->env = ft_arrdell_index(super->env, index, free);
+		args++;
 	}
-	return (env);
 }
 
-void	ft_unset(char ***env, char *arg, int output_fd)
+void	ft_unset(t_super *super, char **arg, int output_fd)
 {
-	t_list	*head;
-
-	head = 0;
-	arglist(&head, arg);
-	*env = check_for_del(*env, head);
-	ft_lstclear(&head, free);
+	super->exit_code = 0;
+	check_for_dell(super, arg + 1);
 	(void)output_fd;
+}
+
+char	*singlearg(char *arg, int *index)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*dest;
+
+	if (!arg[*index])
+		return (NULL);
+	i = *index;
+	j = 0;
+	k = 0;
+	while (arg[*index] && !j)
+	{
+		if (arg[*index] == '"')
+			k++;
+		if (ft_iswhite_space(arg[*index]) && (k % 2) == 0)
+			j = 1;
+		*index += 1;
+	}
+	if ((k % 2))
+		return (NULL);
+	if (ft_iswhite_space(arg[i]))
+		return ("\0");
+	dest = ft_calloc((*index - i) + 1, 1);
+	ft_strlcpy(dest, &arg[i], (*index - i - j) + 1);
+	return (dest);
 }

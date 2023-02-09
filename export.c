@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/07 13:48:59 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/09 15:16:10 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,6 @@ void	ft_export_no_arguments(char **env, int output_fd)
 	ft_lstclear(&head, ft_not_free);
 }
 
-char	*singlearg(char *arg, int *index)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*dest;
-
-	if (!arg[*index])
-		return (NULL);
-	i = *index;
-	j = 0;
-	k = 0;
-	while (arg[*index] && !j)
-	{
-		if (arg[*index] == '"')
-			k++;
-		if (ft_iswhite_space(arg[*index]) && (k % 2) == 0)
-			j = 1;
-		*index += 1;
-	}
-	if ((k % 2))
-		return (NULL);
-	if (ft_iswhite_space(arg[i]))
-		return ("\0");
-	dest = ft_calloc((*index - i) + 1, 1);
-	ft_strlcpy(dest, &arg[i], (*index - i - j) + 1);
-	return (dest);
-}
-
 void	arglist(t_list **head, char *arg)
 {
 	t_list	*temp;
@@ -96,35 +67,55 @@ void	arglist(t_list **head, char *arg)
 	}
 }
 
-char	**checkandadd(char **env, t_list *head)
+static int	is_valid(char *arg)
 {
-	int	index;
-
-	while (head)
-	{
-		index = ft_env_index(env, head->content);
-		if (index != -1)
-			env = ft_arrdell_index(env, index, free);
-		if (!ft_isdigit(*(char *)(head->content)))
-			env = ft_arradd_index(env, head->content, 100);
-		else
-			free(head->content);
-		head = head->next;
-	}
-	return (env);
+	if (ft_isdigit(*arg))
+		return (1);
+	while (ft_isalnum(*arg) || *arg == '_')
+		arg++;
+	if (*arg)
+		return (1);
+	return (0);
 }
 
-void	ft_export(char ***env, char *arg, int output_fd)
+static void	checkandadd(t_super *super, char **args)
+{
+	int		index;
+	char	*var;
+
+	while (*args)
+	{
+		var = ft_env_name(*args);
+		index = -1;
+		if (is_valid(var))
+		{
+			ft_putstr_fd("minishel: export: `", 1);
+			ft_putstr_fd(*args, 1);
+			ft_putstr_fd("': not a valid identifier\n", 1);
+			super->exit_code = 1;
+		}
+		else
+		{
+			index = ft_env_index(super->env, *args);
+			if (index != -1)
+				super->env = ft_arrdell_index(super->env, index, free);
+			super->env = ft_arradd_index(super->env, ft_strdup(*args), 100);
+		}
+		free(var);
+		args++;
+	}
+}
+
+void	ft_export(t_super *super, char **args, int output_fd)
 {
 	t_list	*head;
 
+	super->exit_code = 0;
 	head = 0;
-	if (!arg || !*arg)
-		ft_export_no_arguments(*env, output_fd);
+	if (!args || !args[1])
+		ft_export_no_arguments(super->env, output_fd);
 	else
 	{
-		arglist(&head, arg);
-		*env = checkandadd(*env, head);
-		ft_lstclear(&head, ft_not_free);
+		checkandadd(super, args + 1);
 	}
 }

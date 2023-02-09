@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/07 14:02:35 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/09 14:42:57 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char **mkarg(char *line)
 	return (args);
 }
 
-int	what_cmd(char *line, char ***env)
+int	what_cmd(char *line, t_super *super)
 {
 	int		found;
 	char	*cmd;
@@ -53,12 +53,12 @@ int	what_cmd(char *line, char ***env)
 		ft_pwd(STDOUT_FILENO);
 	}
 	if (look_for_cmd(&cmd, line, &found, "exit"))
-		ft_exit_builtin(args, 1);
+		ft_exit_builtin(args, super);
 	if (look_for_cmd(&cmd, line, &found, "cd "))
 		ft_change_dir(cmd);
 	if (look_for_cmd(&cmd, line, &found, "env"))
 	{
-		ft_put_env(*env, 1);
+		ft_put_env(super->env, 1);
 	}
 	if (look_for_cmd(&cmd, line, &found, "echo -n "))
 	{
@@ -69,13 +69,18 @@ int	what_cmd(char *line, char ***env)
 		ft_echo(cmd, 0, 1);
 	}
 	if (look_for_cmd(&cmd, line, &found, "export "))
-		ft_export(env, line + 7, 1);
+		ft_export(super, args, 1);
 	else if (look_for_cmd(&cmd, line, &found, "export"))
-		ft_export(env, 0, 1);
+		ft_export(super, 0, 1);
 	if (look_for_cmd(&cmd, line, &found, "unset"))
-		ft_unset(env, line + 5, 1);
+		ft_unset(super, args, 1);
+	if (look_for_cmd(&cmd, line, &found, "$?") && ft_arrlen_c(args) == 1)
+	{
+		printf("%d\n", super->exit_code);
+		super->exit_code = 0;
+	}
 	if (look_for_cmd(&cmd, line, &found, "var") && ft_arrlen_c(args) == 2)
-		printf("%s\n", ft_getvar(args[1], *env));
+		printf("%s\n", ft_getvar(args[1], super->env));
 	ft_arrclear_c(args, ft_arrlen_c(args));
 	return (found);
 }
