@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/09 14:26:41 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/10 15:42:41 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ char		*ft_env_name(char *env);
 int			ft_env_index(char **env, char *var);
 void		arglist(t_list **head, char *arg);
 char		*singlearg(char *arg, int *index);
-/* returns (malloct) content of var in string of pointer, 
+/* poiter is char after $.
+returns (malloct) content of var in string of pointer, 
 pointer points to the first char of the var
 retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
