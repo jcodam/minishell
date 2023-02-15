@@ -6,11 +6,12 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/07 14:05:09 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/14 17:45:16 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
+#include "builtins_data_struct.h"
 
 char	**copy_env(char **env)
 {
@@ -78,8 +79,12 @@ int	ft_env_index(char **env, char *var)
 	return (-1);
 }
 
-void	ft_put_env(char **env, int fd)
+void	ft_put_env(t_super *super, int fd)
 {
+	char	**env;
+
+	env = super->env;
+	super->exit_code = 0;
 	while (*env)
 	{
 		if (ft_strchr(*env, '='))

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/10 15:42:41 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/15 17:53:35 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include "libft/libft.h"
 # include "structures.h"
 # include "builtins_data_struct.h"
+# define _POSIX_SOURCE
+# include <sys/wait.h>
+# include <sys/types.h>
 
 /* NOT OURS BUT MUST BE DECLARED*/
 void		rl_clear_history(void);
@@ -53,10 +56,11 @@ int			what_cmd(char *line, t_super *super);
 void		ft_export(t_super *super, char **args, int output_fd);
 void		ft_unset(t_super *super, char **arg, int output_fd);
 void		ft_exit_builtin(char **arg, t_super *super);
-void		ft_pwd(int output_fd);
+void		ft_pwd(t_super *super, int output_fd);
 void		ft_change_dir(char *path);
 void		ft_echo(char *str, int argument, int output_fd);
-void		ft_put_env(char **env, int fd);
+void		ft_put_env(t_super *super, int fd);
+void		ft_othercmd(char **arg, t_super *super, int ispipe);
 
 t_tokens	*tokanize(char *input);
 int			print_all_tokens(t_tokens *list);
@@ -74,7 +78,6 @@ char		*ft_env_name(char *env);
 /* gives the env array index of the exact match of var names 
 -1 if there isn't */
 int			ft_env_index(char **env, char *var);
-void		arglist(t_list **head, char *arg);
 char		*singlearg(char *arg, int *index);
 /* poiter is char after $.
 returns (malloct) content of var in string of pointer, 

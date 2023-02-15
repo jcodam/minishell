@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/09 15:16:10 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/10 15:49:21 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,6 @@ void	ft_export_no_arguments(char **env, int output_fd)
 	ft_put_export(head, output_fd);
 	(void)output_fd;
 	ft_lstclear(&head, ft_not_free);
-}
-
-void	arglist(t_list **head, char *arg)
-{
-	t_list	*temp;
-	int		index;
-	char	*var;
-
-	index = 0;
-	var = singlearg(arg, &index);
-	while (var)
-	{
-		if (var && *var)
-		{
-			temp = ft_lstnew(var);
-			ft_lstadd_back(head, temp);
-		}
-		var = singlearg(arg, &index);
-	}
 }
 
 static int	is_valid(char *arg)
@@ -108,10 +89,7 @@ static void	checkandadd(t_super *super, char **args)
 
 void	ft_export(t_super *super, char **args, int output_fd)
 {
-	t_list	*head;
-
 	super->exit_code = 0;
-	head = 0;
 	if (!args || !args[1])
 		ft_export_no_arguments(super->env, output_fd);
 	else
