@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/15 17:55:23 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/16 13:35:01 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,19 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe)
 	printf("test\n");
 	if (!ispipe)
 	{
+		block_signal();
 		printf("test\n");
 		pid = ft_fork();
 		if (pid == 0)
 		{
+			reset_signal();
 			printf("test\n");
 			execcmd(arg, super);
 			printf("test\n");
 			exit(0);
 		}
 		pid = waitpid(pid, &error, WUNTRACED);
+		set_signal_parrent();
 	}
 }
 

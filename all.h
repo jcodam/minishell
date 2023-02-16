@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/15 17:53:35 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/16 13:26:06 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		set_signal_parrent(void);
  * sets the signals to do nothing
  */
 void		block_signal(void);
+void		reset_signal(void);
 /**
  * @brief jordan
  * use the readline and handels eof and history
