@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/09 14:42:51 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/16 14:58:52 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	super = malloc(sizeof(t_super));
 	super->env = copy_env(envp);
 	super->exit_code = 0;
+	super->term_struct = &term_struct;
 	while (1)
 	{
 		set_signal_parrent();
@@ -37,6 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		// print_all_tokens(splitted);
 		// block_signal();
 		what_cmd(line, super);
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
+		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
+		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
 		// system(line);
 		free(line);
 	}

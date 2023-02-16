@@ -6,20 +6,45 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/23 17:22:51 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/18 19:05:03 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/16 15:51:24 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-void	ft_echo(char *str, int argument, int output_fd)
+static int		has_option(char *arg)
 {
-	str += 5;
-	if (argument)
+	if (!arg || !*arg)
+		return (1);
+	if (*arg != '-')
+		return (0);
+	arg++;
+	while (*arg)
 	{
-		str += 2;
-		ft_putstr_fd(str, output_fd);
+		if (*arg != 'n')
+			return (0);
+		arg++;
 	}
-	else
-		ft_putendl_fd(str, output_fd);
+	return (1);
+}
+
+void	ft_echo(char **arg, int output_fd)
+{
+	int	option;
+
+	option = 0;
+	while (*arg && has_option(*arg))
+	{
+		option = 1;
+		arg++;
+	}
+	while (*arg)
+	{
+		ft_putstr_fd(*arg, output_fd);
+		if (arg[1])
+			write(output_fd, " ", 1);
+		arg++;
+	}
+	if (!option)
+		write(output_fd, "\n", 1);
 }

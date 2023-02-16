@@ -6,36 +6,43 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 13:35:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/16 17:19:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-void	execcmd(char **arg, t_super *super)
+static int	execcmd(char **arg, t_super *super, int fd)
 {
-	int		i = 0;
+	int		i = 5;
 	char	*location;
 
-	ft_putarrs_fd(arg, 2);
+	// ft_putarrs_fd(arg, 2);
 	i = execve(arg[0], &arg[0], super->env);
-	ft_putnbr_fd(i, 1);
+	// ft_putnbr_fd(i, 1);
 	if (i == -1)
 	{
 		location = ft_strjoin("/bin/", arg[0]);
 		i = execve(location, &arg[0], super->env);
-		ft_putnbr_fd(i, 1);
+		// ft_putnbr_fd(i, 1);
 		if (i == -1)
 		{
 			free(location);
 			location = ft_strjoin("/usr/bin/", arg[0]);
 			i = execve(location, &arg[0], super->env);
-			ft_putnbr_fd(i, 1);
+			// ft_putnbr_fd(i, 1);
+			if (i == -1)
+				i = 127;
 		}
 		free(location);
 	}
+	ft_putstr_fd("minishel: ", fd);
+	ft_putstr_fd(*arg, fd);
+	ft_putstr_fd(": command not found\n", fd);
+	return (i);
 }
 
+//fs: command not found  
 pid_t	ft_fork()
 {
 	pid_t	pid;
@@ -46,30 +53,34 @@ pid_t	ft_fork()
 	return (pid);
 }
 
-void	ft_othercmd(char **arg, t_super *super, int ispipe)
+void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 {
 	pid_t	pid;
 	int		error;
 
-	printf("test\n");
 	if (!ispipe)
 	{
 		block_signal();
-		printf("test\n");
 		pid = ft_fork();
 		if (pid == 0)
 		{
 			reset_signal();
-			printf("test\n");
-			execcmd(arg, super);
-			printf("test\n");
-			exit(0);
+			error = execcmd(arg, super, fd);
+			printf("%d\n", error);
+			exit(-2);
 		}
-		pid = waitpid(pid, &error, WUNTRACED);
+		pid = waitpid(pid, &error, WCONTINUED);
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
+		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
+		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+		if (error == 3)
+			printf("\n");
+		printf("%d\n", error);
+		// printf("\n%s\n", rl_prompt);
 		set_signal_parrent();
 	}
 }
-
+/* 131 ctr \ 127 no cmt */
 // int main(int argc, char *argv[], char **envl)
 // {
 // 	int i = 0;
