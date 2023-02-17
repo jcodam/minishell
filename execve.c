@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 17:19:39 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/17 14:41:28 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 			reset_signal();
 			error = execcmd(arg, super, fd);
 			printf("%d\n", error);
-			exit(-2);
+			exit(error);
 		}
 		pid = waitpid(pid, &error, WCONTINUED);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
@@ -75,7 +75,7 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 		if (error == 3)
 			printf("\n");
-		printf("%d\n", error);
+		printf("%d\n", error / 256);
 		// printf("\n%s\n", rl_prompt);
 		set_signal_parrent();
 	}

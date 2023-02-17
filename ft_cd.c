@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/18 17:28:27 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/02 14:11:40 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/17 14:51:25 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_change_dir(char *path)
 {
 	int	i;
 
-	path += 3;
 	i = chdir(path);
 	ft_putnbr_fd(i, 1);
 	if (i == -1)
