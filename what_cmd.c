@@ -6,13 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/17 16:17:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/22 17:38:09 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-int	look_for_cmd(char *line, int *found, char *commend)
+static int	look_for_cmd(char *line, int *found, char *commend)
 {
 	char	*cmd = 0;
 	cmd = ft_strnstr(line, commend, 9);
@@ -22,7 +22,7 @@ int	look_for_cmd(char *line, int *found, char *commend)
 	return (1);
 }
 
-char **mkarg(char *line)
+static char **mkarg(char *line)
 {
 	char	**args;
 	int		i = 0;
@@ -41,7 +41,7 @@ char **mkarg(char *line)
 	return (args);
 }
 
-int	what_cmd(char *line, t_super *super)
+int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 {
 	int		found;
 	char	**args;
@@ -55,7 +55,7 @@ int	what_cmd(char *line, t_super *super)
 	super->exit_code = 0;
 	if (look_for_cmd(*args, &found, "pwd"))
 	{
-		ft_pwd(super, STDOUT_FILENO);
+		ft_pwd(super, fd);
 	}
 	else if (look_for_cmd(*args, &found, "exit"))
 		ft_exit_builtin(args, super);
@@ -63,22 +63,65 @@ int	what_cmd(char *line, t_super *super)
 		ft_change_dir(args[1]);
 	else if (look_for_cmd(*args, &found, "env"))
 	{
-		ft_put_env(super, 1);
+		ft_put_env(super, fd);
 	}
 	else if (look_for_cmd(*args, &found, "echo"))
 	{
-		ft_echo(args + 1, 1);
+		ft_echo(args + 1, fd);
 	}
 	else if (look_for_cmd(*args, &found, "export"))
-		ft_export(super, args, 1);
-	else if (look_for_cmd(*args, &found, "export"))
-		ft_export(super, 0, 1);
+		ft_export(super, args, fd);
 	else if (look_for_cmd(*args, &found, "unset"))
-		ft_unset(super, args, 1);
+		ft_unset(super, args, fd);
 	else if (look_for_cmd(*args, &found, "var") && ft_arrlen_c(args) == 2)
 		printf("%s\n", ft_getvar(args[1], super->env));
+	else if (look_for_cmd(*args, &found, "lll"))
+		printf("%s\n", ft_replacevar(ft_strdup(line), 3, super->env));
 	else
-		ft_othercmd(args, super, 0, 1);
+		ft_othercmd(args, super, pipes, fd);
 	ft_arrclear_c(args, ft_arrlen_c(args));
 	return (found);
+}
+
+int ll(char *line)
+{
+	while (*line && ft_iswhite_space(*line))
+		line++;
+	if (*line)
+		return (1);
+	return (0);
+}
+
+static char **m_arg(char *line, int *p)
+{
+	char	**args;
+	int		j = 0;
+
+	args = ft_split(line, '|');
+	ft_putarrs_fd(args, 1);
+	while (args[j])
+	{
+		if (!ll(args[j]))
+			args = ft_arrdell_index(args, j, free);
+		else
+			j++;
+	}
+	ft_putarrs_fd(args, 1);
+	*p = j;
+	return (args);
+}
+
+int	what_cmd(char *line, t_super *super)
+{
+	// printf("%s\n", line);
+	return (what_cmd1(line, super, 0, 1));
+}
+int	what_cmd2(char *line, t_super *super)
+{
+	int	pipes;
+
+	pipes = 0;
+	m_arg(line, &pipes);
+	printf("%d\n", pipes);
+	return (super->exit_code);
 }
