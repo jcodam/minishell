@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 17:10:54 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/22 19:51:23 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void		ft_echo(char **arg, int output_fd);
 void		ft_put_env(t_super *super, int fd);
 void		ft_othercmd(char **arg, t_super *super, int ispipe, int fd);
 
-t_tokens	*tokanize(char *input);
 int			print_all_tokens(t_tokens *list);
 int			tokanize_main(char *input, t_tokens *list);
 t_tokens	*init_list(void);
@@ -87,4 +86,29 @@ retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 char		*ft_replacevar(char *head, int index, char **env);
+
+t_tokens	*main_loop(char *input);
+int 		*make_arr(int len);
+void		print_array(int *arr);
+int 		*tokanize(char *input, int *arr);
+int 		*label_quotes(char *input, int *arr, int data);
+int 		*label_vals(int start, int end, int *arr, int sig);
+int 		*check_operators(char *input, int *arr);
+int 		*command_after_pipe(char *input, int *arr);
+int 		*trim_spaces(char *input, int *arr);
+int 		*check_commands(char *input, int *arr);
+void 		add_node(int start, int *arr, char *input, t_tokens *top);
+t_tokens 	*split_into_list(char *input, int *arr, t_tokens *list);
+void		ms_lstadd_back(t_tokens **lst, t_tokens *new);
+void		add_node_end(char *input, t_tokens *top, int type);
+void		fill_node(t_tokens *top, char *input, int start, int end);
+void		add_node(int start, int *arr, char *input, t_tokens *top);
+int			get_node_length(int *arr, int start);
+t_tokens 	*get_node(int start, int *arr, char *input, t_tokens *tmp);
+t_tokens 	*lst_end(t_tokens *top);
+int 		get_index(t_tokens *top);
+t_tokens 	*setup_new_node(t_tokens *top);
+char		get_quote_type(int type);
+void		*ms_calloc(size_t nmemb, size_t size);
+
 #endif

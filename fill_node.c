@@ -1,49 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   structures.h                                       :+:    :+:            */
+/*   fill_node.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 15:59:05 by avon-ben      ########   odam.nl         */
+/*   Created: 2023/02/20 15:47:26 by avon-ben      #+#    #+#                 */
+/*   Updated: 2023/02/20 15:48:12 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#include "all.h"
 
-# include "all.h"
-
-typedef struct s_tokens
+void	fill_node(t_tokens *node, char *input, int start, int end)
 {
-	int				type;
-	int				e_var_type;
-	int				iter;
-	char			*content;
-	struct s_tokens	*next;
-}	t_tokens;
+	char	*string;
+	int		i;
 
-enum	e_var_type
-{
-	LOCAL,
-	ENV_R,
-	EXPORT_ONLY,
-};
-
-enum e_commands
-{
-	OTHER = -1,
-	QUOTE_SL,
-	QUOTE_DL,
-	REDIRECT_IP,
-	REDIRECT_OP,
-	RD_TIL_DELIM,
-	REDIRECT_APPEND,
-	COMMAND,
-	PIPE,
-	SPC,
-	ENV_VAR,
-};
-
-#endif
+	i = 0;
+	string = malloc((end - start) + 1);
+	while (start < end)
+	{
+		string[i] = input[start];
+		i++;
+		start++;
+	}
+	string[i] = '\0';
+	node->content = string;
+	node->iter = 0;
+}
