@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 15:59:05 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/22 19:54:11 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_tokens
 	int				e_var_type;
 	int				iter;
 	char			*content;
+	char			**args;
+	char			**files;
+	int				**tokens;
 	struct s_tokens	*next;
 }	t_tokens;
 
@@ -44,6 +47,8 @@ enum e_commands
 	PIPE,
 	SPC,
 	ENV_VAR,
+	EXPANDABLE,
+	FILE_T,
 };
 
 #endif

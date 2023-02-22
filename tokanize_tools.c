@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 16:19:56 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/22 20:09:14 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,36 @@ int	*check_operators(char *input, int *arr)
 		if (input[i] == '|' && arr[i] == -1)
 			arr[i] = 7;
 		if (input[i] == '>' && arr[i] == -1)
-			arr[i] = 4;
+			arr = make_red_op(input, arr, i);
+			//arr[i] = 4;
 		if (input[i] == '<' && arr[i] == -1)
 			arr[i] = 3;
 		i++;
+	}
+	return (arr);
+}
+
+int	*make_red_op(char *input, int *arr, int i)
+{
+	int	done;
+	int	val;
+
+	done = 0;
+	if (input[i + 1] == '>')
+		val = 5;
+	else
+		val = 3;
+	arr[i] = val;
+	i++;
+	if (val == 5)
+		arr[i++] = val;
+	while (done == 0)
+	{
+		while (input[i] == ' ')
+			arr[i++] = val;
+		while (input[i] != ' ' && arr[i] == -1)
+			arr[i++] = val;
+		done = 1;
 	}
 	return (arr);
 }

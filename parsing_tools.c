@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 15:46:50 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/22 18:52:19 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ int	print_all_tokens(t_tokens *list)
 		return (0);
 	while (tmp->content)
 	{
-		write(1, ">", 1);
 		ft_putstr_fd(tmp->content, 1);
-		write(1, "<", 1);
 		write(1, "\n", 1);
 		if (tmp->next)
 			tmp = tmp->next;
@@ -90,5 +88,4 @@ int	print_all_tokens(t_tokens *list)
 	}
 	return (1);
 }
-
 

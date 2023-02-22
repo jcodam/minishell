@@ -1,0 +1,11 @@
+items met string waarde expanden tot argument. 
+heredoc? 
+$expanden als argument
+
+# checks of files geopend kunnen worden 
+# < : zou altijd gevolgd moeten worden door een filenaam. 
+
+
+make sure that the following structure is used: 
+cmd -flag <args>
+so flags and arguments should be added together where relevant.

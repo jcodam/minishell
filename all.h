@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/20 16:18:35 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/22 19:55:09 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@ char		*ft_env_name(char *env);
 -1 if there isn't */
 int			ft_env_index(char **env, char *var);
 char		*singlearg(char *arg, int *index);
-/* poiter is char after $.
+/* pointer is char after $.
 returns (malloct) content of var in string of pointer, 
 pointer points to the first char of the var
 retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 
+
+// functions used for parser
+// need extra documentation
 t_tokens	*main_loop(char *input);
 int 		*make_arr(int len);
 void		print_array(int *arr);
@@ -99,7 +102,7 @@ int 		*check_commands(char *input, int *arr);
 void 		add_node(int start, int *arr, char *input, t_tokens *top);
 t_tokens 	*split_into_list(char *input, int *arr, t_tokens *list);
 void		ms_lstadd_back(t_tokens **lst, t_tokens *new);
-void		add_node_end(char *input, t_tokens *top, int type);
+void		add_node_end(char *input, t_tokens *top);
 void		fill_node(t_tokens *top, char *input, int start, int end);
 void		add_node(int start, int *arr, char *input, t_tokens *top);
 int			get_node_length(int *arr, int start);
@@ -109,5 +112,9 @@ int 		get_index(t_tokens *top);
 t_tokens 	*setup_new_node(t_tokens *top);
 char		get_quote_type(int type);
 void		*ms_calloc(size_t nmemb, size_t size);
+t_arglist	*add_node_args(t_arglist *args, t_tokens *source);
+t_arglist	*convert_list(t_tokens *source);
+int			*make_red_op(char *input, int *arr, int i);
+
 
 #endif
