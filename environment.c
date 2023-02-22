@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/14 17:45:16 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/22 18:13:32 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,43 @@ char	*ft_getvar(char *ptr, char **env)
 	if (!str)
 		return (0);
 	ft_strlcpy(str, ptr, i + 1);
-	printf("%s\n", str);
 	i = ft_env_index(env, str);
 	free(str);
 	if (i != -1)
 		str = ft_env_content(env[i]);
 	else
-		return (0);
+		return (ft_strdup(""));
 	return (str);
+}
+
+char	*ft_replacevar(char *head, int index, char **env)
+{
+	char	*tmp[3];
+
+	tmp[0] = ft_strdup(head);
+	if (!tmp[0])
+		exit(0);
+	tmp[0][index] = 0;
+	index++;
+	tmp[1] = ft_getvar(&head[index], env);
+	if (!tmp[1])
+		exit(0);
+	tmp[2] = ft_strjoin(tmp[0], tmp[1]);
+	if (!tmp[2])
+		exit(0);
+	free(tmp[0]);
+	free(tmp[1]);
+	if (ft_isdigit(head[index]))
+		index++;
+	else
+	{
+		while (ft_isalnum(head[index]) || head[index] == '_')
+			index++;
+	}
+	tmp[0] = ft_strjoin(tmp[2], &head[index]);
+	if (!tmp[0])
+		exit(0);
+	free(tmp[2]);
+	free(head);
+	return (tmp[0]);
 }

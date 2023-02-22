@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 15:34:43 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/22 17:10:54 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ pointer points to the first char of the var
 retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
+char		*ft_replacevar(char *head, int index, char **env);
 #endif

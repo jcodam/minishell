@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 14:06:54 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/20 15:58:08 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	sighandler_parent(int signum)
 	if (signum == SIGINT)
 	{
 		rl_replace_line("", 0);
-		write(1, "\n", 1);
+		write(1, "\n", 2);
 		rl_on_new_line();
 		rl_redisplay();
+		write(1, "\e[s", 2);
 	}
 	if (signum == SIGQUIT)
 	{
