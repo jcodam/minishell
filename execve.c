@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/21 16:55:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/24 15:58:35 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static int	execcmd(char **arg, t_super *super, int fd)
 		}
 		free(location);
 	}
-	ft_putstr_fd("minishel: ", fd);
-	ft_putstr_fd(*arg, fd);
-	ft_putstr_fd(": command not found\n", fd);
+	(void)fd;
+	ft_putstr_fd("minishel: ", 2);
+	ft_putstr_fd(*arg, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	return (i);
 }
 
@@ -81,10 +82,7 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 	}
 	else
 	{
-		dup2(fd, 1);
-		dup2(fd, 2);
 		error = execcmd(arg, super, fd);
-		close(fd);
 		exit(error);
 	}	
 }

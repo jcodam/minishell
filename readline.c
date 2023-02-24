@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 19:47:47 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/23 14:59:46 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char *var = read_the_line()
 wil wait for and return the line
 */
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	while (*s != '\0')
-	{
-		write(fd, s, 1);
-		s++;
-	}
-}
+// void	ft_putstr_fd(char *s, int fd)
+// {
+// 	while (*s != '\0')
+// 	{
+// 		write(fd, s, 1);
+// 		s++;
+// 	}
+// }
 
 static int	is_empty_line(char *line)
 {
@@ -49,7 +49,6 @@ char	*read_the_line(void)
 
 	line = NULL;
 	rl_outstream = stderr;
-	ft_putstr_fd("\e[s", 2);
 	x = hor_pos();
 	line = readline("type away; ");
 	if (!line)
@@ -58,7 +57,7 @@ char	*read_the_line(void)
 		s = ft_strjoin("\e[", c);
 		free(c);
 		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
-		ft_putstr_fd(c, 2);
+		ft_putstr_fd(c, 1);
 		exit(0);
 	}
 	if (is_empty_line(line) == FULL)
@@ -66,7 +65,7 @@ char	*read_the_line(void)
 	return (line);
 }
 
-int	get_pos_data(char *ptr)
+static int	get_pos_data(char *ptr)
 {
 	char	ch;
 	int		ret;
