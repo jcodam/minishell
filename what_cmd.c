@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/24 18:22:36 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/27 17:25:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{
 		printf("%d\n", super->exit_code);
+		return 0;
 	}
 	super->exit_code = 0;
 	if (look_for_cmd(*args, &found, "pwd"))
