@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 20:18:35 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/23 19:09:24 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ void		*ms_calloc(size_t nmemb, size_t size);
 t_arglist	*add_node_args(t_arglist *args, t_tokens *source);
 t_arglist	*convert_list(t_tokens *source);
 int			*make_red_op(char *input, int *arr, int i);
-
+int			*make_red_ip(char *input, int *arr, int i);
+int			pipe_checker(char *input, int i);
+int			red_op_checker(char *input, int i);
+int			red_ip_checker(char *input, int i);
 
 #endif

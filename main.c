@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 20:21:03 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/23 22:28:27 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
+		if (!splitted)
+		{
+			printf("\nprint error code\n");
+			exit (0);
+		}
 		args = convert_list(splitted);
 		print_all_tokens(splitted);
 		//block_signal();

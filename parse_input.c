@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/22 19:54:39 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/23 22:22:45 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_tokens	*main_loop(char *input)
 	len = ft_strlen(input);
 	arr = make_arr(len);
 	arr = tokanize(input, arr);
+	if (!arr)
+		return (NULL);
 	list = split_into_list(input, arr, list);
 	//list = split_args(list);
 	return (list);
@@ -32,13 +34,18 @@ t_tokens	*main_loop(char *input)
 
 int	*tokanize(char *input, int *arr)
 {
-	arr = label_quotes(input, arr, 1);
-	arr = label_quotes(input, arr, 0);
-	arr = check_operators(input, arr);
-	arr = command_after_pipe(input, arr);
-	arr = trim_spaces(input, arr);
-	arr = check_commands(input, arr);
-	return (arr);
+	while (arr)
+	{
+		arr = label_quotes(input, arr, 1);
+		arr = label_quotes(input, arr, 0);
+		arr = check_operators(input, arr);
+		arr = command_after_pipe(input, arr);
+		arr = trim_spaces(input, arr);
+		arr = check_commands(input, arr);
+		if (arr)
+			return (arr);
+	}
+	return (NULL);
 }
 
 t_tokens	*split_into_list(char *input, int *arr, t_tokens *top)
@@ -117,7 +124,6 @@ int	*label_vals(int start, int end, int *arr, int sig)
 // 	}
 // 	return (list);
 // }
-
 
 // void mini_tokenizer(t_tokens *node)
 // {

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:41:52 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 15:48:35 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/23 18:18:54 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	*label_quotes(char *input, int *arr, int type)
 	int		sup;
 	char	d_or_s;
 
+	if (!arr)
+		return (NULL);
 	sup = 0;
 	i = 0;
 	d_or_s = get_quote_type(type);
@@ -26,8 +28,7 @@ int	*label_quotes(char *input, int *arr, int type)
 	{
 		if (input[i] == d_or_s && sup == 0)
 		{
-			start = i;
-			i++;
+			start = i++;
 			sup = 1;
 		}
 		if (input[i] == d_or_s && sup == 1)

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/22 18:52:19 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/02/23 22:12:38 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	*trim_spaces(char *input, int *arr)
 {
 	int	i;
 
+	if (!arr)
+		return (NULL);
 	i = 0;
 	while (input[i])
 	{
@@ -88,4 +90,3 @@ int	print_all_tokens(t_tokens *list)
 	}
 	return (1);
 }
-
