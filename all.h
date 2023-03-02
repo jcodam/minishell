@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/27 16:10:43 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:49:53 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void		rl_replace_line(const char *text, int clear_undo);
 /* DEFINE'S */
 # define EMPTY 1
 # define FULL 0
+/* 1 Globle */
+int	g_exit_code;
 /* OUR FUNCTIONS*/
 /**
  * @brief jordan 
@@ -55,9 +57,9 @@ char		*read_the_line(void);
 /* builtins */
 int			what_cmd(char *line, t_super *super);
 void		ft_export(t_super *super, char **args, int output_fd);
-void		ft_unset(t_super *super, char **arg, int output_fd);
-void		ft_exit_builtin(char **arg, t_super *super);
-void		ft_pwd(t_super *super, int output_fd);
+void		ft_unset(t_super *super, char **arg);
+void		ft_exit_builtin(char **arg);
+void		ft_pwd(int output_fd);
 void		ft_change_dir(char *path);
 void		ft_echo(char **arg, int output_fd);
 void		ft_put_env(t_super *super, int fd);
@@ -86,6 +88,7 @@ retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 char		*ft_replacevar(char *head, int index, char **env);
+void		exit_errbug(char *error, char *debug);
 
 t_tokens	*main_loop(char *input);
 int			*make_arr(int len);

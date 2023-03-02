@@ -6,19 +6,30 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 16:24:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/27 17:07:55 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 14:08:10 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNAL_LIST_H
 # define SIGNAL_LIST_H
 
-static const char *signals = {
+static const char *signals[17] = {
+     "",
 	"Hangup: 1",
 	"",
 	"Quit: 3",
+     "Illegal instruction: 4",
+     "Trace/BPT trap: 5",
 	"Abort trap: 6",
+     "EMT trap: 7",
+     "Floating point exception: 8",
 	"Killed: 9",
+     "Bus error: 10",
+     "Segmentation fault: 11",
+     "Bad system call: 12",
+     "",
+     "Alarm clock: 14",
+     "Terminated: 15",
 	0,
 };
 

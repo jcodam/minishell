@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 13:48:58 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:25:23 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	checkandadd(t_super *super, char **args, int fd)
 			ft_putstr_fd("minishel: export: `", fd);
 			ft_putstr_fd(*args, fd);
 			ft_putstr_fd("': not a valid identifier\n", fd);
-			super->exit_code = 1;
+			g_exit_code = 1;
 		}
 		else
 		{
@@ -89,7 +89,6 @@ static void	checkandadd(t_super *super, char **args, int fd)
 
 void	ft_export(t_super *super, char **args, int output_fd)
 {
-	super->exit_code = 0;
 	if (!args || !args[1])
 		ft_export_no_arguments(super->env, output_fd);
 	else

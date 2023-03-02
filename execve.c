@@ -6,11 +6,12 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/27 19:16:16 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:32:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
+#include "signal_list.h"
 
 static int	execcmd(char **arg, t_super *super)
 {
@@ -60,16 +61,19 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 		{
 			reset_signal();
 			error = execcmd(arg, super);
-			printf("%d\n", error);
 			exit(error);
 		}
 		pid = waitpid(pid, &error, WCONTINUED);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		printf("\n%d\n", WEXITSTATUS(error));
-		printf("%d\n", error);
-		super->exit_code = (error / 256);
+		if (error > 0 && error < 16)
+		{
+			printf("%s\n", signals[error]);
+			g_exit_code = (error + 128);
+		}
+		else
+			g_exit_code = (error / 256);
 		set_signal_parrent();
 	}
 	else
@@ -80,3 +84,4 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 	(void)fd;
 }
 /* 131 ctr \ 127 no cmt */
+// printf("\n%d\n", WEXITSTATUS(error));

@@ -6,11 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 19:56:14 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:54:24 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
+
+int g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -28,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 	super = malloc(sizeof(t_super));
 	super->env = copy_env(envp);
-	super->exit_code = 0;
 	super->term_struct = &term_struct;
 	while (1)
 	{
@@ -37,6 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		// splitted = main_loop(line);
 		// print_all_tokens(splitted);
 		// block_signal();
+		tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
+		tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
+		tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
 		if (line && *line)
 			what_cmd(line, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
