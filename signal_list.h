@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 16:24:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/27 17:07:55 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 15:02:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static const char *signals = {
      20    SIGCHLD      discard signal       child status has changed
      21    SIGTTIN      stop process         background read attempted from
                                              control terminal
-     22    SIGTTOU      stop process         background write attempted to
+     22    SIGTTOU      stop processeof         background write attempted to
                                              control terminal
      23    SIGIO        discard signal       I/O is possible on a descriptor
                                              (see fcntl(2))

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 14:34:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/02 16:38:32 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ int			*make_red_ip(char *input, int *arr, int i);
 int			pipe_checker(char *input, int i);
 int			red_op_checker(char *input, int i);
 int			red_ip_checker(char *input, int i);
+void		mini_tokenizer(t_tokens *node);
 
 #endif

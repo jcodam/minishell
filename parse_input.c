@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/23 22:22:45 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/02 17:14:40 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,39 @@ int	*label_vals(int start, int end, int *arr, int sig)
 	return (arr);
 }
 
-// void	split_args(t_tokens *list)
-// {
-// 	if (!list)
-// 		return (0);
-// 	while (list->content)
-// 	{
-// 		mini_tokenizer(list);
-// 		if (list->next)
-// 			list = list->next;
-// 	}
-// 	return (list);
-// }
+void	split_args(t_tokens *list)
+{
+	if (!list)
+		exit (0);
+	while (list->next)
+	{
+		//printf("node content: %s", list->content);
+		mini_tokenizer(list);
+		list = list->next;
+	}
+	fuzer(list);
+}
 
-// void mini_tokenizer(t_tokens *node)
-// {
-// 	char	**args;
-// 	char	**files;
-// 	int		**tokens;
+void mini_tokenizer(t_tokens *node)
+{
+	char	**args;
+	char	**files;
+	int		**tokens;
 
-// 	args = malloc(sizeof(char **));
-// 	files = malloc(sizeof(char **));
-// 	tokens = malloc(sizeof(int **));
+	args = malloc(sizeof(char **));
+	files = malloc(sizeof(char **));
+	tokens = malloc(sizeof(int **));
+	printf("content of node: %s", node->content);
+	
+	free (args);
+	free (files);
+	free (tokens);
+}
 
-// }
+void	fuzer(t_tokens *list)
+{
+	
+}
+
+// run through tokanized list
+// which items should be fused?

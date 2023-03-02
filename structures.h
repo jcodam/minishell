@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/22 19:54:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/02 16:57:22 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@ typedef struct s_tokens
 	int				e_var_type;
 	int				iter;
 	char			*content;
+	char			**command;
 	char			**args;
 	char			**files;
 	int				**tokens;
 	struct s_tokens	*next;
 }	t_tokens;
 
-enum	e_var_type
-{
-	LOCAL,
-	ENV_R,
-	EXPORT_ONLY,
-};
+// enum	e_var_type
+// {
+// 	LOCAL,
+// 	ENV_R,
+// 	EXPORT_ONLY,
+// };
 
 enum e_commands
 {
