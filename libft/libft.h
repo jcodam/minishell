@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/02 14:32:53 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/28 16:20:10 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,15 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 string, which is the result of the concatenation
 of ’s1’ and ’s2’ */
 char	*ft_strjoin(char const *s1, char const *s2);
+/* Allocates (with malloc(3)) and returns a new
+string, which is the result of the concatenation
+of ’s1’ and ’s2’ and s3 */
+char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+/* Allocates (with malloc(3)) and returns a new
+string, which is the result of the concatenation
+of x amount of string
+can error if x != number of strings */
+char	*ft_strjoinx(int x, ...);
 /* Applies the function ’f’ on each character of
 the string passed as argument, passing its index
 as first argument. Each character is passed by

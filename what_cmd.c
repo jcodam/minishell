@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 17:38:09 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/27 17:25:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{
 		printf("%d\n", super->exit_code);
+		return 0;
 	}
 	super->exit_code = 0;
 	if (look_for_cmd(*args, &found, "pwd"))
@@ -98,7 +99,9 @@ static char **m_arg(char *line, int *p)
 	int		j = 0;
 
 	args = ft_split(line, '|');
-	ft_putarrs_fd(args, 1);
+	if (!args)
+		return (0);
+	// ft_putarrs_fd(args, 1);
 	while (args[j])
 	{
 		if (!ll(args[j]))
@@ -106,22 +109,64 @@ static char **m_arg(char *line, int *p)
 		else
 			j++;
 	}
-	ft_putarrs_fd(args, 1);
-	*p = j;
+	// ft_putarrs_fd(args, 1);
+	*p = j - 1;
 	return (args);
 }
 
-int	what_cmd(char *line, t_super *super)
+int	what_cmd2(char *line, t_super *super)
 {
 	// printf("%s\n", line);
 	return (what_cmd1(line, super, 0, 1));
 }
-int	what_cmd2(char *line, t_super *super)
+int	mk_pipes(char **cpipes, int readfd, t_super *super, int pipes)
+{
+	int	pipefd[2];
+	pid_t pid;
+	int	error;
+
+	error = pipe(pipefd);
+	if (error == -1)
+		return (0);
+	pid = fork();
+	if (pid == 0)
+	{
+		reset_signal();
+		close(pipefd[0]);
+		dup2(readfd, 0);
+		if (pipes)
+			dup2(pipefd[1], 1);
+		error = what_cmd1(*cpipes, super, 1, 1);
+		close(pipefd[1]);
+		exit(error);
+	}
+	close(pipefd[1]);
+	if (pipes)
+	{
+		mk_pipes(cpipes + 1, pipefd[0], super, pipes - 1);
+	}
+	close(pipefd[0]);
+	pid = waitpid(pid, &error, WCONTINUED);
+	return (1);
+}
+int	what_cmd(char *line, t_super *super)
 {
 	int	pipes;
+	char **cpipes;
 
+	if (!line | !ll(line))
+		return (0);
 	pipes = 0;
-	m_arg(line, &pipes);
-	printf("%d\n", pipes);
+	cpipes = m_arg(line, &pipes);//export , grep 'home' , null,; pipes = 2
+	// printf("%d\n", pipes);
+	if (!pipes)
+	{
+		ft_arrclear_c(cpipes, ft_arrlen_c(cpipes));
+		return (what_cmd1(line, super, 0, 1));
+	}
+	block_signal();
+	mk_pipes(cpipes, 0, super, pipes);
+	set_signal_parrent();
+	ft_arrclear_c(cpipes, ft_arrlen_c(cpipes));
 	return (super->exit_code);
 }

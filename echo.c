@@ -6,13 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/23 17:22:51 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/16 15:51:24 by jbax          ########   odam.nl         */
+/*   Updated: 2023/02/27 16:08:33 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-static int		has_option(char *arg)
+static int	has_option(char *arg)
 {
 	if (!arg || !*arg)
 		return (1);
