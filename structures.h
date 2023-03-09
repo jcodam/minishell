@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/20 15:59:05 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:17:11 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ typedef struct s_tokens
 	int				type;
 	int				e_var_type;
 	int				iter;
+	int				section;
 	char			*content;
+	//char			*command;
+	char			**args;
+	char			**files;
+	int				*tokens;
 	struct s_tokens	*next;
 }	t_tokens;
-
-enum	e_var_type
-{
-	LOCAL,
-	ENV_R,
-	EXPORT_ONLY,
-};
 
 enum e_commands
 {
@@ -44,6 +42,10 @@ enum e_commands
 	PIPE,
 	SPC,
 	ENV_VAR,
+	EXPANDABLE,
+	FILE_T,
+	SPLIT_AND,
+	SPLIT_OR
 };
 
 #endif
