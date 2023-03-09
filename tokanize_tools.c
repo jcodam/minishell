@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/23 22:26:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/09 16:40:46 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,114 @@ int	*check_operators(char *input, int *arr)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|' && arr[i] == -1)
-		{
-			if (!pipe_checker(input, i))
-				return (NULL);
-			arr[i] = 7;
-		}
-		if (input[i] == '>' && arr[i] == -1)
-		{
-			if (!red_op_checker(input, i))
-				return (NULL);
-			make_red_op(input, arr, i);
-		}
-		if (input[i] == '<' && arr[i] == -1)
-		{
-			if (!red_ip_checker(input, i))
-				return (NULL);
-			//error checker
-			arr = make_red_ip(input, arr, i);
-		}
-			//arr[i] = 3;
+		if (!check_ampersand(input, arr, i))
+			return (NULL);
+		if (!check_OR(input, arr, i))
+			return (NULL);
+		if (!check_pipes(input, arr, i))
+			return (NULL);
+		if (!check_r_arrow(input, arr, i))
+			return (NULL);
+		if (!check_l_arrow(input, arr, i))
+			return (NULL);
 		i++;
 	}
 	return (arr);
+}
+
+int	content_before(char *input, int i)
+{
+	if (i == 0)
+		return (0);
+	else
+	{
+		while (i)
+		{
+			if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
+				return (1);
+			i--;
+		}
+		return (0);
+	}
+}
+
+int OR_error_checker(char *input, int i)
+{
+	if (input[i + 2] == '|' || !content_before(input, i))
+	{
+		write(1, "minishell: syntax error near unexpected token `||'", 51);
+		return (0);
+	}
+	return (1);
+}
+
+int check_OR (char *input, int * arr, int i)
+{
+	if (input[i] == '|' && input[i + 1] == '|' && \
+	arr[i] == -1 && arr[i + 1] == -1)
+	{
+		if (!OR_error_checker(input, i))
+			return (0);
+		arr[i] = 13;
+		arr[i + 1] = 13;
+	}
+	return (1);
+}
+
+int amp_checker(char *input, int i)
+{
+	if (input[i + 2] == '&' || !content_before(input, i))
+	{
+		write(1, "minishell: syntax error near unexpected token `&&'", 51);
+		return (0);
+	}
+	return (1);
+}
+
+int	check_ampersand(char *input, int *arr, int i)
+{
+	if (input[i] == '&' && input[i + 1] == '&' && \
+	arr[i] == -1 && arr[i + 1] == -1)
+	{
+		if (!amp_checker(input, i))
+			return (0);
+		arr[i] = 12;
+		arr[i + 1] = 12;
+	}
+	return (1);
+}
+
+int	check_pipes(char *input, int *arr, int i)
+{
+	if (input[i] == '|' && arr[i] == -1)
+	{
+		if (!pipe_checker(input, i))
+			return (0);
+		arr[i] = 7;
+	}
+	return (1);
+}
+
+int check_l_arrow(char *input, int *arr, int i)
+{
+	if (input[i] == '<' && arr[i] == -1)
+	{
+		if (!red_ip_checker(input, i))
+			return (0);
+		arr = make_red_ip(input, arr, i);
+	}
+	return (1);
+}
+
+int check_r_arrow(char *input, int *arr, int i)
+{
+	if (input[i] == '>' && arr[i] == -1)
+	{
+		if (!red_op_checker(input, i))
+			return (0);
+		arr = make_red_op(input, arr, i);
+	}
+	return (1);
 }
 
 int	*make_red_op(char *input, int *arr, int i)

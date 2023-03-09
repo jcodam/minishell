@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 18:13:32 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:26:41 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	ft_put_env(t_super *super, int fd)
 	char	**env;
 
 	env = super->env;
-	super->exit_code = 0;
 	while (*env)
 	{
 		if (ft_strchr(*env, '='))

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/23 22:12:38 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/09 17:31:45 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ms_lstadd_back(t_tokens **lst, t_tokens *new)
 	}
 }
 
-int	*trim_spaces(char *input, int *arr)
+int	*label_spaces(char *input, int *arr)
 {
 	int	i;
 

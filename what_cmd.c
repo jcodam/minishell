@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 15:42:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:40:24 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 	args = mkarg(line);
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{
-		printf("%d\n", super->exit_code);
+		printf("%d\n", g_exit_code);
+		g_exit_code = 0;
 		return 0;
 	}
-	super->exit_code = 0;
+	g_exit_code = 0;
 	if (look_for_cmd(*args, &found, "pwd"))
 	{
-		ft_pwd(super, fd);
+		ft_pwd(fd);
 	}
 	else if (look_for_cmd(*args, &found, "exit"))
-		ft_exit_builtin(args, super);
+		ft_exit_builtin(args);
 	else if (look_for_cmd(*args, &found, "cd"))
 		ft_change_dir(args[1]);
 	else if (look_for_cmd(*args, &found, "env"))
@@ -73,7 +74,7 @@ int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 	else if (look_for_cmd(*args, &found, "export"))
 		ft_export(super, args, fd);
 	else if (look_for_cmd(*args, &found, "unset"))
-		ft_unset(super, args, fd);
+		ft_unset(super, args);
 	else if (look_for_cmd(*args, &found, "var") && ft_arrlen_c(args) == 2)
 		printf("%s\n", ft_getvar(args[1], super->env));
 	else if (look_for_cmd(*args, &found, "lll"))
@@ -168,5 +169,5 @@ int	what_cmd(char *line, t_super *super)
 	mk_pipes(cpipes, 0, super, pipes);
 	set_signal_parrent();
 	ft_arrclear_c(cpipes, ft_arrlen_c(cpipes));
-	return (super->exit_code);
+	return (g_exit_code);
 }

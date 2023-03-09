@@ -6,13 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:57:28 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/09 17:36:27 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-int exit_code = 0;
+int g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,32 +34,24 @@ int	main(int argc, char **argv, char **envp)
 	super = malloc(sizeof(t_super));
 	args = malloc(sizeof(t_arglist));
 	super->env = copy_env(envp);
-	super->exit_code = 0;
 	super->term_struct = &term_struct;
 	while (1)
 	{
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
-		if (!splitted)
+		print_all_tokens(splitted);
+		// block_signal();
+		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
+		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
+		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
+		while (splitted)
 		{
-			printf("\nprint error code\n");
-			exit (0);
+			what_cmd(splitted->content, super);
+			splitted = splitted->next;
 		}
-		args = convert_list(splitted);
-		//print_all_tokens(splitted);
-		//block_signal();
-		//printf("string: %s", args->arg);
-		while (args->next)
-		{
-			//printf("string: %s", splitted->content);
-			what_cmd(args->arg, super);
-			if (splitted->next)
-				splitted = splitted->next;
-			else
-				break ;
-		}
-		//what_cmd("pwd", super);
+		//if (line && *line)
+		//	what_cmd(line, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);

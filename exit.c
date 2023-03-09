@@ -6,11 +6,17 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 13:18:11 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/09 13:37:10 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:48:45 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
+
+void	exit_errbug(char *error, char *debug)
+{
+	printf("%s\n%s\n", error, debug);
+	exit(g_exit_code);
+}
 
 static int	check_arg(char *arg, int exit_code)
 {
@@ -24,12 +30,12 @@ static int	check_arg(char *arg, int exit_code)
 	return (0);
 }
 
-void	ft_exit_builtin(char **arg, t_super *super)
+void	ft_exit_builtin(char **arg)
 {
 	ft_putstr_fd("exit\n", 1);
 	if (!arg || !*(&arg[1]))
-		exit(super->exit_code);
-	if (check_arg(arg[1], super->exit_code))
+		exit(g_exit_code);
+	if (check_arg(arg[1], g_exit_code))
 	{
 		if (!arg[2])
 		{
@@ -42,7 +48,7 @@ void	ft_exit_builtin(char **arg, t_super *super)
 	if (arg[2])
 	{
 		ft_putstr_fd("minishel: exit: too many arguments\n", 1);
-		super->exit_code = 1;
+		g_exit_code = 1;
 	}
 	else
 		exit(ft_atoi(arg[1]) % 256);

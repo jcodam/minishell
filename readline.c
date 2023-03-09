@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 14:36:07 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/02 17:19:18 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*read_the_line(void)
 		free(c);
 		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
 		ft_putstr_fd(c, 1);
-		exit(0);
+		exit(g_exit_code);
 	}
 	if (is_empty_line(line) == FULL)
 		add_history(line);

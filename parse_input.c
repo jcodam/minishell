@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/02 17:14:40 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/09 17:32:13 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ t_tokens	*main_loop(char *input)
 	arr = tokanize(input, arr);
 	if (!arr)
 		return (NULL);
-	list = split_into_list(input, arr, list);
-	//list = split_args(list);
+	list = primary_split(input, arr, list);
+	//list = split_into_list(input, arr, list);
+	//split_args(list);
 	return (list);
 }
 
@@ -40,12 +41,23 @@ int	*tokanize(char *input, int *arr)
 		arr = label_quotes(input, arr, 0);
 		arr = check_operators(input, arr);
 		arr = command_after_pipe(input, arr);
-		arr = trim_spaces(input, arr);
+		arr = label_spaces(input, arr);
 		arr = check_commands(input, arr);
 		if (arr)
 			return (arr);
 	}
 	return (NULL);
+}
+
+int	find_pipe(int *arr, int max, int position)
+{
+	while (position <= max)
+	{
+		if (arr[position] == 7)
+			return (position);
+		position++;
+	}
+	return (position);
 }
 
 t_tokens	*split_into_list(char *input, int *arr, t_tokens *top)
@@ -112,39 +124,17 @@ int	*label_vals(int start, int end, int *arr, int sig)
 	return (arr);
 }
 
-void	split_args(t_tokens *list)
-{
-	if (!list)
-		exit (0);
-	while (list->next)
-	{
-		//printf("node content: %s", list->content);
-		mini_tokenizer(list);
-		list = list->next;
-	}
-	fuzer(list);
-}
-
-void mini_tokenizer(t_tokens *node)
-{
-	char	**args;
-	char	**files;
-	int		**tokens;
-
-	args = malloc(sizeof(char **));
-	files = malloc(sizeof(char **));
-	tokens = malloc(sizeof(int **));
-	printf("content of node: %s", node->content);
-	
-	free (args);
-	free (files);
-	free (tokens);
-}
-
-void	fuzer(t_tokens *list)
-{
-	
-}
+// void	split_args(t_tokens *list)
+// {
+// 	if (!list)
+// 		exit (0);
+// 	while (list->next)
+// 	{
+// 		printf("node content: %s", list->content);
+// 		mini_tokenizer(list);
+// 		list = list->next;
+// 	}
+// }
 
 // run through tokanized list
 // which items should be fused?

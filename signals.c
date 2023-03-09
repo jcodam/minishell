@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/22 20:21:46 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/02 17:19:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sighandler_parent(int signum)
 		write(1, "\n", 2);
 		rl_on_new_line();
 		rl_redisplay();
-		write(1, "\e[s", 2);
+		g_exit_code = 1;
 	}
 	if (signum == SIGQUIT)
 	{

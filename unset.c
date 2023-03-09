@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/29 14:35:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/09 16:10:51 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 16:30:58 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	check_for_dell(t_super *super, char **args)
 		index = -1;
 		if (is_valid(*args))
 		{
-			ft_putstr_fd("minishel: unset: `", 1);
-			ft_putstr_fd(*args, 1);
-			ft_putstr_fd("': not a valid identifier\n", 1);
-			super->exit_code = 1;
+			ft_putstr_fd("minishel: unset: `", 2);
+			ft_putstr_fd(*args, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			g_exit_code = 1;
 		}
 		else
 			index = ft_env_index(super->env, *args);
@@ -45,11 +45,9 @@ static void	check_for_dell(t_super *super, char **args)
 	}
 }
 
-void	ft_unset(t_super *super, char **arg, int output_fd)
+void	ft_unset(t_super *super, char **arg)
 {
-	super->exit_code = 0;
 	check_for_dell(super, arg + 1);
-	(void)output_fd;
 }
 
 char	*singlearg(char *arg, int *index)
