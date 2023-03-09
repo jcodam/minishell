@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:32:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/06 15:21:45 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,40 @@ static pid_t	ft_fork(void)
 
 	pid = fork();
 	if (pid == -1)
-		exit(0);
+		exit_errbug("fork error", "execve 47");
 	return (pid);
 }
 
-void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
+static int	lets_fork(char **arg, t_super *super)
 {
 	pid_t	pid;
 	int		error;
 
+	block_signal();
+	pid = ft_fork();
+	if (pid == 0)
+	{
+		reset_signal();
+		error = execcmd(arg, super);
+		exit(error);
+	}
+	pid = waitpid(pid, &error, WCONTINUED);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
+	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+	return (error);
+}
+
+void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
+{
+	int		error;
+
 	if (!ispipe)
 	{
-		block_signal();
-		pid = ft_fork();
-		if (pid == 0)
-		{
-			reset_signal();
-			error = execcmd(arg, super);
-			exit(error);
-		}
-		pid = waitpid(pid, &error, WCONTINUED);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+		error = lets_fork(arg, super);
 		if (error > 0 && error < 16)
 		{
-			printf("%s\n", signals[error]);
+			ft_putendl_fd((char *)signals[error], 2);
 			g_exit_code = (error + 128);
 		}
 		else

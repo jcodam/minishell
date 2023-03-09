@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/02/22 19:55:45 by jbax          ########   odam.nl          #
+#    Updated: 2023/03/08 15:03:58 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME= minishell
 
 SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	echo.c export.c environment.c unset.c exit.c execve.c\
+	envget.c letspipe.c heredoc.c\
 	#parse_input.c parse_quotes.c parsing_list.c\
 	#parsing_tools.c tokanize_tools.c fill_node.c\
 	#parse_input.c list.c

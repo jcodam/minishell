@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:26:41 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/02 17:50:34 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,57 +90,4 @@ void	ft_put_env(t_super *super, int fd)
 			ft_putendl_fd(*env, fd);
 		env++;
 	}
-}
-
-char	*ft_getvar(char *ptr, char **env)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	while (ft_isalnum(ptr[i]) || ptr[i] == '_')
-		i++;
-	str = malloc((i + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	ft_strlcpy(str, ptr, i + 1);
-	i = ft_env_index(env, str);
-	free(str);
-	if (i != -1)
-		str = ft_env_content(env[i]);
-	else
-		return (ft_strdup(""));
-	return (str);
-}
-
-char	*ft_replacevar(char *head, int index, char **env)
-{
-	char	*tmp[3];
-
-	tmp[0] = ft_strdup(head);
-	if (!tmp[0])
-		exit(0);
-	tmp[0][index] = 0;
-	index++;
-	tmp[1] = ft_getvar(&head[index], env);
-	if (!tmp[1])
-		exit(0);
-	tmp[2] = ft_strjoin(tmp[0], tmp[1]);
-	if (!tmp[2])
-		exit(0);
-	free(tmp[0]);
-	free(tmp[1]);
-	if (ft_isdigit(head[index]))
-		index++;
-	else
-	{
-		while (ft_isalnum(head[index]) || head[index] == '_')
-			index++;
-	}
-	tmp[0] = ft_strjoin(tmp[2], &head[index]);
-	if (!tmp[0])
-		exit(0);
-	free(tmp[2]);
-	free(head);
-	return (tmp[0]);
 }
