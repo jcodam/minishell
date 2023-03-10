@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/10 13:58:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 19:05:38 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 char		*ft_replacevar(char *head, int index, char **env);
 void		exit_errbug(char *error, char *debug);
+int			tmpfileswitch(char **line);
 
 // @alex functions 
 t_tokens	*main_loop(char *input);

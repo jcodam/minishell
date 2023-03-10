@@ -6,13 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/10 18:42:04 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 19:05:52 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "all.h"
 
-int g_exit_code = 0;
+int	g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -56,8 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		//system(line);
-		//free(line);
+		free(line);
 	}
 	(void)splitted;
 	return (0);
