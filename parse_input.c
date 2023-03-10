@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/09 17:32:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 15:25:15 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,3 @@ int	*label_vals(int start, int end, int *arr, int sig)
 // 		list = list->next;
 // 	}
 // }
-
-// run through tokanized list
-// which items should be fused?

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/09 17:35:24 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 13:58:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,16 +131,20 @@ int			check_pipes(char *input, int *arr, int i);
 int			check_l_arrow(char *input, int *arr, int i);
 int			check_r_arrow(char *input, int *arr, int i);
 /**
- * splits the content of a node at the position given as 'split_points' and places the
- * righthand part of the string in a new node in the linked list. 
- * noc determines the amount of characters to be splitted on (i.e. for '&&' noc would be 2)
- * if node_nr is given, it determines the node in which the string should be split
+ * splits the content of a node at the position given as 'split_points' and 
+ * places the righthand part of the string in a new node in the linked list. 
+ * noc determines the amount of characters to be splitted on 
+ * (i.e. for '&&' noc would be 2)
+ * if node_nr is given, it determines the node in which the string 
+ * should be split
  */
-void		split_to_node(t_tokens *node, int split_point, int noc, int node_nr);
+void		split_to_node(t_tokens *node, int split_point, \
+int noc, int node_nr);
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
 int			*ft_subarr(int *arr, unsigned int start, size_t len);
 int			ar_len(int *arr);
-void		fill_node_split(t_tokens	*node, int split_point, int noc, int length);
+void		fill_node_split(t_tokens	*node, int split_point, \
+int noc, int length);
 /**
  * finds the first instance of a specified token in the array. 
  * returns -1 if there is no instance of the token

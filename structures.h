@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/07 16:17:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 15:17:55 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ enum e_commands
 	EXPANDABLE,
 	FILE_T,
 	SPLIT_AND,
-	SPLIT_OR
+	SPLIT_OR,
+	FLAGS
 };
 
 #endif

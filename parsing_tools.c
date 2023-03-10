@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/09 17:31:45 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/10 14:47:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,15 @@ int	print_all_tokens(t_tokens *list)
 		return (0);
 	while (tmp->content)
 	{
+		ft_putstr_fd("node value: ", 1);
+		ft_putnbr_fd(tmp->iter, 1);
+		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("node content: ", 1);
+		ft_putstr_fd("[", 1);
 		ft_putstr_fd(tmp->content, 1);
+		ft_putstr_fd("]", 1);
+		ft_putstr_fd("\n", 1);
+		print_tokens(tmp->tokens);
 		write(1, "\n", 1);
 		if (tmp->next)
 			tmp = tmp->next;

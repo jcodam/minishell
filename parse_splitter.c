@@ -42,8 +42,8 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list->tokens = arr;
 	list->iter = 0;
 	list = split_on_amps(list);
-	list = split_on_or(list);
-	list = split_on_pipes(list);
+	//list = split_on_or(list);
+	//list = split_on_pipes(list);
 	trim_spaces(list);
 	//list = transpose_args(list);
 	return (list);
@@ -60,15 +60,16 @@ void	trim_spaces(t_tokens *list)
 	while (list)
 	{
 		tmp = list->content;
+		//printf("node number: %d\n", list->iter);
+		//printf("content: [%s]\n", tmp);
 		start = 0;
+		end = (ft_strlen(list->content) - 1);
 		while (tmp[start] == ' ')
 			start++;
 		while (tmp[end] == ' ')
 			end--;
-		end = (ft_strlen(list->content));
-		list->content = ft_substr(tmp, start, (end - start));
-		printf("word; %s\n", list->content);
-		free(tmp);
+		list->content = ft_substr(tmp, start, ((end - start) + 1));
+		list->tokens = ft_subarr(list->tokens, start, ((end - start) + 1));
 		list = list->next;
 	}
 }
@@ -84,8 +85,13 @@ t_tokens	*split_on_amps(t_tokens *list)
 	len = ft_strlen(list->content);
 	while (list)
 	{
-		while (find_tokens(12, list) != -1)
+		// issue somewhere with the tokens.
+		while ((find_tokens(12, list) != -1) && list)
+		{
 			split_to_node(list, find_tokens(12, list), 2, list->iter);
+			//printf("find tokens: %d", find_tokens(12, list));
+			//print_all_tokens(list);
+		}
 		list = list->next;
 	}
 	return (tmp);
@@ -103,7 +109,10 @@ t_tokens	*split_on_or(t_tokens *list)
 	while (list)
 	{
 		while (find_tokens(11, list) != -1)
+		{
 			split_to_node(list, find_tokens(11, list), 2, list->iter);
+			print_all_tokens(list);
+		}
 		list = list->next;
 	}
 	return (tmp);
@@ -136,16 +145,18 @@ int find_tokens(int val, t_tokens *list)
 	{
 		if (list->tokens[i] == val)
 			return (i + 1);
+		//printf("array val: %d\n", list->tokens[i]);
 		i++;
 	}
 	return (-1);
 }
 
-// splits the content of a node at the position given as 'split_points' and places the
-// righthand part of the string in a new node in the linked list.
-// noc determines the amount of characters to be splitted on (i.e. for '&&' noc would be 2)
-// if node_nr is given, it determines the node in which the string should be split
-
+// splits the content of a node at the position given as 'split_points' and 
+// places the righthand part of the string in a new node in the linked list.
+// noc determines the amount of characters to be splitted on 
+// (i.e. for '&&' noc would be 2)
+// if node_nr is given, it determines the node in which the 
+// string should be split
 void	split_to_node(t_tokens *node, int split_point, int noc, int node_nr)
 {
 	int			length;
@@ -163,7 +174,7 @@ void	split_to_node(t_tokens *node, int split_point, int noc, int node_nr)
 		new->next = node->next;
 	node->next = new;
 	fill_node_split(node, split_point, noc, length);
-	while (new->next)
+	while (new)
 	{
 		new->iter++;
 		new = new->next;
@@ -179,12 +190,12 @@ void	fill_node_split(t_tokens	*node, int split_point, int noc, int length)
 	arr = node->tokens;
 	node->next->content = ft_substr(node->content, (split_point + noc), \
 	(length - (split_point + noc)));
-	free(node->content);
-	node->content = ft_substr(node->content, 0, (split_point - 1));
+	node->content = ft_substr(str, 0, (split_point - 1));
+	free(str);
 	node->next->tokens = ft_subarr(node->tokens, (split_point + noc), \
 	(length - (split_point + noc)));
-	free(node->tokens);
-	node->tokens = ft_subarr(node->tokens, 0, (split_point - 1));
+	node->tokens = ft_subarr(arr, 0, (split_point - 1));
+	free(arr);
 }
 
 int	*ft_subarr(int *arr, unsigned int start, size_t len)
@@ -298,4 +309,3 @@ int	ar_len(int *arr)
 // ****l
 // ***l
 // **l
-
