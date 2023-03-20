@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/09 18:12:05 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/20 14:06:00 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		splitted = main_loop(line);
-		print_all_tokens(splitted);
+		// splitted = main_loop(line);
+		// print_all_tokens(splitted);
 		// block_signal();
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
-		while (splitted)
-		{
-			what_cmd(splitted->content, super);
-			splitted = splitted->next;
-		}
-		//if (line && *line)
-		//	what_cmd(line, super);
+		// while (splitted)
+		// {
+		// 	what_cmd(splitted->content, super);
+		// 	splitted = splitted->next;
+		// }
+		if (line && *line)
+			what_cmd(line, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-t_arglist	*convert_list(t_tokens *source)
+/*t_arglist	*convert_list(t_tokens *source)
 {
 	t_arglist	*dest;
 
@@ -93,3 +93,4 @@ t_arglist	*add_node_args(t_arglist *args, t_tokens *source)
 	tmp->next->arg = &source->content;
 	return (tmp);
 }
+*/
