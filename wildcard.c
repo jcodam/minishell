@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 14:46:19 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/09 18:01:10 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 15:24:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,35 @@
 #define FOUND 1
 #define NOT_FOUND 0
 
-// int wild(char )
+static int	strcmpwild(char *card, char *s);
 
-int	strcmpwild(char *card, char *s)
+static int	qq(char *card, char *s)
 {
-	while (*card)// comper
+	while (*card == '*')
+		card++;
+	if (!*card)
+		return (FOUND);
+	while (*s)
+	{
+		while (*s && *card != *s)
+			s++;
+		if (strcmpwild(card, s))
+			return (FOUND);
+		if (*s)
+			s++;
+	}
+	return (NOT_FOUND);
+}
+
+static int	strcmpwild(char *card, char *s)
+{
+	while (*card)
 	{
 		if (!*s && *card && *card != '*')
 			return (NOT_FOUND);
-		if (*card == '*') // na ster == s
+		if (*card == '*')
 		{
-			while (*card == '*')
-				card++;
-			if (!*card)
-				return (FOUND);
-			while (*s)
-			{
-				while (*s && *card != *s) // go tot gelijk aan
-					s++;
-				if (strcmpwild(card, s))
-					return (FOUND);
-				if (*s)
-					s++;
-			}
-			if (!*s)
-				return (NOT_FOUND);
+			return (qq(card, s));
 		}
 		else if (*card == *s)
 		{
@@ -57,47 +61,53 @@ int	strcmpwild(char *card, char *s)
 	return (NOT_FOUND);
 }
 
-char	**get_wildcard(char *wild)
+t_list	*get_wildcard(char *wild)
 {
 	DIR				*dirp;
 	struct dirent	*dp;
 	size_t			len;
+	t_list			*cards;
+	t_list			*card;
 
-	dirp = opendir("./fucking_around");
+	cards = 0;
+	dirp = opendir(".");
 	if (dirp == 0)
-			return (ERROR);
+		return (ERROR);
 	len = strlen(wild);
-	while ((dp = readdir(dirp)) != 0)
+	dp = readdir(dirp);
+	while (dp != 0)
 	{
-		ft_putendl_fd(dp->d_name, 1);
 		if (strcmpwild(wild, dp->d_name))
-			write(1,"FOUND\n\n",7);
-			// ft_putendl_fd("FOUND\n", 1);
-			// if (dp->d_namlen == len && strcmp(dp->d_name, name) == 0) {
-			// 		(void)closedir(dirp);
-			// 		return (FOUND);
-			// }
+		{
+			card = ft_lstnew(ft_strdup(dp->d_name));
+			ft_lstadd_back(&cards, card);
+		}
+		dp = readdir(dirp);
 	}
 	(void)closedir(dirp);
-	return (NOT_FOUND);
+	return (cards);
 }
 
-int main(int argc, char *argv[])
-{
-	if (argc != 2)
-	{
-		ft_putnbr_fd(argc, 1);
-		for (int i = 0; i < argc ; i++)
-			ft_putendl_fd(argv[i], 1);
-		return 0;
-	}
-	char **card;
-	card = get_wildcard(argv[1]);
-	while (card && *card)
-	{
-		ft_putendl_fd(*card, 1);
-		card++;
-	}
-	// free(card);
-	return 0;
-}
+// int	main(int argc, char *argv[])
+// {
+// 	t_list	*card;
+
+// 	if (argc != 2)
+// 	{
+// 		ft_putnbr_fd(argc, 1);
+// 		for (int i = 0; i < argc ; i++)
+// 			ft_putendl_fd(argv[i], 1);
+// 		return 0;
+// 	}
+// 	card = get_wildcard(argv[1]);
+// 	system("leaks -q testwild");
+// 	while (card)
+// 	{
+// 		ft_putstr_fd(card->content, 1);
+// 		ft_putchar_fd(' ', 1);
+// 		card = card->next;
+// 	}
+// 	ft_putchar_fd('\n', 1);
+// 	// free(card);
+// 	return 0;
+// }

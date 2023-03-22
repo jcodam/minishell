@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/20 14:06:00 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/20 16:56:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
+		// exit(0);
 		// while (splitted)
 		// {
 		// 	what_cmd(splitted->content, super);
@@ -71,7 +72,6 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	while (source->next)
 	{
-		//printf("current string: %s", source->content);
 		dest = add_node_args(dest, source);
 		source = source->next;
 	}

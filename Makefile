@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/03/09 18:12:32 by jbax          ########   odam.nl          #
+#    Updated: 2023/03/22 16:17:19 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME= minishell
 
 SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	echo.c export.c environment.c unset.c exit.c execve.c\
-	envget.c letspipe.c heredoc.c\
+	envget.c letspipe.c heredoc.c openfiles.c wildcard.c\
 	#parse_input.c parse_quotes.c parsing_list.c\
 	#parsing_tools.c tokanize_tools.c fill_node.c\
 	#parse_input.c list.c
@@ -24,6 +24,10 @@ OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)
 HEADER= builtins_data_struct.h all.h
 
 UTIL=
+
+LEXER=
+
+EXECUTOR=
 
 lib=libft/libft.a
 

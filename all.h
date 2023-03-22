@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/09 18:11:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 15:22:04 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,23 @@ retuns empty string if var has no content but is still malloct
 returns 0 if no match can be found. */
 char		*ft_getvar(char *ptr, char **env);
 char		*ft_replacevar(char *head, int index, char **env);
+/*returns a list of matching files/dir */
+t_list		*get_wildcard(char *wild);
 void		exit_errbug(char *error, char *debug);
 int			tmpfileswitch(char **line);
+/* eoh wil be freed and is expected to only have the rellevand data
+so use substring
+eoh = end of heredoc (the string that ends the heredoc)
+tmpfindex wil start trying to creat a temp file 
+that ends with that number, use 1 for normal behavior
+retuns malloced pointer of the tmp file name */
+char		*heredoc(char *eoh, int tmpfindex);
+/* set a fd in append mode 0 if error*/
+int			setfd_append(char *filename);
+/* set a fd in write mode 0 if error*/
+int			setfd_write(char *filename);
+/* sets a fd in read mode 0 if error*/
+int			setfd_read(char *filename);
 
 // @alex functions 
 t_tokens	*main_loop(char *input);
@@ -132,16 +147,20 @@ int			check_pipes(char *input, int *arr, int i);
 int			check_l_arrow(char *input, int *arr, int i);
 int			check_r_arrow(char *input, int *arr, int i);
 /**
- * splits the content of a node at the position given as 'split_points' and places the
- * righthand part of the string in a new node in the linked list. 
- * noc determines the amount of characters to be splitted on (i.e. for '&&' noc would be 2)
- * if node_nr is given, it determines the node in which the string should be split
+ * splits the content of a node at the position given as 'split_points' and 
+ * places the righthand part of the string in a new node in the linked list. 
+ * noc determines the amount of characters to be splitted on 
+ * (i.e. for '&&' noc would be 2)
+ * if node_nr is given, it determines the node in which the string 
+ * should be split
  */
-void		split_to_node(t_tokens *node, int split_point, int noc, int node_nr);
+void		split_to_node(t_tokens *node, int split_point, \
+int noc, int node_nr);
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
 int			*ft_subarr(int *arr, unsigned int start, size_t len);
 int			ar_len(int *arr);
-void		fill_node_split(t_tokens	*node, int split_point, int noc, int length);
+void		fill_node_split(t_tokens	*node, int split_point, \
+int noc, int length);
 /**
  * finds the first instance of a specified token in the array. 
  * returns -1 if there is no instance of the token
