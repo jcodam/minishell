@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/10 14:47:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/23 14:55:11 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	*make_arr(int len)
 	int	*arr;
 
 	i = 0;
-	arr = malloc(sizeof(int) * len);
-	while (i <= len)
+	arr = malloc(sizeof(int) * (len + 1));
+	while (i < len)
 	{
 		arr[i] = -1;
 		i++;
 	}
-	arr[len] = -2;
+	arr[i] = -2;
 	return (arr);
 }
 
@@ -75,26 +75,62 @@ int	*label_spaces(char *input, int *arr)
 int	print_all_tokens(t_tokens *list)
 {
 	t_tokens	*tmp;
+	int			i;
 
+	i = 0;
 	tmp = list;
 	if (!list)
 		return (0);
-	while (tmp->content)
+	while (tmp)
 	{
-		ft_putstr_fd("node value: ", 1);
-		ft_putnbr_fd(tmp->iter, 1);
-		ft_putstr_fd("\n", 1);
 		ft_putstr_fd("node content: ", 1);
 		ft_putstr_fd("[", 1);
 		ft_putstr_fd(tmp->content, 1);
 		ft_putstr_fd("]", 1);
 		ft_putstr_fd("\n", 1);
-		print_tokens(tmp->tokens);
-		write(1, "\n", 1);
-		if (tmp->next)
-			tmp = tmp->next;
-		else
-			break ;
+		if (tmp->tokens)
+		{
+			print_tokens(tmp->tokens);
+			write(1, "\n", 1);
+		}
+		if (tmp->log_op)
+		{
+			ft_putnbr_fd(tmp->log_op, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		if (tmp->files)
+		{
+			while (tmp->files[i])
+			{
+				ft_putstr_fd("file: ", 1);
+				ft_putstr_fd(tmp->files[i], 1);
+				ft_putstr_fd("\n", 1);
+				i++;
+			}
+		}
+		i = 0;
+		if (tmp->args)
+		{
+			while (tmp->args[i])
+			{
+				ft_putstr_fd("arg: ", 1);
+				ft_putstr_fd(tmp->args[i], 1);
+				ft_putstr_fd("\n", 1);
+				i++;
+			}
+		}
+		i = 0;
+		if (tmp->mini_tok)
+		{
+			while (tmp->mini_tok[i])
+			{
+				ft_putstr_fd("val: ", 1);
+				ft_putnbr_fd(tmp->mini_tok[i], 1);
+				ft_putstr_fd("\n", 1);
+			}
+		}
+		i = 0;
+		tmp = tmp->next;
 	}
 	return (1);
 }

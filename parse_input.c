@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/10 15:25:15 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/23 14:13:11 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_tokens	*main_loop(char *input)
 	list = malloc(sizeof(t_tokens));
 	list->content = 0;
 	list->next = 0;
-	list->iter = 0;
 	len = ft_strlen(input);
 	arr = make_arr(len);
 	arr = tokanize(input, arr);

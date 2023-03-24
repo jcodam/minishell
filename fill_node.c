@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:47:26 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:28:50 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/14 20:16:56 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ void	fill_node(t_tokens *node, char *input, int start, int end)
 	}
 	string[i] = '\0';
 	node->content = string;
-	node->iter = 0;
 }
 

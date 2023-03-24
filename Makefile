@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/03/09 18:12:32 by jbax          ########   odam.nl          #
+#    Updated: 2023/03/11 14:22:49 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ NAME= minishell
 SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	echo.c export.c environment.c unset.c exit.c execve.c\
 	envget.c letspipe.c heredoc.c\
-	#parse_input.c parse_quotes.c parsing_list.c\
-	#parsing_tools.c tokanize_tools.c fill_node.c\
+	parse_input.c parse_quotes.c parsing_list.c\
+	parsing_tools.c tokanize_tools.c fill_node.c\
+	parse_splitter.c \
 	#parse_input.c list.c
 
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o) $(UTIL:%.c=$(OBF_DIR)/%.o)

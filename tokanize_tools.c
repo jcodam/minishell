@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/09 16:40:46 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/15 17:19:15 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	*command_after_pipe(char *input, int *arr)
 	i = 0;
 	while (input[i])
 	{
-		if (arr[i] == 7)
+		if (arr[i] == PIPE)
 		{
 			i++;
 			while (input[i] != ' ')
@@ -116,7 +116,7 @@ int OR_error_checker(char *input, int i)
 {
 	if (input[i + 2] == '|' || !content_before(input, i))
 	{
-		write(1, "minishell: syntax error near unexpected token `||'", 51);
+		write(2, "minishell: syntax error near unexpected token `||'", 51);
 		return (0);
 	}
 	return (1);
@@ -139,7 +139,7 @@ int amp_checker(char *input, int i)
 {
 	if (input[i + 2] == '&' || !content_before(input, i))
 	{
-		write(1, "minishell: syntax error near unexpected token `&&'", 51);
+		write(2, "minishell: syntax error near unexpected token `&&'", 51);
 		return (0);
 	}
 	return (1);
@@ -245,7 +245,7 @@ int pipe_checker(char *input, int i)
 {
 	if (!input[i + 1])
 	{
-		write(1, "Minishell: syntax error near unexpected token `newline'", 56);
+		write(2, "Minishell: syntax error near unexpected token `newline'", 56);
 		return (0);
 	}
 	i++;
@@ -253,7 +253,7 @@ int pipe_checker(char *input, int i)
 		i++;
 	if (input[i] == '|')
 	{
-		write(1, "Minishell: syntax error near unexpected token `|'", 50);
+		write(2, "Minishell: syntax error near unexpected token `|'", 50);
 		return (0);
 	}
 	return (1);
@@ -263,7 +263,7 @@ int red_op_checker(char *input, int i)
 {
 	if (!input[i + 1])
 	{
-		write(1, "Minishell: syntax error near unexpected token `newline'", 56);
+		write(2, "Minishell: syntax error near unexpected token `newline'", 56);
 		return (0);
 	}
 	i++;
@@ -271,8 +271,11 @@ int red_op_checker(char *input, int i)
 		i++;
 	if (input[i] == '>')
 	{
-		write(1, "Minishell: syntax error near unexpected token `>'", 50);
-		return (0);
+		if (input[i + 1] == '>')
+		{
+			write(2, "Minishell: syntax error near unexpected token `>'", 50);
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -281,16 +284,19 @@ int red_ip_checker(char *input, int i)
 {
 	if (!input[i + 1])
 	{
-		write(1, "Minishell: syntax error near unexpected token `newline'", 56);
+		write(2, "Minishell: syntax error near unexpected token `newline'", 56);
 		return (0);
 	}
 	i++;
 	while (input[i] == ' ')
 		i++;
-	if (input[i] == '>')
+	if (input[i] == '<')
 	{
-		write(1, "Minishell: syntax error near unexpected token `<'", 50);
-		return (0);
+		if (input[i + 1] == '<')
+		{
+			write(2, "Minishell: syntax error near unexpected token `<'", 50);
+			return (0);
+		}
 	}
 	return (1);
 }
