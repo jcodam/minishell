@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:41:52 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/02/23 18:18:54 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/24 19:42:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 int	*label_quotes(char *input, int *arr, int type)
 {

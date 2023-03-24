@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 19:27:18 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/24 20:39:45 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -48,25 +48,25 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &c, 1);
 }
 
-t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
-{
-	//int	i;
+// t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
+// {
+// 	//int	i;
 
-	//i = 0;
-	list->content = input;
-	list->tokens = arr;
-	list = split_on_amps(list);
-	//print_all_tokens(list);
-	//list = split_on_or(list);
-	//list = split_on_pipes(list);
-	trim_spaces(list);
-	//print_all_tokens(list);
-	//list = find_docs(list);
-	//ft_putstr_fd("after find docs\n", 1);
-	//list = find_flags(list);
-	//list = transpose_args(list);
-	return (list);
-}
+// 	//i = 0;
+// 	list->content = input;
+// 	list->tokens = arr;
+// 	list = split_on_amps(list);
+// 	//print_all_tokens(list);
+// 	//list = split_on_or(list);
+// 	//list = split_on_pipes(list);
+// 	trim_spaces(list);
+// 	//print_all_tokens(list);
+// 	//list = find_docs(list);
+// 	//ft_putstr_fd("after find docs\n", 1);
+// 	//list = find_flags(list);
+// 	//list = transpose_args(list);
+// 	return (list);
+// }
 
 void	trim_spaces(t_tokens *list)
 {
@@ -223,7 +223,7 @@ void	fill_node_split(t_tokens	*node, int split_point, int noc, int length)
 	free(str);
 	node->next->tokens = ft_subarr(node->tokens, (split_point + noc), \
 	(length - ((split_point + noc) - 1)));
-	node->tokens = ft_subarr(arr, 0, (split_point - noc));
+	node->tokens = ft_subarr(arr, 0, ((split_point - noc) - 1));
 	free(arr);
 }
 

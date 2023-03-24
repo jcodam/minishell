@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:38:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/21 17:39:15 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/24 19:42:39 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 int	get_node_length(int *arr, int start)
 {

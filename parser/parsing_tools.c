@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/23 14:55:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/24 19:56:07 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 int	*make_arr(int len)
 {
@@ -90,7 +90,7 @@ int	print_all_tokens(t_tokens *list)
 		ft_putstr_fd("\n", 1);
 		if (tmp->tokens)
 		{
-			print_tokens(tmp->tokens);
+			print_array(tmp->tokens);
 			write(1, "\n", 1);
 		}
 		if (tmp->log_op)

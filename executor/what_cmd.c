@@ -6,11 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-<<<<<<< HEAD:what_cmd.c
-/*   Updated: 2023/03/23 16:54:09 by avon-ben      ########   odam.nl         */
-=======
-/*   Updated: 2023/03/22 18:39:16 by jbax          ########   odam.nl         */
->>>>>>> 85be7a140aa1cde66491869e155c3ca75d687c81:executor/what_cmd.c
+/*   Updated: 2023/03/24 20:29:17 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +68,8 @@ int	what_cmd1(char *line, t_super *super, int pipes, int fd)
 
 	found = 0;
 	tmpfileswitch(&line);
+	if (!line || !*line)
+		return 0;
 	args = mkarg(line);
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{

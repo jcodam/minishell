@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 18:41:07 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/24 20:14:58 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	tmpfileswitch(char **line)
 		if (**line == '<' && line[0][1] == '<')
 		{
 			*line += 2;
+			while (**line == ' ')
+				*line += 1;
 			start_heredoc(*line);
 			while (ft_isalnum(**line) || **line == '.' || **line == '_')
 			{
@@ -121,6 +123,8 @@ int	tmpfileswitch(char **line)
 		else if (**line == '<')
 		{
 			*line += 1;
+			while (**line == ' ')
+				*line += 1;
 			setfd_read(*line);
 			while (ft_isalnum(**line) || **line == '.' || **line == '_')
 			{
@@ -130,6 +134,8 @@ int	tmpfileswitch(char **line)
 		else if (**line == '>' && line[0][1] == '>')
 		{
 			*line += 2;
+			while (**line == ' ')
+				*line += 1;
 			setfd_append(*line);
 			while (ft_isalnum(**line) || **line == '.' || **line == '_')
 			{
@@ -139,6 +145,8 @@ int	tmpfileswitch(char **line)
 		else if (**line == '>')
 		{
 			*line += 1;
+			while (**line == ' ')
+				*line += 1;
 			setfd_write(*line);
 			while (ft_isalnum(**line) || **line == '.' || **line == '_')
 			{

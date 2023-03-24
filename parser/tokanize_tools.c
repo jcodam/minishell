@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/15 17:19:15 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/24 19:42:48 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 int	*command_after_pipe(char *input, int *arr)
 {
