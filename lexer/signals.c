@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 13:53:07 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:33:29 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 void	sighandler_parent(int signum)
 {

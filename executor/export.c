@@ -6,12 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:25:23 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:36:23 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#include "libft/libft.h"
+#include "../headers/all.h"
 
 void	ft_put_export(t_list *envl, int fd)
 {

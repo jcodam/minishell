@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 17:50:01 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 18:19:30 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:33:54 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 char	*ft_getvar(char *ptr, char **env)
 {

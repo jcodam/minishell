@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/29 14:35:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:30:58 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:36:47 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 static int	is_valid(char *arg)
 {

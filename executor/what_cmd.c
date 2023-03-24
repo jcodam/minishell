@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 12:15:00 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:39:16 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 
 static int	look_for_cmd(char *line, int *found, char *commend)
 {

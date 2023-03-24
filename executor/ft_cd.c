@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   ft_cd.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/16 17:12:12 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 16:21:02 by jbax          ########   odam.nl         */
+/*   Created: 2023/01/18 17:28:27 by jbax          #+#    #+#                 */
+/*   Updated: 2023/03/22 18:36:32 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#define _POSIX_SOURCE
+#include "../headers/all.h"
 
-void	ft_pwd(int output_fd)
+void	ft_change_dir(char *path)
 {
-	char	*cwd;
-	int		len;
+	int	i;
 
-	g_exit_code = 0;
-	cwd = ft_calloc(100, 1);
-	if (!getcwd(cwd, 100))
-		g_exit_code = 1;
-	len = ft_strlen(cwd);
-	write(output_fd, cwd, len);
-	write(output_fd, "\n", 1);
-	free(cwd);
+	i = chdir(path);
+	ft_putnbr_fd(i, 1);
+	if (i == -1)
+		ft_putendl_fd("cd argument is not corect", 1);
 }

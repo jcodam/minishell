@@ -6,12 +6,12 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/07 16:02:35 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:39:42 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
-#include "signal_list.h"
+#include "../headers/all.h"
+#include "../headers/signal_list.h"
 
 int	what_cmd1(char *line, t_super *super, int pipes, int fd);
 

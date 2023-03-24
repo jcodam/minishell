@@ -6,12 +6,12 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:05:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 17:50:34 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:42:31 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "builtins_data_struct.h"
+#include "../libft/libft.h"
+#include "../headers/builtins_data_struct.h"
 
 char	**copy_env(char **env)
 {

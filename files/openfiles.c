@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 12:49:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 13:51:26 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:41:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 #include <fcntl.h>
 #include <errno.h>
 

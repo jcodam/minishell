@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/23 17:22:51 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/27 16:08:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:35:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 static int	has_option(char *arg)
 {

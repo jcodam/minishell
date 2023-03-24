@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 15:22:04 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:31:43 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include "structures.h"
 # include "builtins_data_struct.h"
 # define _POSIX_SOURCE

@@ -6,11 +6,11 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 13:50:27 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:41:07 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "../headers/all.h"
 #include <fcntl.h>
 #include <errno.h>
 
@@ -50,7 +50,7 @@ static void	mkchild(char *eoh, int fd)
 
 char	*heredoc(char *eoh, int tmpfindex)
 {
-	static char	*basename = "tmpfile_heredoc_";
+	static char	*basename = ".tempdir/.tmpfile_heredoc_";
 	char		*fdname;
 	int			fd;
 	char		*num;

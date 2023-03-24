@@ -6,12 +6,12 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 14:46:19 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 15:24:51 by jbax          ########   odam.nl         */
+/*   Updated: 2023/03/22 18:43:03 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
-#include "all.h"
+#include "../headers/all.h"
 #define ERROR 0
 #define FOUND 1
 #define NOT_FOUND 0
