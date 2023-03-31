@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 20:39:45 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:48:09 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,112 +75,100 @@ void	trim_spaces(t_tokens *list)
 	char	*tmp;
 	int		*arr;
 
-	//start = 0;
-	//end = ft_strlen(list->content);
 	while (list)
 	{
 		arr = list->tokens;
 		tmp = list->content;
 		start = 0;
-		end = ((ft_strlen(list->content) - 1));
-		//printf("end: %d", end);
+		end = ((ft_strlen(list->content)) - 1);
+		if (end < 0)
+			end = 0;
 		while (list->content[start] == ' ')
 			start++;
 		while (list->content[end] == ' ')
 			end--;
-		//printf("list->content (pre): %s\n", tmp);
-		//printf("list->tokens (pre): ");
-		//print_tokens(arr);
-		//printf("\n");
-		//printf("start: %d\n", start);
-		//printf("end: %d\n", end);
-		//printf("content: [%s]\n", list->content);
 		list->content = ft_substr(tmp, start, (end - start));
-		list->tokens = ft_subarr(list->tokens, start, (end - start));
-		//printf("list->tokens (post): ");
-		//print_tokens(arr);
-		//printf("\n");
+		list->tokens = ft_subarr(arr, start, (end - start));
 		list = list->next;
 	}
 }
 
 t_tokens	*split_on_amps(t_tokens *list)
 {
-	t_tokens	*tmp;
+	t_tokens	*top;
 	int			place;
 
-	tmp = list;
+	if (!list)
+		return (NULL);
+	top = list;
 	place = 0;
-	while (place != -1 && list)
+	while (list)
 	{
 		place = find_tokens(SPLIT_AND, list);
-		//printf("place; %d", place);
-		if (place != -1)
-		{
-			split_to_node(list, place, 2);
-			list->next->log_op = OPP_AND;
-		}
 		if (place == -1)
 			break ;
-		//printf("current content: [%s]\n", list->content);
-		//if (list->next->content)
-		//	printf("next content: [%s]\n", list->next->content);
-		if (list->next)
-			list = list->next;
+		split_to_node(list, place, 2);
+		list->next->log_op = OPP_AND;
+		list = list->next;
 	}
-	return (tmp);
+	return (top);
 }
 
 t_tokens	*split_on_or(t_tokens *list)
 {
-	t_tokens	*tmp;
+	t_tokens	*top;
 	int			place;
 
-	tmp = list;
-	place = 0;
-	while (place != -1 && list)
+	if (!list)
+		return (NULL);
+	top = list;
+	place = -1;
+	while (list)
 	{
-		while (list->next && find_tokens(SPLIT_OR, list) == -1)
-			list = list->next;
-		if (list)
-			place = find_tokens(SPLIT_OR, list);
+		place = find_tokens(SPLIT_OR, list);
 		if (place != -1)
 		{
 			split_to_node(list, place, 2);
 			list->next->log_op = OPP_OR;
 		}
+		list = list->next;
 	}
-	return (tmp);
+	return (top);
 }
 
 t_tokens	*split_on_pipes(t_tokens *list)
 {
-	t_tokens	*tmp;
+	t_tokens	*top;
 	int			place;
 
-	tmp = list;
-	place = 0;
-	while (place != -1 && list)
+	if (!list)
+		return (NULL);
+	top = list;
+	place = -1;
+	while (list)
 	{
-		while (list->next && find_tokens(PIPE, list) == -1)
-			list = list->next;
-		if (list)
-			place = find_tokens(PIPE, list);
+		place = find_tokens(PIPE, list);
 		if (place != -1)
 		{
-			split_to_node(list, place, 2);
+			split_to_node(list, place, 1);
 			list->next->log_op = OPP_PIPE;
 		}
+		list = list->next;
 	}
-	return (tmp);
+	return (top);
 }
+
 
 int find_tokens(int val, t_tokens *list)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	while (list->tokens[i] != -2 && list)
+	len = ft_strlen(list->content);
+	if (!list->tokens)
+		return (-1);
+	while (list->tokens[i] != -2 && list->content[i])
 	{
 		if (list->tokens[i] == val)
 			return (i);
@@ -199,9 +187,12 @@ void	split_to_node(t_tokens *node, int split_point, int noc)
 {
 	int			length;
 	t_tokens	*new;
+	int			*arr;
 
+	arr = NULL;
 	length = ft_strlen(node->content);
 	new = malloc(sizeof(t_tokens));
+	new->tokens = arr;
 	if (node->next)
 		new->next = node->next;
 	else
@@ -210,26 +201,72 @@ void	split_to_node(t_tokens *node, int split_point, int noc)
 	fill_node_split(node, split_point, noc, length);
 }
 
-void	fill_node_split(t_tokens	*node, int split_point, int noc, int length)
+void	fill_node_split(t_tokens *node, int split_point, int noc, int length)
 {
-	char	*str;
-	int		*arr;
+	char		*str;
+	int			*arr;
+	size_t		node_2_len;
+	size_t		len;
 
-	str = node->content;
+	len = (ft_strlen(node->content) + 1);
+	node_2_len = (length) - (split_point + noc);
+	// arr = malloc(sizeof(int) * split_point);
+	// str = malloc(node_2_len);
+	// str = ft_strdup(node->content);
+	// arr = ms_arrdup(node->tokens, len);
+	// free(node->content);
+	// free(node->tokens);
 	arr = node->tokens;
-	node->next->content = ft_substr(node->content, (split_point + noc), \
-	(length - ((split_point + noc) - 1)));
-	node->content = ft_substr(str, 0, (split_point - noc));
+	str = node->content;
+	node->next->content = ft_substr(str, (split_point + noc), \
+	node_2_len);
+	node->content = ft_substr(str, 0, (split_point - 1));
 	free(str);
-	node->next->tokens = ft_subarr(node->tokens, (split_point + noc), \
-	(length - ((split_point + noc) - 1)));
-	node->tokens = ft_subarr(arr, 0, ((split_point - noc) - 1));
+	node->next->tokens = ft_subarr(arr, (split_point + noc), \
+	node_2_len);
+	node->tokens = ft_subarr(arr, 0, (split_point - 1));
 	free(arr);
 }
 
-int	*ft_subarr(int *arr, unsigned int start, size_t len)
+
+int *ms_arrdup(int *arr, int len)
 {
-	unsigned int	i;
+	int	*newarr;
+	int	i;
+
+	i = 0;
+	if (!arr || !len)
+		return (NULL);
+	newarr = malloc(sizeof(int) * len);
+	while (i <= len)
+	{
+		newarr[i] = arr[i];
+		i++;
+	}
+	newarr[i] = -2;
+	return (newarr);
+}
+
+int	*calloc_array(int len, int type)
+{
+	int	*ret;
+	int	i;
+
+	i = 0;
+	if (!len || !type)
+		return (NULL);
+	ret = malloc(len * sizeof(type));
+	while (i <= len)
+	{
+		ret[i] = -2;
+		i++;
+	}
+	return (ret);
+}
+
+int	*ft_subarr(int *arr, size_t start, size_t len)
+{
+	size_t			i;
 	int				*newarr;
 	size_t			arrlen;
 
@@ -239,9 +276,14 @@ int	*ft_subarr(int *arr, unsigned int start, size_t len)
 	arrlen = ar_len(arr);
 	if (start > arrlen)
 		return (0);
-	newarr = (int *)malloc((len + 1) * sizeof(int));
+	newarr = calloc_array((len + 2), -2);
 	if (!newarr)
-		return (0);
+	{
+		printf("\n malloc error!\n");
+		return (NULL);
+	}
+	printf("start: %zu\n", start);
+	printf("len %zu\n", len);
 	while (i <= len)
 	{
 		newarr[i] = arr[start + i];
@@ -267,7 +309,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(s + start));
 	newstr = (char *)malloc((len + 1) * sizeof(char));
 	if (newstr == 0)
+	{
+		printf("\n malloc error!\n");
 		return (NULL);
+	}
 	while (i <= len)
 	{
 		newstr[i] = s[start + i];
@@ -283,12 +328,13 @@ void print_tokens(int *arr)
 
 	i = 0;
 	ft_putstr_fd("tokens: [", 1);
-	while (arr[i] != -2 && arr[i])
+	while (arr[i] != -2)
 	{
-		ft_putnbr_fd((signed int)arr[i], 1);
+		ft_putnbr_fd(arr[i], 1);
+		write(1, " ", 1);
 		i++;
 	}
-	ft_putnbr_fd((signed int)arr[i], 1);
+	ft_putnbr_fd(arr[i], 1);
 	ft_putstr_fd("]", 1);
 }
 
@@ -297,10 +343,11 @@ int	ar_len(int *arr)
 	int	len;
 
 	len = 0;
-	while (arr[len] != -2 && len < 10)
+	if (!arr)
+		return (0);
+	while (arr[len] != -2)
 		len++;
-	if (len > 0)
-		len--;
+	// printf("len: %d", len);
 	return (len);
 }
 
@@ -328,7 +375,6 @@ t_tokens *find_docs(t_tokens *list)
 	return (tmp);
 }
 
-// make this work
 int	cut_to_files(t_tokens *list, int i, int val)
 {
 	int	length;
@@ -430,3 +476,4 @@ void	add_in_node(t_tokens *list, int length, int i)
 // ****l
 // ***l
 // **l
+

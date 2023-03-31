@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/24 20:07:49 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/30 19:07:39 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	t_tokens			*splitted;
 	t_super				*super;
 	t_arglist			*args;
-	int 				i;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
 	tcgetattr(STDIN_FILENO, &term_struct);
@@ -41,26 +39,45 @@ int	main(int argc, char **argv, char **envp)
 		line = read_the_line();
 		splitted = main_loop(line);
 		print_all_tokens(splitted);
-		// block_signal();
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
-		// exit(0);
-		while (splitted)
-		{
-			what_cmd(splitted->content, super);
-			splitted = splitted->next;
-		}
+		// while (splitted)
+		// {
+		// 	what_cmd(splitted->content, super);
+		// 	splitted = splitted->next;zz
+		// }
 		// if (line && *line)
 		// 	what_cmd(line, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
+		free_list(splitted);
 		// free(line);
+		//system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
 }
+
+void free_list(t_tokens *list)
+{
+	t_tokens	*tmp;
+	//int 		i;
+
+	while (list)
+	{
+		tmp = list->next;
+		free(list->content);
+		free(list->tokens);
+		// while (list->files[i])
+		// 	free(list->files[i++]);
+		// free(list->files);
+		free(list);
+		list = tmp;
+	}
+}
+
 
 /*t_arglist	*convert_list(t_tokens *source)
 {
