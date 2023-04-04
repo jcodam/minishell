@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/16 18:08:47 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:47:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_tokens
 
 enum	e_log_op
 {
-	OPP_AND = 0,
+	OPP_AND = 1,
 	OPP_OR,
 	OPP_PIPE
 };

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/24 20:07:49 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:43:45 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,30 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		splitted = main_loop(line);
-		print_all_tokens(splitted);
+		// splitted = main_loop(line);
+		// print_all_tokens(splitted);
 		// block_signal();
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
 		// exit(0);
-		while (splitted)
-		{
-			what_cmd(splitted->content, super);
-			splitted = splitted->next;
-		}
-		// if (line && *line)
-		// 	what_cmd(line, super);
+		// while (splitted)
+		// {
+		// 	if (!splitted->content)
+		// 		exit_errbug("fuck",0);
+		// 	splitted = split_on_pipes(splitted);
+		// 	ft_putendl_fd(splitted->content, 1);
+		// 	if (!splitted->args)
+		// 		ft_putendl_fd("fail", 1);
+		// 	// ft_putarrs_fd(splitted->args, 1);
+		// 	// ft_putarrs_fd(splitted->files, 1);
+		// 	// what_cmd(splitted->content, super);
+		// 	splitted = splitted->next;
+		// }
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		// free(line);
+		free(line);
 	}
 	(void)splitted;
 	return (0);
