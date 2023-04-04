@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 19:56:07 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:45:13 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ void	print_array(int *arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return ;
 	while (arr[i] != -2)
 	{
 		ft_putnbr_fd(arr[i], 1);
 		write(1, " ", 1);
 		i++;
 	}
+	ft_putnbr_fd(arr[i], 1);
 }
 
 void	ms_lstadd_back(t_tokens **lst, t_tokens *new)
@@ -76,8 +79,10 @@ int	print_all_tokens(t_tokens *list)
 {
 	t_tokens	*tmp;
 	int			i;
+	int			j;
 
 	i = 0;
+	j = 0;
 	tmp = list;
 	if (!list)
 		return (0);
@@ -95,41 +100,38 @@ int	print_all_tokens(t_tokens *list)
 		}
 		if (tmp->log_op)
 		{
-			ft_putnbr_fd(tmp->log_op, 1);
-			ft_putstr_fd("\n", 1);
+			printf("log_op of node %d: %d\n",i ,tmp->log_op);
 		}
 		if (tmp->files)
 		{
-			while (tmp->files[i])
+			while (tmp->files[j])
 			{
-				ft_putstr_fd("file: ", 1);
-				ft_putstr_fd(tmp->files[i], 1);
-				ft_putstr_fd("\n", 1);
-				i++;
+				printf("file no. %d in node %d: %s\n", j, i, tmp->files[j]);
+				j++;
 			}
 		}
-		i = 0;
-		if (tmp->args)
-		{
-			while (tmp->args[i])
-			{
-				ft_putstr_fd("arg: ", 1);
-				ft_putstr_fd(tmp->args[i], 1);
-				ft_putstr_fd("\n", 1);
-				i++;
-			}
-		}
-		i = 0;
-		if (tmp->mini_tok)
-		{
-			while (tmp->mini_tok[i])
-			{
-				ft_putstr_fd("val: ", 1);
-				ft_putnbr_fd(tmp->mini_tok[i], 1);
-				ft_putstr_fd("\n", 1);
-			}
-		}
-		i = 0;
+		// i = 0;
+		// if (tmp->args)la 
+		// {
+		// 	while (tmp->args[i])
+		// 	{
+		// 		ft_putstr_fd("arg: ", 1);
+		// 		ft_putstr_fd(tmp->args[i], 1);
+		// 		ft_putstr_fd("\n", 1);
+		// 		i++;
+		// 	}
+		// }
+		// i = 0;
+		// if (tmp->mini_tok)
+		// {
+		// 	while (tmp->mini_tok[i])
+		// 	{
+		// 		ft_putstr_fd("val: ", 1);
+		// 		ft_putnbr_fd(tmp->mini_tok[i], 1);
+		// 		ft_putstr_fd("\n", 1);
+		// 	}
+		// }
+		i++;
 		tmp = tmp->next;
 	}
 	return (1);

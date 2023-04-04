@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 19:52:36 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/03/31 17:47:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 void		trim_spaces(t_tokens *list);
 
+void	print_list(t_tokens *list)
+{
+	while (list != NULL)
+	{
+		printf("%s\t[%s]\n", __func__, list->content);
+		list = list->next;
+	}
+}
+
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 {
-	//int	i;
-
-	//i = 0;
 	list->content = input;
 	list->tokens = arr;
+	list->log_op = 1;
 	list = split_on_amps(list);
-	//print_all_tokens(list);
-	//list = split_on_or(list);
-	//list = split_on_pipes(list);
+	list = split_on_or(list);
+	list = split_on_pipes(list);
 	trim_spaces(list);
-	//print_all_tokens(list);
 	//list = find_docs(list);
 	//ft_putstr_fd("after find docs\n", 1);
 	//list = find_flags(list);
 	//list = transpose_args(list);
 	return (list);
 }
-
 
 t_tokens	*main_loop(char *input)
 {

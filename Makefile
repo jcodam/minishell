@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/03/24 20:04:08 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/03/31 17:16:17 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,14 +35,14 @@ CFLAGS= -g -Wall -Wextra -Werror -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
 
-SAN= -fsanitize=adres
+SAN= -fsanitize=address
 
 OO= -O3
 
 all:$(NAME)
 
 $(NAME): $(OBF_DIR) $(OBF)
-	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE)
+	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) 
 
 $(OBF_DIR)/%o: %c $(HEADER) $(lib)
 	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/ -I $(lib)

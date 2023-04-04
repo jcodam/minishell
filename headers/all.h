@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/04 17:50:29 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/04 18:01:46 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int			check_r_arrow(char *input, int *arr, int i);
  */
 void		split_to_node(t_tokens *node, int split_point, int noc);
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
-int			*ft_subarr(int *arr, unsigned int start, size_t len);
+int			*ft_subarr(int *arr, size_t start, size_t len);
 int			ar_len(int *arr);
 void		fill_node_split(t_tokens	*node, int split_point, \
 int noc, int length);
@@ -174,5 +174,8 @@ void		trim_spaces(t_tokens *list);
 t_tokens	*find_docs(t_tokens *list);
 int			cut_to_files(t_tokens *list, int i, int val);
 void		add_in_node(t_tokens *list, int length, int i);
+int			*calloc_array(int len, int type);
+int			*ms_arrdup(int *arr, int len);
+void 		free_list(t_tokens *list);
 
 #endif

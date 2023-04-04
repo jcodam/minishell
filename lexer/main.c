@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/04 16:43:45 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/04 18:03:17 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	t_tokens			*splitted;
 	t_super				*super;
 	t_arglist			*args;
-	int 				i;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
 	tcgetattr(STDIN_FILENO, &term_struct);
@@ -39,34 +37,47 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		// splitted = main_loop(line);
-		// print_all_tokens(splitted);
-		// block_signal();
+		splitted = main_loop(line);
+		print_all_tokens(splitted);
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
-		// exit(0);
 		// while (splitted)
 		// {
-		// 	if (!splitted->content)
-		// 		exit_errbug("fuck",0);
-		// 	splitted = split_on_pipes(splitted);
-		// 	ft_putendl_fd(splitted->content, 1);
-		// 	if (!splitted->args)
-		// 		ft_putendl_fd("fail", 1);
-		// 	// ft_putarrs_fd(splitted->args, 1);
-		// 	// ft_putarrs_fd(splitted->files, 1);
-		// 	// what_cmd(splitted->content, super);
-		// 	splitted = splitted->next;
+		// 	what_cmd(splitted->content, super);
+		// 	splitted = splitted->next;zz
 		// }
+		// if (line && *line)
+		// 	what_cmd(line, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		free(line);
+		free_list(splitted);
+		// free(line);
+		//system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
 }
+
+void free_list(t_tokens *list)
+{
+	t_tokens	*tmp;
+	//int 		i;
+
+	while (list)
+	{
+		tmp = list->next;
+		free(list->content);
+		free(list->tokens);
+		// while (list->files[i])
+		// 	free(list->files[i++]);
+		// free(list->files);
+		free(list);
+		list = tmp;
+	}
+}
+
 
 /*t_arglist	*convert_list(t_tokens *source)
 {
