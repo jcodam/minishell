@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/04 17:51:30 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/05 15:41:33 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 
 int	what_cmd2(t_tokens *bigdata, t_super *super)
 {
-	char			**cpipes;
+	// char			**cpipes;
 	static int		stdio[2] = {0, 0};
 
 	if (!bigdata->args || !bigdata->args[0])

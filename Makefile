@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/03/31 17:16:17 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/05 17:23:56 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	parse_input.c parse_quotes.c parsing_list.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
 	list.c parse_splitter.c
+
+wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expender.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
 	
@@ -40,6 +42,9 @@ SAN= -fsanitize=address
 OO= -O3
 
 all:$(NAME)
+
+a.out: $(OBF_DIR) $(wild)
+	$(CC) $(CFLAGS) $@ $(wild) $(RLINE) 
 
 $(NAME): $(OBF_DIR) $(OBF)
 	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) 

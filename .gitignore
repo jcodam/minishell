@@ -2,6 +2,7 @@
 a.out
 fuck*
 .vscode
+*.vscode
 *test*
 *.dSYM
 rr
