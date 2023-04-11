@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/07 14:34:31 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/11 16:59:07 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	parse_input.c parse_quotes.c parsing_list.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
 	list.c parse_splitter.c
+
+wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expender.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
 	
@@ -41,8 +43,11 @@ OO= -O3
 
 all:$(NAME)
 
-$(NAME): $(OBF_DIR) $(OBF) 
-	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) $(SAN)
+a.out: $(OBF_DIR) $(wild)
+	$(CC) $(CFLAGS) $@ $(wild) $(RLINE) 
+
+$(NAME): $(OBF_DIR) $(OBF)
+	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) 
 
 $(OBF_DIR)/%o: %c $(HEADER) $(lib)
 	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/ -I $(lib)

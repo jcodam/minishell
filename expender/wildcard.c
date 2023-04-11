@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 14:46:19 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/29 20:01:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/05 16:42:02 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_list	*get_wildcard(char *wild)
 		return (ERROR);
 	len = strlen(wild);
 	dp = readdir(dirp);
+	cards = 0;
 	while (dp != 0)
 	{
 		if (strcmpwild(wild, dp->d_name))

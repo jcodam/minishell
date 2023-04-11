@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/10 18:04:26 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/11 16:57:35 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		reset_signal(void);
  */
 char		*read_the_line(void);
 /* builtins */
-int			what_cmd(char *line, t_super *super);
+int			what_cmd(t_tokens *, t_super *super);
 void		ft_export(t_super *super, char **args, int output_fd);
 void		ft_unset(t_super *super, char **arg);
 void		ft_exit_builtin(char **arg);
