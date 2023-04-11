@@ -6,11 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 17:50:32 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 19:42:16 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/06 20:04:03 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../headers/all.h"
+#include "../headers/all.h"
 
 t_tokens	*new_node(char *input)
 {
@@ -21,4 +21,3 @@ t_tokens	*new_node(char *input)
 	new->next = 0;
 	return (new);
 }
-

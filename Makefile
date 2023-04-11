@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/03/31 17:16:17 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/07 14:34:31 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ OO= -O3
 
 all:$(NAME)
 
-$(NAME): $(OBF_DIR) $(OBF)
-	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) 
+$(NAME): $(OBF_DIR) $(OBF) 
+	$(CC) $(CFLAGS) $@ $(OBF) $(RLINE) $(SAN)
 
 $(OBF_DIR)/%o: %c $(HEADER) $(lib)
 	$(CC) -c $(CFLAGS) $@ $< -I ~/.brew/opt/readline/include/ -I $(lib)

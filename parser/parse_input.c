@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/31 17:47:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/11 16:51:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list->content = input;
 	list->tokens = arr;
 	list->log_op = 1;
+	list->args = 0;
+	list->files = 0;
+	list->mini_tok = 0;
 	list = split_on_amps(list);
 	list = split_on_or(list);
 	list = split_on_pipes(list);
 	trim_spaces(list);
-	//list = find_docs(list);
-	//ft_putstr_fd("after find docs\n", 1);
-	//list = find_flags(list);
-	//list = transpose_args(list);
+	list = find_docs(list);
+	list = find_args(list);
+	//list = check_for_commands(list);
 	return (list);
 }
 
@@ -69,6 +71,7 @@ int	*tokanize(char *input, int *arr)
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);
 		arr = check_commands(input, arr);
+		//arr = revert_quotes(input, arr);
 		if (arr)
 			return (arr);
 	}
@@ -150,14 +153,74 @@ int	*label_vals(int start, int end, int *arr, int sig)
 	return (arr);
 }
 
-// void	split_args(t_tokens *list)
+// t_tokens *check_for_commands(t_tokens *list)
 // {
-// 	if (!list)
-// 		exit (0);
-// 	while (list->next)
+// 	int			i;
+// 	t_tokens	*tmp;
+
+// 	i = 0;
+// 	while (list)
 // 	{
-// 		printf("node content: %s", list->content);
-// 		mini_tokenizer(list);
-// 		list = list->next;
+// 		if (list->mini_tok)
+// 		{
+// 			while (list->mini_tok[i] != -2)
+// 			{
+// 				if (list->mini_tok[i] == COMMAND)
+// 					split_on_flags(list, i);
+// 				i++;
+// 			}
+// 		}
 // 	}
+// }
+
+// void	split_on_flags(t_tokens *list, int i)
+// {
+// 	int	end;
+// 	int	start;
+
+// 	start = 0;
+// 	while (list->args[i][start] != ' ')
+// 		start++;
+// 	while (list->args[i][start] != '-' && list->mini_tok[start] != -2)
+// 		start++;
+// 	if (list->args[i][start] == '-')
+// 	{
+// 		end = start;
+// 		while (list->args[i][end] != " " && list->args[i][end] != '-' && \
+// 		list->args[i][end])
+// 			end++;
+// 	}
+// 	if (list->args[i + 1])
+	
+
+
+
+	
+// }
+
+// void	arg_splitter(char **args, int i, int start, int end)
+// {
+// 	char	**tmp_args;
+// 	int		j;
+
+// 	j = 0;
+// 	while (list->args[j])
+// 		j++;
+// 	// tmp_args = malloc(sizeof(char *) * (j + 2));
+// 	// j = 0;
+// 	// while (list->args[j])
+// 	// {
+// 	// 	ft_strlcpy(tmp_args[j], list->args[j], ft_strlen(list->args[j]));
+// 	// 	j++;
+// 	// }
+// 	// tmp_args[j] = ft_substr(list->content, i, length);
+// 	// tmp_args[j + 1] = 0;
+// 	// j = 0;
+// 	// while (list->args[j])
+// 	// {
+// 	// 	free (list->args[j]);
+// 	// 	j++;
+// 	// }
+// 	// free (list->files);
+// 	// list->args = tmp_args;
 // }
