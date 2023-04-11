@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/05 15:55:18 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/11 16:07:58 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		splitted = main_loop(line);
-		print_all_tokens(splitted);
+		// splitted = main_loop(line);
+		// print_all_tokens(splitted);
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
@@ -52,8 +52,8 @@ int	main(int argc, char **argv, char **envp)
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		free_list(splitted);
-		// free(line);
+		// free_list(splitted);
+		free(line);
 		//system("leaks minishell");
 	}
 	(void)splitted;

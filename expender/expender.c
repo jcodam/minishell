@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/07 20:21:24 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/11 16:58:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,10 @@ int main(int argc, char const *argv[], char **envp)
 	char **env;
 	char *line;
 	int i = 0;
-	// t_list *head;
-	atexit(ex);
+	// t_list *head = NULL;
+	// atexit(ex);
 	// head = get_wildcard("e*");
-	// ft_lstputs_fd(head, 1);
+	// ft_lstputs_fd(head->next, 1);
 	g_exit_code = 42;
 	arr = malloc(1 * sizeof(char *));
 	arr[0] = 0;
@@ -274,7 +274,7 @@ int main(int argc, char const *argv[], char **envp)
 	ft_putarrs_fd(arr, 1);
 	ft_arrclear_c(arr, ft_arrlen_c(arr));
 	ft_arrclear_c(env, ft_arrlen_c(env));
-	system("leaks -q a.out");
+	// system("leaks -q a.out");
 	return 0;
 }
 

@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/05 17:23:56 by jbax          ########   odam.nl          #
+#    Updated: 2023/04/11 16:18:57 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
 	list.c parse_splitter.c
 
-wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expender.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
+wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o\
+ $(OBF_DIR)/wildcard.o $(OBF_DIR)/expender.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
 	
