@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 16:24:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/02 17:19:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/11 17:32:18 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static const char *signals[17] = {
      "Floating point exception: 8",
 	"Killed: 9",
      "Bus error: 10",
-     "Segmentation fault: 11",
+     "Segmentation fault: 11?",
      "Bad system call: 12",
      "",
      "Alarm clock: 14",

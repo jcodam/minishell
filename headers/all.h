@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/04 18:01:46 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/11 16:57:35 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,16 @@ t_tokens	*split_on_or(t_tokens *list);
 t_tokens	*split_on_pipes(t_tokens *list);
 void		trim_spaces(t_tokens *list);
 t_tokens	*find_docs(t_tokens *list);
+t_tokens	*find_args(t_tokens *list);
 int			cut_to_files(t_tokens *list, int i, int val);
-void		add_in_node(t_tokens *list, int length, int i);
+int			cut_to_args(t_tokens *list, int i, int val);
+void		add_in_node_file(t_tokens *list, int length, int i);
+void		add_in_node_arg(t_tokens *list, int length, int i);
 int			*calloc_array(int len, int type);
 int			*ms_arrdup(int *arr, int len);
-void 		free_list(t_tokens *list);
+void		free_list(t_tokens *list);
+void		transpose_file(t_tokens *list, int length, int start, int val);
+void		transpose_arg(t_tokens *list, int length, int start, int val);
+t_tokens	*check_for_commands(t_tokens *list);
 
 #endif

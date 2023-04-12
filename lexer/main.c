@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/11 16:07:58 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 14:22:27 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,77 +37,61 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		// splitted = main_loop(line);
+		splitted = main_loop(line);
 		// print_all_tokens(splitted);
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
-		// while (splitted)
-		// {
-		// 	what_cmd(splitted->content, super);
-		// 	splitted = splitted->next;zz
-		// }
+		if (splitted)
+		{
+			printf("%s  %zu %p\n",splitted->args[0], ft_arrlen_c(splitted->args), splitted->next);
+			ft_putarrs_fd(splitted->args, 1);
+			what_cmd(splitted, super);
+			// what_cmd(splitted->content, super);
+			// splitted = splitted->next;
+		}
 		// if (line && *line)
-		// 	what_cmd(line, super);
+		// 	what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		// free_list(splitted);
-		free(line);
+		free_list(splitted);
+		// free(line);
 		//system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
 }
 
-void free_list(t_tokens *list)
+void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
-	//int 		i;
+	int			i;
 
 	while (list)
 	{
+		i = 0;
 		tmp = list->next;
-		free(list->content);
-		free(list->tokens);
-		// while (list->files[i])
-		// 	free(list->files[i++]);
-		// free(list->files);
+		if (list->content)
+			free(list->content);
+		if (list->tokens)
+			free(list->tokens);
+		if (list->args)
+		{
+			while (list->args[i])
+				free(list->args[i++]);
+			free(list->args);
+		}
+		i = 0;
+		if (list->files)
+		{
+			while (list->files[i])
+				free(list->files[i++]);
+			free(list->files);
+		}
+		if (list->mini_tok)
+			free(list->mini_tok);
 		free(list);
 		list = tmp;
 	}
 }
-
-
-/*t_arglist	*convert_list(t_tokens *source)
-{
-	t_arglist	*dest;
-
-	dest = malloc(sizeof(t_arglist));
-	dest->next = 0;
-	if (!source)
-		return (0);
-	while (source->next)
-	{
-		dest = add_node_args(dest, source);
-		source = source->next;
-	}
-	dest = add_node_args(dest, source);
-	return (dest);
-}
-
-t_arglist	*add_node_args(t_arglist *args, t_tokens *source)
-{
-	t_arglist	*node;
-	t_arglist	*tmp;
-
-	tmp = args;
-	node = malloc(sizeof(node));
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = node;
-	tmp->next->next = 0;
-	tmp->next->arg = &source->content;
-	return (tmp);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/04 18:03:52 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/11 16:57:44 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,14 @@
 
 typedef struct s_tokens
 {
-	int				type;
-	int				e_var_type;
-	int				section;
 	char			*content;
 	int				log_op;
-	int				has_pipe;
 	int				*mini_tok;
 	char			**args;
 	char			**files;
 	int				*tokens;
 	struct s_tokens	*next;
 }	t_tokens;
-
-// typedef struct s_tree
-// {
-// 	struct s_tree *para;
-// 	struct s_tree *pipes;
-// 	struct s_tree *next;
-// }	t_tree;
-
-// void	function(t_tree *node)
-// {
-// 	if (node->para != NULL)
-// 		function(node.para);
-// 	if (node->pipes != NULL)
-// 		function(node.pipes);
-// 	if (node->next != NULL)
-// 		function(node.next);
-// 	to_child(node);
-// }
 
 enum	e_log_op
 {

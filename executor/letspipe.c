@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/05 15:41:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 14:49:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	what_cmd1(char **args, t_super *super, int pipes, int fd);
 
 int	stage_files(char **files, int *tokens)
 {
-	int index;
+	int	index;
 
 	index = 0;
-	while (files)
+	while (files && files[index])
 	{
 		if (tokens[index] == REDIRECT_IP || tokens[index] == RD_TIL_DELIM)
 			setfd_read(files[index]);
@@ -80,7 +80,7 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 		dup2(readfd, 0);
 		if (bigdata->next && bigdata->next->log_op == 3)
 			dup2(pipefd[1], 1);
-		stage_files(bigdata->args, bigdata->tokens);
+		stage_files(bigdata->files, bigdata->tokens);
 		error = what_cmd1(bigdata->args, super, 1, 1);
 		close(pipefd[1]);
 		exit(error);
@@ -90,14 +90,13 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 		mk_pipes(bigdata->next, pipefd[0], super);
 	close(pipefd[0]);
 	pid = waitpid(pid, &error, WCONTINUED);
-	set_exit_code(super, bigdata, error); // pipes 0 = set exitcode
+	set_exit_code(super, bigdata, error);
 	return (1);
 }
 
 int	what_cmd2(t_tokens *bigdata, t_super *super)
 {
-	// char			**cpipes;
-	static int		stdio[2] = {0, 0};
+	static int	stdio[2] = {0, 0};
 
 	if (!bigdata->args || !bigdata->args[0])
 		return (0);
@@ -106,7 +105,7 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 		stdio[1] = dup(1);
 		stdio[0] = dup(0);
 	}
-	if (bigdata->next && bigdata->next->log_op != 3)
+	if (!bigdata->next || bigdata->next->log_op != 3)
 	{
 		stage_files(bigdata->files, bigdata->tokens);
 		what_cmd1(bigdata->args, super, 0, 1);
@@ -118,30 +117,4 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 	mk_pipes(bigdata, 0, super);
 	set_signal_parrent();
 	return (g_exit_code);
-}
-
-int	what(t_tokens *bigdata, t_super *super)
-{
-	what_cmd2(bigdata, super);
-	while (bigdata)
-	{
-		if (g_exit_code && bigdata->log_op == 2)
-		{
-			what_cmd2(bigdata, super);
-		}
-		bigdata = bigdata->next;
-	}
-	return (1);
-}
-
-int	what_cmd(t_tokens *bigdata, t_super *super)
-{
-	while (bigdata)
-	{
-		if (bigdata->log_op == 1)
-		what(bigdata, super);
-		bigdata = bigdata->next;
-	}
-	(void)super;
-	return (1);
 }
