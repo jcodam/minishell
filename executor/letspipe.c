@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 14:49:37 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 16:05:01 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 	if (last_pipe && error > 0 && error < 16)
 	{
-		ft_putendl_fd((char *)signals[error], 2);
+		ft_putendl_fd((char *)g_signals[error], 2);
 		g_exit_code = (error + 128);
 	}
 	else if (last_pipe)

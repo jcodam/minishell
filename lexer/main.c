@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 14:22:27 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 16:07:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	main(int argc, char **argv, char **envp)
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
 		if (splitted)
 		{
-			printf("%s  %zu %p\n",splitted->args[0], ft_arrlen_c(splitted->args), splitted->next);
-			ft_putarrs_fd(splitted->args, 1);
+			// splitted->args = ft_arradd_index(splitted->args, ft_strdup("ls "), 0);
+			// printf("%s  %zu %p %zu\n",splitted->args[0], ft_arrlen_c(splitted->args), splitted->next, ft_strlen(splitted->args[0]));
+			// ft_putarrs_fd(splitted->args, 1);
 			what_cmd(splitted, super);
 			// what_cmd(splitted->content, super);
 			// splitted = splitted->next;

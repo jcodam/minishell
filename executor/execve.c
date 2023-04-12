@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/11 17:36:09 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 16:05:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 		error = lets_fork(arg, super);
 		if (error > 0 && error < 16)
 		{
-			ft_putendl_fd((char *)signals[error], 2);
+			ft_putendl_fd((char *)g_signals[error], 2);
 			g_exit_code = (error + 128);
 		}
 		else
