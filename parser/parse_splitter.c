@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/11 16:35:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/12 15:15:27 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,13 +420,8 @@ int	cut_to_files(t_tokens *list, int i, int val)
 		transpose_file(list, length, start, val);
 	else if (list->files)
 	{
-		printf("files exitsts!\n");
 		add_in_node_file(list, length, i);
 	}
-	// printf("i: %d\n", i);
-	// printf("length: %d\n", length);
-	// printf("start: %d\n", start);
-	// printf("val: %d\n", val);
 	return (i);
 }
 

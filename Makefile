@@ -6,11 +6,11 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/11 16:59:07 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/13 14:19:16 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH= expender : executor : files : lexer : headers : parser
+VPATH= expander : executor : files : lexer : headers : parser
 
 NAME= minishell
 
@@ -19,9 +19,9 @@ SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c\
 	parse_input.c parse_quotes.c parsing_list.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
-	list.c parse_splitter.c
+	list.c parse_splitter.c 
 
-wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expender.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
+wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expander.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
 	
