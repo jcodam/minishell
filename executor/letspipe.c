@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 16:05:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/13 16:01:52 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ int	stage_files(char **files, int *tokens)
 	return (0);
 }
 
-int	is_empty(char *line)
-{
-	while (*line && ft_iswhite_space(*line))
-		line++;
-	if (*line)
-		return (1);
-	return (0);
-}
-
 static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 {
 	int	last_pipe;
@@ -63,6 +54,31 @@ static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 	set_signal_parrent();
 }
 
+void	rrr(t_tokens *bigdata, t_super *super, int *pipefd, int readfd)
+{
+	int	error;
+
+	reset_signal();
+	close(pipefd[0]);
+	dup2(readfd, 0);
+	if (bigdata->next && bigdata->next->log_op == 3)
+		dup2(pipefd[1], 1);
+	stage_files(bigdata->files, bigdata->tokens);
+	error = what_cmd1(bigdata->args, super, 1, 1);
+	close(pipefd[1]);
+	exit(error);
+}
+
+// reset_signal();
+// close(pipefd[0]);
+// dup2(readfd, 0);
+// if (bigdata->next && bigdata->next->log_op == 3)
+// 	dup2(pipefd[1], 1);
+// stage_files(bigdata->files, bigdata->tokens);
+// error = what_cmd1(bigdata->args, super, 1, 1);
+// close(pipefd[1]);
+// exit(error);
+
 static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 {
 	int		pipefd[2];
@@ -75,15 +91,7 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 	pid = fork();
 	if (pid == 0)
 	{
-		reset_signal();
-		close(pipefd[0]);
-		dup2(readfd, 0);
-		if (bigdata->next && bigdata->next->log_op == 3)
-			dup2(pipefd[1], 1);
-		stage_files(bigdata->files, bigdata->tokens);
-		error = what_cmd1(bigdata->args, super, 1, 1);
-		close(pipefd[1]);
-		exit(error);
+		rrr(bigdata, super, pipefd, readfd);
 	}
 	close(pipefd[1]);
 	if (bigdata->next && bigdata->next->log_op == 3)

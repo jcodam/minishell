@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 16:07:39 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/13 17:47:45 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,45 @@
 
 int	g_exit_code = 0;
 
+void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
+{
+	tcgetattr(STDIN_FILENO, term_struct);
+	tcgetattr(STDOUT_FILENO, term_struct);
+	tcgetattr(STDERR_FILENO, term_struct);
+	(*term_struct).c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, term_struct);
+	super->env = copy_env(envp);
+	super->term_struct = term_struct;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
-	struct termios		term_struct;
 	t_tokens			*splitted;
 	t_super				*super;
-	t_arglist			*args;
+	struct termios		term_struct;
 
 	(void)argc;
 	(void)argv;
-	tcgetattr(STDIN_FILENO, &term_struct);
-	tcgetattr(STDOUT_FILENO, &term_struct);
-	tcgetattr(STDERR_FILENO, &term_struct);
-	term_struct.c_lflag &= ~(ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 	super = malloc(sizeof(t_super));
-	args = malloc(sizeof(t_arglist));
-	super->env = copy_env(envp);
-	super->term_struct = &term_struct;
+	prep_terms(super, envp, &term_struct);
 	while (1)
 	{
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
-		// print_all_tokens(splitted);
-		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
-		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
-		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
 		if (splitted)
-		{
-			// splitted->args = ft_arradd_index(splitted->args, ft_strdup("ls "), 0);
-			// printf("%s  %zu %p %zu\n",splitted->args[0], ft_arrlen_c(splitted->args), splitted->next, ft_strlen(splitted->args[0]));
-			// ft_putarrs_fd(splitted->args, 1);
 			what_cmd(splitted, super);
-			// what_cmd(splitted->content, super);
-			// splitted = splitted->next;
-		}
-		// if (line && *line)
-		// 	what_cmd(splitted, super);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
-		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
-		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
+		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
+		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 		free_list(splitted);
-		// free(line);
-		//system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
 }
+		// print_all_tokens(splitted);
+		//system("leaks minishell");
 
 void	free_list(t_tokens *list)
 {
@@ -79,16 +69,12 @@ void	free_list(t_tokens *list)
 			free(list->tokens);
 		if (list->args)
 		{
-			while (list->args[i])
-				free(list->args[i++]);
-			free(list->args);
+			ft_arrclear_c(list->args, ft_arrlen_c(list->args));
 		}
 		i = 0;
 		if (list->files)
 		{
-			while (list->files[i])
-				free(list->files[i++]);
-			free(list->files);
+			ft_arrclear_c(list->files, ft_arrlen_c(list->files));
 		}
 		if (list->mini_tok)
 			free(list->mini_tok);
@@ -96,3 +82,9 @@ void	free_list(t_tokens *list)
 		list = tmp;
 	}
 }
+			// while (list->args[i])
+			// 	free(list->args[i++]);
+			// free(list->args);
+			// while (list->files[i])
+			// 	free(list->files[i++]);
+			// free(list->files);

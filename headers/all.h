@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 16:04:48 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/13 16:59:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char		*ft_replacevar(char *head, int index, char **env);
 t_list		*get_wildcard(char *wild);
 void		exit_errbug(char *error, char *debug);
 int			tmpfileswitch(char **line);
+int			is_empty(char *line);
 /* eoh wil be freed and is expected to only have the rellevand data
 so use substring
 eoh = end of heredoc (the string that ends the heredoc)

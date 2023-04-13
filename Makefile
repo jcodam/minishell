@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/13 15:29:59 by jbax          ########   odam.nl          #
+#    Updated: 2023/04/13 17:16:08 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ VPATH= expander : executor : files : lexer : headers : parser
 
 NAME= minishell
 
-SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
+SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty.c\
 	echo.c export.c environment.c unset.c exit.c execve.c expander.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c expand_quotes.c expand_vars.c\
 	parse_input.c parse_quotes.c parsing_list.c\
@@ -35,7 +35,7 @@ lib=libft/libft.a
 CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror
-# CFLAGS+= $(SAN)
+CFLAGS+= $(SAN)
 CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
