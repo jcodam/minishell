@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/13 14:19:16 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/13 14:28:18 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,10 @@ SRC= readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c\
 	parse_input.c parse_quotes.c parsing_list.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
-	list.c parse_splitter.c 
+	list.c parse_splitter.c and_or_loop.c
 
-wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/wildcard.o $(OBF_DIR)/expander.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
+wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/expend_quotes.o $(OBF_DIR)/expend_vars.o\
+ $(OBF_DIR)/wildcard.o $(OBF_DIR)/expander.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
 	
@@ -33,7 +34,9 @@ lib=libft/libft.a
 
 CC= gcc
 
-CFLAGS= -g -Wall -Wextra -Werror -o
+CFLAGS= -g -Wall -Wextra -Werror
+# CFLAGS+= $(SAN)
+CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
 

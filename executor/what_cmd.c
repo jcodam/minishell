@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/05 15:41:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/12 14:42:42 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 static int	look_for_cmd(char *line, int *found, char *commend)
 {
 	char	*cmd;
+	int		i;
 
-	cmd = ft_strnstr(line, commend, 9);
+	i = ft_strncmp(line, commend, strlen(line));
+	if (i)
+		return (0);
+	cmd = ft_strnstr(line, commend, strlen(commend));
 	if (!cmd)
 		return (0);
 	*found += 1;
@@ -63,13 +67,11 @@ static int	lookcmd(char **args, t_super *super, int *found, int fd)
 
 int	what_cmd1(char **args, t_super *super, int pipes, int fd)
 {
-	int		found;
+	int	found;
 
 	found = 0;
-	// tmpfileswitch(&line);
 	if (!args || !*args)
-		return 0;
-	// args = mkarg(line);
+		return (0);
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{
 		printf("%d\n", g_exit_code);
@@ -78,12 +80,13 @@ int	what_cmd1(char **args, t_super *super, int pipes, int fd)
 	}
 	g_exit_code = 0;
 	lookcmd(args, super, &found, fd);
-	// if (!found && look_for_cmd(*args, &found, "var") && ft_arrlen_c(args) == 2)
+	if (!found)
+		ft_othercmd(args, super, pipes, fd);
+	return (found);
+}
+	// if (!found && look_for_cmd(*args, &found, "var") 
+	// && ft_arrlen_c(args) == 2)
 	// 	printf("%s\n", ft_getvar(args[1], super->env));
 	// else if (look_for_cmd(*args, &found, "lll"))
 	// 	printf("%s\n", ft_replacevar(ft_strdup(line), 3, super->env));
-	if (!found)
-		ft_othercmd(args, super, pipes, fd);
 	// ft_arrclear_c(args, ft_arrlen_c(args));
-	return (found);
-}

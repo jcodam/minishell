@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/12 15:15:27 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/13 17:57:07 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,9 +543,19 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 		free (list->args[j]);
 		j++;
 	}
-	free (list->files);
+	if (list->args)
+		free_null(&(list->args));
 	list->args = tmp_args;
 }
+
+
+void free_null(char ***ptr)
+{
+	free(**ptr);
+	**ptr = 0;
+}
+
+
 
 // int main(void)
 // {

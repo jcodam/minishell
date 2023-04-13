@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 15:13:23 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/13 14:25:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,28 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
+		// print_all_tokens(splitted);
+		splitted = main_loop(line);
 		print_all_tokens(splitted);
 		// tcsetattr(STDIN_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDOUT_FILENO, TCSANOW, &term_struct);
 		// tcsetattr(STDERR_FILENO, TCSANOW, &term_struct);
-		// while (splitted)
-		// {
-		// 	what_cmd(splitted->content, super);
-		// 	splitted = splitted->next;
-		// }
+		if (splitted)
+		{
+			// splitted->args = ft_arradd_index(splitted->args, ft_strdup("ls "), 0);
+			// printf("%s  %zu %p %zu\n",splitted->args[0], ft_arrlen_c(splitted->args), splitted->next, ft_strlen(splitted->args[0]));
+			// ft_putarrs_fd(splitted->args, 1);
+			what_cmd(splitted, super);
+			// what_cmd(splitted->content, super);
+			// splitted = splitted->next;
+		}
 		// if (line && *line)
-		// 	what_cmd(line, super);
+		// 	what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, &term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, &term_struct);
-		// free_list(splitted);
+		free_list(splitted);
+		// free(line);
 		//system("leaks minishell");
 	}
 	(void)splitted;
