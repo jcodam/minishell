@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/11 16:51:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/14 15:12:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	trim_spaces(list);
 	list = find_docs(list);
 	list = find_args(list);
-	//list = check_for_commands(list);
+	//exit (0);
+	list = check_for_commands(list);
 	return (list);
 }
 
@@ -153,74 +154,190 @@ int	*label_vals(int start, int end, int *arr, int sig)
 	return (arr);
 }
 
-// t_tokens *check_for_commands(t_tokens *list)
-// {
-// 	int			i;
-// 	t_tokens	*tmp;
+t_tokens *check_for_commands(t_tokens *list)
+{
+	int			i;
+	t_tokens	*tmp;
 
-// 	i = 0;
-// 	while (list)
-// 	{
-// 		if (list->mini_tok)
-// 		{
-// 			while (list->mini_tok[i] != -2)
-// 			{
-// 				if (list->mini_tok[i] == COMMAND)
-// 					split_on_flags(list, i);
-// 				i++;
-// 			}
-// 		}
-// 	}
-// }
+	tmp = list;
+	i = 0;
+	while (list)
+	{
+		if (list->mini_tok)
+		{
+			while (list->mini_tok[i] != -2)
+			{
+				if (list->mini_tok[i] == COMMAND)
+					split_on_flags(list, i);
+				else if (list->mini_tok[i] == FLAGS)
+					split_between_flags(list, i);
+				i++;
+			}
+		}
+		i = 0;
+		list = list->next;
+	}
+	return (tmp);
+}
 
-// void	split_on_flags(t_tokens *list, int i)
-// {
-// 	int	end;
-// 	int	start;
+void	split_between_flags(t_tokens *list, int i)
+{
+	int	end;
+	int	start;
 
-// 	start = 0;
-// 	while (list->args[i][start] != ' ')
-// 		start++;
-// 	while (list->args[i][start] != '-' && list->mini_tok[start] != -2)
-// 		start++;
-// 	if (list->args[i][start] == '-')
-// 	{
-// 		end = start;
-// 		while (list->args[i][end] != " " && list->args[i][end] != '-' && \
-// 		list->args[i][end])
-// 			end++;
-// 	}
-// 	if (list->args[i + 1])
-	
+	start = 0;
+	end = 0;
+	while (list->args[i][start] != ' ' && list->args[i][start])
+		start++;
+	while (list->args[i][start] && list->args[i][start] == ' ' \
+	&& list->mini_tok[start] != -2)
+		start++;
+	if (list->args[i][start] == '-')
+	{
+		if (list->args[i][start + 1] == '-')
+		{
+			printf("syntax error");
+		}
+		end = start;
+		while (list->args[i][end] != ' ' && list->args[i][end])
+			end++;
+		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+		list->args = arg_splitter(list->args, i, start, end);
+		update_mini_tok(list, i, FLAGS);
+	}
+}
 
+void	split_on_flags(t_tokens *list, int i)
+{
+	int	end;
+	int	start;
 
+	start = 0;
+	end = 0;
+	while (list->args[i][start] != ' ' && list->args[i][start])
+		start++;
+	while (list->args[i][start] && list->args[i][start] != '-' \
+	&& list->mini_tok[start] != -2)
+		start++;
+	if (list->args[i][start] == '-')
+	{
+		if (list->args[i][start + 1] == '-')
+		{
+			printf("syntax error");
+			//exit (0);
+		}
+		end = start;
+		while (list->args[i][end] != ' ' && list->args[i][end])
+			end++;
+		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+		list->args = arg_splitter(list->args, i, start, end);
+		update_mini_tok(list, i, FLAGS);
+	}
+}
 
-	
-// }
+char	**arg_splitter(char **args, int i, int start, int end)
+{
+	char	**tmp_args;
+	int		current;
+	int		j;
 
-// void	arg_splitter(char **args, int i, int start, int end)
-// {
-// 	char	**tmp_args;
-// 	int		j;
+	j = 0;
+	current = count_args(args);
+	tmp_args = malloc(sizeof(char *) * (current + 2));
+	while (j < i)
+	{
+		ft_strlcpy(tmp_args[j], args[j], (sizeof(args[j]) + 1));
+		j++;
+	}
+	tmp_args[j + 1] = ft_substr(args[i], start, end);
+	tmp_args[j] = ft_substr(args[i], 0, (start - 1));
+	tmp_args[j + 1] = mini_space_trimmer(tmp_args[j + 1]);
+	tmp_args[j] = mini_space_trimmer(tmp_args[j]);
+	j++;
+	while (args[j])
+	{
+		ft_strlcpy(tmp_args[j + 1], args[j], (sizeof(args[j]) + 1));
+		j++;
+	}
+	tmp_args[j + 1] = 0;
+	j = 0;
+	while (args[j])
+	{
+		free (args[j]);
+		j++;
+	}
+	j = 0;
+	while (tmp_args[j])
+	{
+		printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
+		j++;
+	}
+	printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
+	free (args);
+	return (tmp_args);
+}
 
-// 	j = 0;
-// 	while (list->args[j])
-// 		j++;
-// 	// tmp_args = malloc(sizeof(char *) * (j + 2));
-// 	// j = 0;
-// 	// while (list->args[j])
-// 	// {
-// 	// 	ft_strlcpy(tmp_args[j], list->args[j], ft_strlen(list->args[j]));
-// 	// 	j++;
-// 	// }
-// 	// tmp_args[j] = ft_substr(list->content, i, length);
-// 	// tmp_args[j + 1] = 0;
-// 	// j = 0;
-// 	// while (list->args[j])
-// 	// {
-// 	// 	free (list->args[j]);
-// 	// 	j++;
-// 	// }
-// 	// free (list->files);
-// 	// list->args = tmp_args;
-// }
+int	count_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}
+
+char	*mini_space_trimmer(char *string)
+{
+	int		start;
+	int		end;
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	start = 0;
+	end = ft_strlen(string);
+	//printf("start: %d", start);
+	//printf("end: %d", end);
+	while (string[start] == ' ')
+		start++;
+	while (string[end - 1] == ' ')
+		end--;
+	tmp = malloc(sizeof(char) * ((end - start) + 1));
+	while (start < end)
+	{
+		tmp[i] = string[start];
+		i++;
+		start++;
+	}
+	tmp[i] = 0;
+	free (string);
+	return (tmp);
+}
+
+void update_mini_tok(t_tokens *list, int i, int val)
+{
+	int	len;
+	int	*new;
+	int	j;
+
+	len = 0;
+	j = 0;
+	while (list->mini_tok[len] != -2)
+		len++;
+	new = malloc(sizeof(int) * (len + 2));
+	while (j <= i)
+	{
+		new[j] = list->mini_tok[j];
+		j++;
+	}
+	new[j] = val;
+	while (list->mini_tok[j] != -2)
+	{
+		new[j + 1] = list->mini_tok[j];
+		j++;
+	}
+	new[j + 1] = -2;
+	free(list->mini_tok);
+	list->mini_tok = new;
+}

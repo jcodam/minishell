@@ -6,47 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/11 16:35:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/14 15:39:06 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
-
-char	*ft_strdup(const char *s)
-{
-	char	*copy;
-	int		count;
-
-	copy = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (copy == NULL)
-		return (NULL);
-	count = 0;
-	while (s[count] != '\0')
-	{
-		copy[count] = s[count];
-		count++;
-	}
-	copy[count] = '\0';
-	return (copy);
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	char			c;
-	unsigned int	d;
-
-	d = n;
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		d = n * -1;
-	}
-	c = d % 10 + '0';
-	d = d / 10;
-	if (d > 0)
-		ft_putnbr_fd(d, fd);
-	write(fd, &c, 1);
-}
 
 void	trim_spaces(t_tokens *list)
 {
@@ -140,7 +104,7 @@ t_tokens	*split_on_pipes(t_tokens *list)
 	return (top);
 }
 
-int find_tokens(int val, t_tokens *list)
+int	find_tokens(int val, t_tokens *list)
 {
 	int	i;
 	int	len;
@@ -193,19 +157,15 @@ void	fill_node_split(t_tokens *node, int split_point, int noc, int length)
 	size_t		len;
 
 	len = (ft_strlen(node->content) + 1);
-	node_2_len = (length) - (split_point + noc);
-	//printf("node 2 len: %zu", node_2_len);
-	// arr = malloc(sizeof(int) * split_point);
-	// str = malloc(node_2_len);
-	// str = ft_strdup(node->content);
-	// arr = ms_arrdup(node->tokens, len);
-	// free(node->content);
-	// free(node->tokens);
+	node_2_len = length - (split_point + noc);
 	arr = node->tokens;
 	str = node->content;
+	printf("node 2 len: %zu\n", node_2_len);
+	printf("start of node 2: %d, which is char: %c\n", (split_point + noc), str[split_point + noc]);
 	node->next->content = ft_substr(str, (split_point + noc), \
 	node_2_len);
 	node->content = ft_substr(str, 0, (split_point - 1));
+	printf("node->next->content: [%s]", node->next->content);
 	free(str);
 	node->next->tokens = ft_subarr(arr, (split_point + noc), \
 	node_2_len);
@@ -289,7 +249,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > strlen - start)
 		return (ft_strdup(s + start));
-	newstr = (char *)malloc((len + 2) * sizeof(char));
+	newstr = (char *)malloc(len + 1);
 	if (newstr == 0)
 	{
 		printf("\n malloc error!\n");
@@ -363,7 +323,9 @@ t_tokens *find_args(t_tokens *list)
 {
 	t_tokens	*tmp;
 	int			i;
+	int			counter;
 
+	counter = 0;
 	i = 0;
 	tmp = list;
 	while (list)
@@ -372,12 +334,17 @@ t_tokens *find_args(t_tokens *list)
 		{
 			if (list->tokens[i] == 1 || list->tokens[i] == 0 || \
 			list->tokens[i] > 5)
+			{
 				i = cut_to_args(list, i, list->tokens[i]);
+				printf("i: %d\n", i);
+				counter++;
+			}
 			i++;
 		}
 		i = 0;
 		list = list->next;
 	}
+	printf("counter: %d\n", counter);
 	return (tmp);
 }
 
@@ -420,13 +387,8 @@ int	cut_to_files(t_tokens *list, int i, int val)
 		transpose_file(list, length, start, val);
 	else if (list->files)
 	{
-		printf("files exitsts!\n");
 		add_in_node_file(list, length, i);
 	}
-	// printf("i: %d\n", i);
-	// printf("length: %d\n", length);
-	// printf("start: %d\n", start);
-	// printf("val: %d\n", val);
 	return (i);
 }
 
@@ -548,9 +510,18 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 		free (list->args[j]);
 		j++;
 	}
-	free (list->files);
+	if (list->args)
+		free_null(&(list->args));
 	list->args = tmp_args;
 }
+
+void free_null(char ***ptr)
+{
+	free(**ptr);
+	**ptr = 0;
+}
+
+
 
 // int main(void)
 // {

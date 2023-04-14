@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/14 15:13:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/14 17:02:38 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
+		print_all_tokens(splitted);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
@@ -109,17 +110,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }
-		// print_all_tokens(splitted);
-		//system("leaks minishell");
+
 
 void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
-	int			i;
 
 	while (list)
 	{
-		i = 0;
 		tmp = list->next;
 		if (list->content)
 			free(list->content);
@@ -129,7 +127,6 @@ void	free_list(t_tokens *list)
 		{
 			ft_arrclear_c(list->args, ft_arrlen_c(list->args));
 		}
-		i = 0;
 		if (list->files)
 		{
 			ft_arrclear_c(list->files, ft_arrlen_c(list->files));
@@ -140,9 +137,3 @@ void	free_list(t_tokens *list)
 		list = tmp;
 	}
 }
-			// while (list->args[i])
-			// 	free(list->args[i++]);
-			// free(list->args);
-			// while (list->files[i])
-			// 	free(list->files[i++]);
-			// free(list->files);
