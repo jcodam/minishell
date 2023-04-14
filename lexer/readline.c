@@ -6,26 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/23 15:37:45 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/14 16:39:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
-int	hor_pos(void);
-/* 
-char *var = read_the_line()
-wil wait for and return the line
-*/
-
-// void	ft_putstr_fd(char *s, int fd)
-// {
-// 	while (*s != '\0')
-// 	{
-// 		write(fd, s, 1);
-// 		s++;
-// 	}
-// }
+static int	hor_pos(void);
 
 static int	is_empty_line(char *line)
 {
@@ -87,7 +74,7 @@ static int	get_pos_data(char *ptr)
 	return (i);
 }
 
-int	hor_pos(void)
+static int	hor_pos(void)
 {
 	char			*ptr;
 	int				i;
@@ -110,3 +97,35 @@ int	hor_pos(void)
 	tcsetattr(0, TCSANOW, &restore);
 	return (i);
 }
+
+// char	*read_the_line_again(char *first_half)
+// {
+// 	char	*c;
+// 	char	*line;
+// 	int		x;
+// 	char	*s;
+
+// 	line = NULL;
+// 	rl_outstream = stderr;
+// 	x = hor_pos();
+// 	line = readline("> ");
+// 	if (!line)
+// 	{
+// 		c = ft_itoa(x);
+// 		s = ft_strjoin("\e[", c);
+// 		free(c);
+// 		c = ft_strjoin(s, "G\e[1Aminishell; 
+// syntax error: unexpected end of file\n");
+// 		ft_putstr_fd(c, 1);
+// 		free(c);
+// 		free(s);
+// 		free(first_half);
+// 		return (0);
+// 	}
+// 	s = ft_strjoin(first_half, line);
+// 	if (is_empty_line(s) == FULL)
+// 		add_history(s);
+// 	free(first_half);
+// 	free(line);
+// 	return (s);
+// }
