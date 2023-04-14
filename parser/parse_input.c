@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/12 18:51:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/14 15:12:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	trim_spaces(list);
 	list = find_docs(list);
 	list = find_args(list);
+	//exit (0);
 	list = check_for_commands(list);
 	return (list);
 }

@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_data_struct.h                             :+:    :+:            */
+/*   is_empty.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/20 14:48:02 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/13 16:26:46 by jbax          ########   odam.nl         */
+/*   Created: 2023/04/13 16:00:37 by jbax          #+#    #+#                 */
+/*   Updated: 2023/04/13 16:02:00 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_DATA_STRUCT_H
-# define BUILTINS_DATA_STRUCT_H
+#include "../libft/libft.h"
 
-typedef struct s_arglist
+int	is_empty(char *line)
 {
-	char				**arg;
-	struct s_arglist	*next;
-}	t_arglist;
-
-typedef struct s_super
-{
-	char			**env;
-	struct termios	*term_struct;
-	struct termios	*restore_term;
-}	t_super;
-
-#endif
+	while (*line && ft_iswhite_space(*line))
+		line++;
+	if (*line)
+		return (1);
+	return (0);
+}
