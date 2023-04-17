@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 14:17:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 14:20:31 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/17 18:37:10 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	what(t_tokens *bigdata, t_super *super)
 
 int	what_cmd(t_tokens *bigdata, t_super *super)
 {
+	bigdata->args = arr_expander(bigdata->args, super->env);
+	bigdata->files = arr_expander(bigdata->files, super->env);
 	while (bigdata)
 	{
 		if (bigdata->log_op == 1)

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/17 14:20:57 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 19:11:15 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_list		*get_wildcard(char *wild);
 void		exit_errbug(char *error, char *debug);
 int			tmpfileswitch(char **line);
 int			is_empty(char *line);
+char		**arr_expander(char **arr, char **env);
 /* eoh wil be freed and is expected to only have the rellevand data
 so use substring
 eoh = end of heredoc (the string that ends the heredoc)
@@ -191,6 +192,5 @@ void		update_mini_tok(t_tokens *list, int i, int val);
 void		split_between_flags(t_tokens *list, int i);
 void		free_arr_null(char ***ptr);
 void		free_str_null(char **ptr);
-
 
 #endif
