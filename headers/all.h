@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/13 18:08:26 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 14:20:57 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,7 @@ void		split_to_node(t_tokens *node, int split_point, int noc);
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
 int			*ft_subarr(int *arr, size_t start, size_t len);
 int			ar_len(int *arr);
-void		fill_node_split(t_tokens	*node, int split_point, \
-int noc, int length);
+void		fill_node_split(t_tokens	*node, int split_point, int noc);
 /**
  * finds the first instance of a specified token in the array. 
  * returns -1 if there is no instance of the token
@@ -172,7 +171,7 @@ void		print_tokens(int *arr);
 t_tokens	*split_on_or(t_tokens *list);
 t_tokens	*split_on_pipes(t_tokens *list);
 void		trim_spaces(t_tokens *list);
-t_tokens	*find_docs(t_tokens *list);
+t_tokens	*find_files(t_tokens *list);
 t_tokens	*find_args(t_tokens *list);
 int			cut_to_files(t_tokens *list, int i, int val);
 int			cut_to_args(t_tokens *list, int i, int val);
@@ -190,7 +189,8 @@ void		split_on_flags(t_tokens *list, int i);
 char		*mini_space_trimmer(char *string);
 void		update_mini_tok(t_tokens *list, int i, int val);
 void		split_between_flags(t_tokens *list, int i);
-void		free_null(char ***ptr);
+void		free_arr_null(char ***ptr);
+void		free_str_null(char **ptr);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/14 15:12:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 14:33:53 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = split_on_or(list);
 	list = split_on_pipes(list);
 	trim_spaces(list);
-	list = find_docs(list);
+	list = find_files(list);
 	list = find_args(list);
-	//exit (0);
 	list = check_for_commands(list);
 	return (list);
 }
@@ -58,7 +57,6 @@ t_tokens	*main_loop(char *input)
 		return (NULL);
 	list = primary_split(input, arr, list);
 	//list = split_into_list(input, arr, list);
-	//split_args(list);
 	return (list);
 }
 
@@ -66,8 +64,8 @@ int	*tokanize(char *input, int *arr)
 {
 	while (arr)
 	{
-		arr = label_quotes(input, arr, 1);
-		arr = label_quotes(input, arr, 0);
+		arr = label_quotes(input, arr, 33);
+		arr = label_quotes(input, arr, 34);
 		arr = check_operators(input, arr);
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);
@@ -83,7 +81,7 @@ int	find_pipe(int *arr, int max, int position)
 {
 	while (position <= max)
 	{
-		if (arr[position] == 7)
+		if (arr[position] == PIPE)
 			return (position);
 		position++;
 	}
@@ -207,31 +205,48 @@ void	split_between_flags(t_tokens *list, int i)
 	}
 }
 
+//generating a heap overflow
+//also, change so that we are just splitting on spaces;
+//should simply split on spaces if not a file.
+// void	split_on_flags(t_tokens *list, int i)
+// {
+// 	int	end;
+// 	int	start;
+
+// 	start = 0;
+// 	end = 0;
+// 	while (list->args[i][start] != ' ' && list->args[i][start])
+// 		start++;
+// 	//this does not make sense
+// 	while (list->args[i][start] && list->args[i][start] != '-' \
+// 	&& list->mini_tok[start] != -2)
+// 		start++;
+// 	if (list->args[i][start] == '-')
+// 	{
+// 		if (list->args[i][start + 1] == '-')
+// 		{
+// 			printf("syntax error");
+// 			//exit (0);
+// 		}
+// 		end = start;
+// 		while (list->args[i][end] != ' ' && list->args[i][end])
+// 			end++;
+// 		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+// 		list->args = arg_splitter(list->args, i, start, end);
+// 		update_mini_tok(list, i, FLAGS);
+// 	}
+// }
+
 void	split_on_flags(t_tokens *list, int i)
 {
-	int	end;
-	int	start;
-
-	start = 0;
-	end = 0;
-	while (list->args[i][start] != ' ' && list->args[i][start])
-		start++;
-	while (list->args[i][start] && list->args[i][start] != '-' \
-	&& list->mini_tok[start] != -2)
-		start++;
-	if (list->args[i][start] == '-')
+	i = 0;
+	
+	while (list)
 	{
-		if (list->args[i][start + 1] == '-')
-		{
-			printf("syntax error");
-			//exit (0);
-		}
-		end = start;
-		while (list->args[i][end] != ' ' && list->args[i][end])
-			end++;
-		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
-		list->args = arg_splitter(list->args, i, start, end);
-		update_mini_tok(list, i, FLAGS);
+		list->args = ft_split(list->content, ' ');
+		list = list->next;
+		
+		// 
 	}
 }
 

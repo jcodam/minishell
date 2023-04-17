@@ -1,3 +1,5 @@
 - reintegrate quoted text back into node.
 - split on spaces (except for quoted spaces)
 - 'ls "hello world"' segfaults. 
+
+ls -la && ls -la && ls -la && ls -la

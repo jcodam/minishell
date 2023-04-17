@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/04 16:20:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/15 23:55:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	*command_after_pipe(char *input, int *arr)
 			i++;
 			while (input[i] != ' ')
 			{
-				arr[i] = 6;
+				arr[i] = COMMAND;
 				i++;
 			}
 		}
@@ -56,7 +56,7 @@ int	*check_commands(char *input, int *arr)
 {
 	int	i;
 
-	if (!arr)
+	if (!arr || !input)
 		return (NULL);
 	i = 0;
 	while (input[i])
@@ -65,9 +65,11 @@ int	*check_commands(char *input, int *arr)
 		{
 			while (arr[i] == -1 || arr[i] == 8)
 			{
-				arr[i] = 6;
+				arr[i] = COMMAND;
 				i++;
 			}
+			if (arr[i] == -2)
+				return (arr);
 		}
 		i++;
 	}
@@ -130,8 +132,8 @@ int check_OR (char *input, int * arr, int i)
 	{
 		if (!OR_error_checker(input, i))
 			return (0);
-		arr[i] = 13;
-		arr[i + 1] = 13;
+		arr[i] = SPLIT_OR;
+		arr[i + 1] = SPLIT_OR;
 	}
 	return (1);
 }
@@ -154,19 +156,19 @@ int	check_ampersand(char *input, int *arr, int i)
 	{
 		if (!amp_checker(input, i))
 			return (0);
-		arr[i] = 12;
-		arr[i + 1] = 12;
+		arr[i] = SPLIT_AND;
+		arr[i + 1] = SPLIT_AND;
 	}
 	return (1);
 }
 
 int	check_pipes(char *input, int *arr, int i)
 {
-	if (input[i] == '|' && arr[i] == -1)
+	if (input[i] == '|' && arr[i] == OTHER)
 	{
 		if (!pipe_checker(input, i))
 			return (0);
-		arr[i] = 7;
+		arr[i] = PIPE;
 	}
 	return (1);
 }
@@ -200,12 +202,12 @@ int	*make_red_op(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '>')
-		val = 5;
+		val = 13;
 	else
-		val = 3;
+		val = 11;
 	arr[i] = val;
 	i++;
-	if (val == 5)
+	if (val == 13)
 		arr[i++] = val;
 	while (done == 0)
 	{
@@ -225,12 +227,12 @@ int	*make_red_ip(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '<')
-		val = 4;
+		val = 12;
 	else
-		val = 2;
+		val = 10;
 	arr[i] = val;
 	i++;
-	if (val == 4)
+	if (val == 12)
 		arr[i++] = val;
 	while (done == 0)
 	{
