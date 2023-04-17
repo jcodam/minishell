@@ -6,13 +6,14 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 14:33:53 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 18:06:20 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
 void		trim_spaces(t_tokens *list);
+int	label_quotess(char *str, int *arr);
 
 void	print_list(t_tokens *list)
 {
@@ -47,14 +48,14 @@ t_tokens	*main_loop(char *input)
 	int			*arr;
 	t_tokens	*list;
 
-	list = malloc(sizeof(t_tokens));
-	list->content = 0;
-	list->next = 0;
 	len = ft_strlen(input);
 	arr = make_arr(len);
 	arr = tokanize(input, arr);
 	if (!arr)
 		return (NULL);
+	list = malloc(sizeof(t_tokens));
+	list->content = 0;
+	list->next = 0;
 	list = primary_split(input, arr, list);
 	//list = split_into_list(input, arr, list);
 	return (list);
@@ -62,10 +63,9 @@ t_tokens	*main_loop(char *input)
 
 int	*tokanize(char *input, int *arr)
 {
+	label_quotess(input, arr);
 	while (arr)
 	{
-		arr = label_quotes(input, arr, 33);
-		arr = label_quotes(input, arr, 34);
 		arr = check_operators(input, arr);
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);
@@ -312,8 +312,6 @@ char	*mini_space_trimmer(char *string)
 	i = 0;
 	start = 0;
 	end = ft_strlen(string);
-	//printf("start: %d", start);
-	//printf("end: %d", end);
 	while (string[start] == ' ')
 		start++;
 	while (string[end - 1] == ' ')

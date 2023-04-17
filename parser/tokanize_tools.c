@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/15 23:55:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 18:04:58 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	*check_commands(char *input, int *arr)
 	i = 0;
 	while (input[i])
 	{
-		if (arr[i] == -1)
+		if (arr[i] == OTHER)
 		{
-			while (arr[i] == -1 || arr[i] == 8)
+			while (arr[i] == OTHER || arr[i] == SPC)
 			{
 				arr[i] = COMMAND;
 				i++;
@@ -128,7 +128,7 @@ int OR_error_checker(char *input, int i)
 int check_OR (char *input, int * arr, int i)
 {
 	if (input[i] == '|' && input[i + 1] == '|' && \
-	arr[i] == -1 && arr[i + 1] == -1)
+	arr[i] == OTHER && arr[i + 1] == OTHER)
 	{
 		if (!OR_error_checker(input, i))
 			return (0);
@@ -152,7 +152,7 @@ int amp_checker(char *input, int i)
 int	check_ampersand(char *input, int *arr, int i)
 {
 	if (input[i] == '&' && input[i + 1] == '&' && \
-	arr[i] == -1 && arr[i + 1] == -1)
+	arr[i] == OTHER && arr[i + 1] == OTHER)
 	{
 		if (!amp_checker(input, i))
 			return (0);
@@ -175,7 +175,7 @@ int	check_pipes(char *input, int *arr, int i)
 
 int check_l_arrow(char *input, int *arr, int i)
 {
-	if (input[i] == '<' && arr[i] == -1)
+	if (input[i] == '<' && arr[i] == OTHER)
 	{
 		if (!red_ip_checker(input, i))
 			return (0);
@@ -186,7 +186,7 @@ int check_l_arrow(char *input, int *arr, int i)
 
 int check_r_arrow(char *input, int *arr, int i)
 {
-	if (input[i] == '>' && arr[i] == -1)
+	if (input[i] == '>' && arr[i] == OTHER)
 	{
 		if (!red_op_checker(input, i))
 			return (0);
@@ -202,18 +202,18 @@ int	*make_red_op(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '>')
-		val = 13;
+		val = REDIRECT_APPEND;
 	else
-		val = 11;
+		val = REDIRECT_OP;
 	arr[i] = val;
 	i++;
-	if (val == 13)
+	if (val == REDIRECT_APPEND)
 		arr[i++] = val;
 	while (done == 0)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == -1)
+		while (input[i] != ' ' && arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
@@ -227,18 +227,18 @@ int	*make_red_ip(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '<')
-		val = 12;
+		val = RD_TIL_DELIM;
 	else
-		val = 10;
+		val = REDIRECT_IP;
 	arr[i] = val;
 	i++;
-	if (val == 12)
+	if (val == RD_TIL_DELIM)
 		arr[i++] = val;
 	while (done == 0)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == -1)
+		while (input[i] != ' ' && arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}

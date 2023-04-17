@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:05:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 16:33:21 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	*make_arr(int len)
 
 	i = 0;
 	arr = malloc(sizeof(int) * (len + 1));
+	if (!arr)
+		return (NULL);
 	while (i < len)
 	{
-		arr[i] = -1;
+		arr[i] = OTHER;
 		i++;
 	}
-	arr[i] = -2;
+	arr[i] = EOL;
 	return (arr);
 }
 
@@ -35,7 +37,7 @@ void	print_array(int *arr)
 	i = 0;
 	if (!arr)
 		return ;
-	while (arr[i] != -2)
+	while (arr[i] != EOL)
 	{
 		ft_putnbr_fd(arr[i], 1);
 		write(1, " ", 1);
@@ -68,8 +70,8 @@ int	*label_spaces(char *input, int *arr)
 	i = 0;
 	while (input[i])
 	{
-		if (arr[i] == -1 && input[i] == ' ')
-			arr[i] = 8;
+		if (arr[i] == OTHER && input[i] == ' ')
+			arr[i] = SPC;
 		i++;
 	}
 	return (arr);
