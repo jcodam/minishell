@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:06:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 19:08:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ void	trim_spaces(t_tokens *list)
 			start++;
 		while (list->content[end] == ' ')
 			end--;
-		//printf("%s\ncontent: [%s], start: %d, end: %d, (end - start): %d\n", __func__, list->content, start, end, (end - start));
 		list->content = ft_substr(tmp, start, (end - start));
 		list->tokens = ft_subarr(arr, start, (end - start));
-		//printf("trimmed: [%s]\n", list->content);
-		//printf("token at end point: %d\n\n", list->tokens[(end - start) + 1]);
 		free(arr);
 		free(tmp);
 		list = list->next;
@@ -51,10 +48,6 @@ t_tokens	*split_on_amps(t_tokens *list)
 	if (!list)
 		return (NULL);
 	top = list;
-	// printf("ptr &top: %p\n", &top);
-	// printf("ptr &list: %p\n", &list);
-	// printf("ptr top: %p\n", top);
-	// printf("ptr list: %p\n", list);
 	place = 0;
 	while (list)
 	{
@@ -64,8 +57,6 @@ t_tokens	*split_on_amps(t_tokens *list)
 		split_to_node(list, place, 2);
 		list->next->log_op = OPP_AND;
 		list = list->next;
-		//print_all_tokens(top);
-		//printf("\n\n\n");
 	}
 	return (top);
 }
@@ -167,11 +158,7 @@ void	fill_node_split(t_tokens *node, int split_point, int noc)
 	len = ft_strlen(node->content);
 	node_2_len = (len - (split_point + noc) - 1);
 	arr = node->tokens;
-	//free(node->tokens);
 	str = node->content;
-	//free(node->tokens);
-	//printf("node 1 len: %d\n", (split_point - 1));
-	//printf("node 2 len: %zu\n", node_2_len);
 	node->next->content = ft_substr(str, (split_point + noc), \
 	node_2_len);
 	node->content = ft_substr(str, 0, (split_point - 1));
@@ -298,34 +285,6 @@ int	ar_len(int *arr)
 	return (len);
 }
 
-t_tokens *find_files(t_tokens *list)
-{
-	t_tokens	*tmp;
-	int			i;
-
-	i = 0;
-	tmp = list;
-	while (list)
-	{
-		while (list->content[i] && list->tokens[i] != -2)
-		{
-			if (list->tokens[i] >= FILE_T)
-			{
-				while (list->content[i] == '<' || list->content[i] == '>')
-					i++;
-				while (list->content[i] == ' ')
-					i++;
-				if (list->content[i])
-					i = cut_to_files(list, i, list->tokens[i]);
-			}
-			i++;
-		}
-		i = 0;
-		list = list->next;
-	}
-	return (tmp);
-}
-
 t_tokens *find_args(t_tokens *list)
 {
 	t_tokens	*tmp;
@@ -335,7 +294,7 @@ t_tokens *find_args(t_tokens *list)
 	tmp = list;
 	while (list)
 	{
-		while (list->content[i] && list->tokens[i] != -2)
+		while (list->content[i] && list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= COMMAND)
 			{
@@ -362,17 +321,42 @@ int	cut_to_args(t_tokens *list, int i, int val)
 		i++;
 	}
 	if (!list->args)
-	{
-		// printf("transpose!\n");
-		// printf("list->content: [%s], lenght: %d, start: %d, val: %d\n\n", list->content, length, start, val);
 		transpose_arg(list, length, start, val);
-	}
 	else if (list->args)
-	{
-		//printf("add in node!\n");
 		add_in_node_arg(list, length, i);
-	}
 	return (i - 1);
+}
+
+t_tokens *find_files(t_tokens *list)
+{
+	t_tokens	*tmp;
+	int			i;
+
+	i = 0;
+	tmp = list;
+	while (list)
+	{
+		while (list->content[i] && list->tokens[i] != EOL)
+		{
+			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] <= \
+			REDIRECT_APPEND)
+			{
+				while (list->content[i] == '<' || list->content[i] == '>')
+				{
+					printf("list->content[%d]: %c\n", i, list->content[i]);
+					i++;
+				}
+				while (list->content[i] == ' ')
+					i++;
+				if (list->content[i])
+					i = cut_to_files(list, i, list->tokens[i]);
+			}
+			i++;
+		}
+		i = 0;
+		list = list->next;
+	}
+	return (tmp);
 }
 
 int	cut_to_files(t_tokens *list, int i, int val)
@@ -382,7 +366,7 @@ int	cut_to_files(t_tokens *list, int i, int val)
 
 	length = 0;
 	start = i;
-	while (list->tokens[i] == val)
+	while (list->tokens[i] == val && !ft_strchr("<>", list->content[i]))
 	{
 		length++;
 		i++;
@@ -470,7 +454,7 @@ void	add_in_node_file(t_tokens *list, int length, int i)
 	j = 0;
 	while (list->files[j])
 		j++;
-	tmp_files = malloc(sizeof(char *) * (j + 1));
+	tmp_files = malloc(sizeof(char *) * (j + 2));
 	j = 0;
 	while (list->files[j])
 	{
@@ -568,3 +552,5 @@ void free_str_null(char **ptr)
 // ****l
 // ***l
 // **l
+// name1 name2 
+// <		>

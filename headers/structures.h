@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:00:57 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 18:42:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 typedef struct s_tokens
 {
 	char			*content;
+	int				*tokens;
 	int				log_op;
 	int				*mini_tok;
 	char			**args;
 	char			**files;
-	int				*tokens;
 	struct s_tokens	*next;
 }	t_tokens;
 
@@ -51,25 +51,5 @@ enum e_commands
 	QUOTE_DL,
 	QUOTE_SL
 };
-
-// enum e_commands
-// {
-// 	OTHER = -1,
-// 	QUOTE_SL,
-// 	QUOTE_DL,
-// 	REDIRECT_IP,
-// 	REDIRECT_OP,
-// 	RD_TIL_DELIM,
-// 	REDIRECT_APPEND,
-// 	COMMAND,
-// 	PIPE,
-// 	SPC,
-// 	ENV_VAR,
-// 	EXPANDABLE,
-// 	FILE_T,
-// 	SPLIT_AND,
-// 	SPLIT_OR,
-// 	FLAGS
-// };
 
 #endif
