@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 16:15:30 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/17 17:52:34 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ t_tokens	*main_loop(char *input)
 	int			*arr;
 	t_tokens	*list;
 
-	list = malloc(sizeof(t_tokens));
-	list->content = 0;
-	list->next = 0;
 	len = ft_strlen(input);
 	arr = make_arr(len);
-	print_tokens(arr);
 	arr = tokanize(input, arr);
 	if (!arr)
 		return (NULL);
-	print_tokens(arr);
+	list = malloc(sizeof(t_tokens));
+	list->content = 0;
+	list->next = 0;
 	list = primary_split(input, arr, list);
 	//list = split_into_list(input, arr, list);
 	//split_args(list);
@@ -70,7 +68,6 @@ t_tokens	*main_loop(char *input)
 int	*tokanize(char *input, int *arr)
 {
 	label_quotess(input, arr);
-	print_array(arr);
 	while (arr)
 	{
 		arr = check_operators(input, arr);

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/14 15:39:06 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 17:48:11 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	find_tokens(int val, t_tokens *list)
 	len = ft_strlen(list->content);
 	if (!list->tokens)
 		return (-1);
-	while (list->tokens[i] != -2 && list->content[i])
+	while (list->tokens[i] != EOL && list->content[i])
 	{
 		if (list->tokens[i] == val)
 			return (i);
