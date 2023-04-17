@@ -6,13 +6,14 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/14 15:12:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 16:15:30 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
 void		trim_spaces(t_tokens *list);
+int	label_quotess(char *str, int *arr);
 
 void	print_list(t_tokens *list)
 {
@@ -53,21 +54,25 @@ t_tokens	*main_loop(char *input)
 	list->next = 0;
 	len = ft_strlen(input);
 	arr = make_arr(len);
+	print_tokens(arr);
 	arr = tokanize(input, arr);
 	if (!arr)
 		return (NULL);
+	print_tokens(arr);
 	list = primary_split(input, arr, list);
 	//list = split_into_list(input, arr, list);
 	//split_args(list);
 	return (list);
 }
 
+		// arr = label_quotes(input, arr, 1);
+		// arr = label_quotes(input, arr, 0);
 int	*tokanize(char *input, int *arr)
 {
+	label_quotess(input, arr);
+	print_array(arr);
 	while (arr)
 	{
-		arr = label_quotes(input, arr, 1);
-		arr = label_quotes(input, arr, 0);
 		arr = check_operators(input, arr);
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);

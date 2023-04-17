@@ -6,11 +6,37 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:41:52 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/24 19:42:29 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 16:14:32 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+int	label_quotess(char *str, int *arr)
+{
+	int	iterator;
+	int	quote_mark;
+
+	quote_mark = OTHER;
+	iterator = 0;
+	while (str && arr && str[iterator] && arr[iterator] != EOL)
+	{
+		if (quote_mark != OTHER)
+			arr[iterator] = quote_mark;
+		if (str[iterator] == '"' && quote_mark == OTHER)
+			quote_mark = QUOTE_DL;
+		else if (str[iterator] == '"' && quote_mark == QUOTE_DL)
+			quote_mark = OTHER;
+		else if (str[iterator] == '\'' && quote_mark == OTHER)
+			quote_mark = QUOTE_SL;
+		else if (str[iterator] == '\'' && quote_mark == QUOTE_SL)
+			quote_mark = OTHER;
+		if (quote_mark != OTHER)
+			arr[iterator] = quote_mark;
+		iterator++;
+	}
+	return (-1);
+}
 
 int	*label_quotes(char *input, int *arr, int type)
 {

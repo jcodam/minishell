@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/04 16:20:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 16:30:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	*command_after_pipe(char *input, int *arr)
 			i++;
 			while (input[i] != ' ')
 			{
-				arr[i] = 6;
+				arr[i] = COMMAND;
 				i++;
 			}
 		}
@@ -61,11 +61,11 @@ int	*check_commands(char *input, int *arr)
 	i = 0;
 	while (input[i])
 	{
-		if (arr[i] == -1)
+		if (arr[i] == OTHER)
 		{
-			while (arr[i] == -1 || arr[i] == 8)
+			while (arr[i] == OTHER || arr[i] == SPC)
 			{
-				arr[i] = 6;
+				arr[i] = COMMAND;
 				i++;
 			}
 		}
@@ -126,12 +126,12 @@ int OR_error_checker(char *input, int i)
 int check_OR (char *input, int * arr, int i)
 {
 	if (input[i] == '|' && input[i + 1] == '|' && \
-	arr[i] == -1 && arr[i + 1] == -1)
+	arr[i] == OTHER && arr[i + 1] == OTHER)
 	{
 		if (!OR_error_checker(input, i))
 			return (0);
-		arr[i] = 13;
-		arr[i + 1] = 13;
+		arr[i] = SPLIT_OR;
+		arr[i + 1] = SPLIT_OR;
 	}
 	return (1);
 }
@@ -150,30 +150,30 @@ int amp_checker(char *input, int i)
 int	check_ampersand(char *input, int *arr, int i)
 {
 	if (input[i] == '&' && input[i + 1] == '&' && \
-	arr[i] == -1 && arr[i + 1] == -1)
+	arr[i] == OTHER && arr[i + 1] == OTHER)
 	{
 		if (!amp_checker(input, i))
 			return (0);
-		arr[i] = 12;
-		arr[i + 1] = 12;
+		arr[i] = SPLIT_AND;
+		arr[i + 1] = SPLIT_AND;
 	}
 	return (1);
 }
 
 int	check_pipes(char *input, int *arr, int i)
 {
-	if (input[i] == '|' && arr[i] == -1)
+	if (input[i] == '|' && arr[i] == OTHER)
 	{
 		if (!pipe_checker(input, i))
 			return (0);
-		arr[i] = 7;
+		arr[i] = PIPE;
 	}
 	return (1);
 }
 
 int check_l_arrow(char *input, int *arr, int i)
 {
-	if (input[i] == '<' && arr[i] == -1)
+	if (input[i] == '<' && arr[i] == OTHER)
 	{
 		if (!red_ip_checker(input, i))
 			return (0);
@@ -184,7 +184,7 @@ int check_l_arrow(char *input, int *arr, int i)
 
 int check_r_arrow(char *input, int *arr, int i)
 {
-	if (input[i] == '>' && arr[i] == -1)
+	if (input[i] == '>' && arr[i] == OTHER)
 	{
 		if (!red_op_checker(input, i))
 			return (0);
@@ -200,18 +200,18 @@ int	*make_red_op(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '>')
-		val = 5;
+		val = REDIRECT_APPEND;
 	else
-		val = 3;
+		val = REDIRECT_OP;
 	arr[i] = val;
 	i++;
-	if (val == 5)
+	if (val == REDIRECT_APPEND)
 		arr[i++] = val;
 	while (done == 0)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == -1)
+		while (input[i] != ' ' && arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
@@ -225,18 +225,18 @@ int	*make_red_ip(char *input, int *arr, int i)
 
 	done = 0;
 	if (input[i + 1] == '<')
-		val = 4;
+		val = RD_TIL_DELIM;
 	else
-		val = 2;
+		val = REDIRECT_IP;
 	arr[i] = val;
 	i++;
-	if (val == 4)
+	if (val == RD_TIL_DELIM)
 		arr[i++] = val;
 	while (done == 0)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == -1)
+		while (input[i] != ' ' && arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
