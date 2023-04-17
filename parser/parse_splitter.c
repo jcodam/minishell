@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 19:08:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/17 19:59:26 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ int	cut_to_files(t_tokens *list, int i, int val)
 		transpose_file(list, length, start, val);
 	else if (list->files)
 		add_in_node_file(list, length, i);
-	return (i);
+	return (i - length);
 }
 
 void	transpose_file(t_tokens *list, int length, int start, int val)
@@ -393,20 +393,20 @@ void	transpose_file(t_tokens *list, int length, int start, int val)
 	{
 		list->mini_tok = malloc(sizeof(int) * 2);
 		list->mini_tok[0] = val;
-		list->mini_tok[1] = -2;
+		list->mini_tok[1] = EOL;
 	}
 	else
 	{
-		while (list->mini_tok[i] != -2)
+		while (list->mini_tok[i] != EOL)
 			i++;
 		tmp = malloc(sizeof(int) * (i + 2));
 		i = 0;
-		while (list->mini_tok[i] != -2)
+		while (list->mini_tok[i] != EOL)
 		{
 			tmp[i] = list->mini_tok[i];
 			i++;
 		}
-		tmp[i] = -2;
+		tmp[i] = EOL;
 		free(list->mini_tok);
 		list->mini_tok = tmp;
 	}
@@ -427,20 +427,20 @@ void	transpose_arg(t_tokens *list, int length, int start, int val)
 	{
 		list->mini_tok = malloc(sizeof(int) * 2);
 		list->mini_tok[0] = val;
-		list->mini_tok[1] = -2;
+		list->mini_tok[1] = EOL;
 	}
 	else
 	{
-		while (list->mini_tok[i] != -2)
+		while (list->mini_tok[i] != EOL)
 			i++;
 		tmp = malloc(sizeof(int) * (i + 2));
 		i = 0;
-		while (list->mini_tok[i] != -2)
+		while (list->mini_tok[i] != EOL)
 		{
 			tmp[i] = list->mini_tok[i];
 			i++;
 		}
-		tmp[i] = -2;
+		tmp[i] = EOL;
 		free(list->mini_tok);
 		list->mini_tok = tmp;
 	}
