@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:04:58 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/18 17:46:53 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	*make_red_op(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == OTHER)
+		while (input[i] != ' ' && input[i]) //&& arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
@@ -238,7 +238,7 @@ int	*make_red_ip(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == OTHER)
+		while (input[i] != ' ' && input[i]) //arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}

@@ -6,11 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2023/04/18 15:09:31 by avon-ben      ########   odam.nl         */
-=======
-/*   Updated: 2023/04/17 19:11:15 by jbax          ########   odam.nl         */
->>>>>>> 627fdc9ccd420b41a58bad532b210856633410ff
+/*   Updated: 2023/04/18 15:53:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +182,7 @@ int			*calloc_array(int len, int type);
 int			*ms_arrdup(int *arr, int len);
 void		free_list(t_tokens *list);
 void		transpose_file(t_tokens *list, int length, int start, int val);
-void		transpose_arg(t_tokens *list, int length, int start, int val);
+void		transpose_arg(t_tokens *list, int length, int start);
 t_tokens	*check_for_commands(t_tokens *list);
 char		**arg_splitter(char **args, int i, int start, int end);
 int			count_args(char **args);
