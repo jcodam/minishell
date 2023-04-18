@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:06:20 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/18 15:09:25 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list->args = 0;
 	list->files = 0;
 	list->mini_tok = 0;
+	//list = revert_quotes(list);
 	list = split_on_amps(list);
 	list = split_on_or(list);
 	list = split_on_pipes(list);
@@ -70,7 +71,6 @@ int	*tokanize(char *input, int *arr)
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);
 		arr = check_commands(input, arr);
-		//arr = revert_quotes(input, arr);
 		if (arr)
 			return (arr);
 	}
@@ -245,8 +245,6 @@ void	split_on_flags(t_tokens *list, int i)
 	{
 		list->args = ft_split(list->content, ' ');
 		list = list->next;
-		
-		// 
 	}
 }
 
@@ -354,3 +352,76 @@ void update_mini_tok(t_tokens *list, int i, int val)
 	free(list->mini_tok);
 	list->mini_tok = new;
 }
+
+// t_tokens *revert_quotes(t_tokens *list)
+// {
+// 	if (find_tokens(list->tokens, QUOTE_DL))
+// 		revert_quotes_dl(list);
+// 	if (find_tokens(list->tokens, QUOTE_SL))
+		
+// }
+
+
+// int find_tokens(int *arr, int token)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (arr[i] != token && arr[i] != EOL)
+// 		i++;
+// 	return (i);
+// }
+
+// void revert_quotes_sl(t_tokens *list)
+// {
+// 	int i;
+
+// 	while (list)
+// 	{
+// 		if (i = find_tokens(list->tokens, QUOTE_SL))
+// 		{
+			
+// 		}
+			
+// 	}
+// }	
+
+// void revert_quotes_dl(t_tokens *list, int *arr)
+// {
+// 	int i;
+
+// 	while (list)
+// 	{
+// 		if (i = find_tokens(list->tokens, QUOTE_DL))
+// 		{
+			
+// 		}
+			
+// 	}
+// }	
+
+// remove_from_content(t_tokens* list, int place)
+// {
+// 	size_t len;
+// 	size_t i;
+	
+	
+// 	i = 0;
+// 	while(i < len)
+// 	{
+		
+// 	}
+	
+// }
+
+// t_tokens *pop_start_end(t_tokens *list, int start, int end)
+// {
+// 	int i;
+// 	int len; 
+// 	int *new_arr;
+
+
+// 	i = 0;
+// 	len = ft_strlen(list->content)
+
+// }

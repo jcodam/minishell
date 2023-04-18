@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/17 14:20:57 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/18 15:09:31 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,6 @@ void		update_mini_tok(t_tokens *list, int i, int val);
 void		split_between_flags(t_tokens *list, int i);
 void		free_arr_null(char ***ptr);
 void		free_str_null(char **ptr);
-
+//int 		find_tokens(int *arr, int token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 19:08:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/18 15:16:34 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,7 @@ t_tokens *find_args(t_tokens *list)
 			if (list->tokens[i] >= COMMAND)
 			{
 				i = cut_to_args(list, i, list->tokens[i]);
+				printf("i: %d\n", i);
 			}
 			i++;
 		}
@@ -320,11 +321,13 @@ int	cut_to_args(t_tokens *list, int i, int val)
 		length++;
 		i++;
 	}
+	if (i > 0)
+		i = i -1;
 	if (!list->args)
 		transpose_arg(list, length, start, val);
 	else if (list->args)
 		add_in_node_arg(list, length, i);
-	return (i - 1);
+	return (i);
 }
 
 t_tokens *find_files(t_tokens *list)
@@ -336,7 +339,8 @@ t_tokens *find_files(t_tokens *list)
 	tmp = list;
 	while (list)
 	{
-		while (list->content[i] && list->tokens[i] != EOL)
+		//while (list->content[i] && list->tokens[i] != EOL)
+		while (list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] <= \
 			REDIRECT_APPEND)
@@ -421,7 +425,7 @@ void	transpose_arg(t_tokens *list, int length, int start, int val)
 	if (list->args)
 		free(list->args);
 	list->args = malloc(sizeof(char *) * 2);
-	list->args[0] = ft_substr(list->content, start, (length + 1));
+	list->args[0] = ft_substr(list->content, start, (length - 1));
 	list->args[1] = 0;
 	if (!list->mini_tok)
 	{
