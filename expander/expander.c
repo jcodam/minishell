@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expender.c                                         :+:    :+:            */
+/*   expander.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 18:43:15 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/17 19:53:13 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,11 @@ static char	**expand_wildcard(char **arr)
 
 char	**arr_expander(char **arr, char **env)
 {
+	if (!arr || !*arr)
+		return (arr);
 	arr = expend_vars(arr, env);
-	ft_putendl_fd("var complete", 1);
 	arr = expand_wildcard(arr);
-	ft_putendl_fd("wildcard complete", 1);
 	arr = expend_quotes(arr);
-	ft_putendl_fd("quote complete", 1);
 	return (arr);
 }
 
