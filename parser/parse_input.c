@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:16:54 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 18:28:54 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,21 +153,10 @@ int	*label_vals(int start, int end, int *arr, int sig)
 t_tokens *check_for_commands(t_tokens *list)
 {
 	int			i;
-	t_tokens	*tmp;
 
-	tmp = list;
 	i = 0;
-	while (list)
-	{
-		while (list->args[i])
-		{
-			split_on_flags(list, i);
-			i++;
-		}
-		i = 0;
-		list = list->next;
-	}
-	return (tmp);
+	split_on_flags(list, i);
+	return (list);
 }
 
 void	split_between_flags(t_tokens *list, int i)
@@ -231,13 +220,28 @@ void	split_between_flags(t_tokens *list, int i)
 
 void	split_on_flags(t_tokens *list, int i)
 {
+	char	**temp;
+	char	**temp1;
+	int		j;
+
+	temp1 = NULL;
+	j = 0;
 	i = 0;
-	
 	while (list)
 	{
-		ft_putendl_fd(list->content, 1);
-		list->args = split_quote(list->content, ' ');
+		while (list->args[i])
+		{
+			temp = split_quote(list->args[i], ' ');
+			while (temp[j])
+			{
+				temp1 = ft_arradd_index(temp1, temp[j], ft_arrlen_c(temp1));
+				j++;
+			}
+			i++;
+		}
+		list->args = temp1;
 		ft_putarrs_fd(list->args, 1);
+		print_all_tokens(list);
 		list = list->next;
 	}
 }

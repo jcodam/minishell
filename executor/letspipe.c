@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/18 17:29:06 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 18:25:50 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/all.h"
 #include "../headers/signal_list.h"
 
-int	what_cmd1(char **args, t_super *super, int pipes, int fd);
+int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes, int fd);
 
 static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 {
@@ -46,7 +46,7 @@ void	rrr(t_tokens *bigdata, t_super *super, int *pipefd, int readfd)
 	if (bigdata->next && bigdata->next->log_op == OPP_PIPE)
 		dup2(pipefd[1], 1);
 	// stage_files(bigdata->files, bigdata->tokens);
-	error = what_cmd1(bigdata->args, super, 1, 1);
+	error = what_cmd1(bigdata, super, 1, 1);
 	close(pipefd[1]);
 	exit(error);
 }
@@ -98,7 +98,7 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 	if (!bigdata->next || bigdata->next->log_op != OPP_PIPE)
 	{
 		// stage_files(bigdata->files, bigdata->tokens);
-		what_cmd1(bigdata->args, super, 0, 1);
+		what_cmd1(bigdata, super, 0, 1);
 		dup2(stdio[1], 1);
 		dup2(stdio[0], 0);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 16:47:17 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/19 18:32:38 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,7 +492,7 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 	j = 0;
 	while (list->args[j])
 	{
-		ft_strlcpy(tmp_args[j], list->args[j], ft_strlen(list->args[j]));
+		tmp_args[j] = ft_strdup(list->args[j]);
 		j++;
 	}
 	tmp_args[j] = ft_substr(list->content, i, length);

@@ -6,7 +6,7 @@
 /*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/08 13:06:25 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 16:57:48 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 18:02:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**split_quote(char *s, char c)
 	{
 		if (len[1])
 		{
-			dest = add_arr_split(dest, s, len[0], len[1]);
+			dest = add_arr_split(dest, s, len[0], len[1] - 1);
 			if (!dest)
 				return (NULL);
 		}
@@ -74,7 +74,7 @@ char	**split_quote(char *s, char c)
 		len[1] = dellim_index(&s[len[0]], c);
 	}
 	if (s[len[0]])
-		dest = add_arr_split(dest, s, len[0], len[1]);
+		dest = add_arr_split(dest, s, len[0], ft_strlen(s));
 	if (!dest)
 		return (NULL);
 	return (dest);
