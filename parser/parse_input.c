@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/18 15:09:25 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/19 16:52:15 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list->args = 0;
 	list->files = 0;
 	list->mini_tok = 0;
-	//list = revert_quotes(list);
 	list = split_on_amps(list);
 	list = split_on_or(list);
 	list = split_on_pipes(list);
@@ -58,7 +57,6 @@ t_tokens	*main_loop(char *input)
 	list->content = 0;
 	list->next = 0;
 	list = primary_split(input, arr, list);
-	//list = split_into_list(input, arr, list);
 	return (list);
 }
 
@@ -161,16 +159,10 @@ t_tokens *check_for_commands(t_tokens *list)
 	i = 0;
 	while (list)
 	{
-		if (list->mini_tok)
+		while (list->args[i])
 		{
-			while (list->mini_tok[i] != -2)
-			{
-				if (list->mini_tok[i] == COMMAND)
-					split_on_flags(list, i);
-				else if (list->mini_tok[i] == FLAGS)
-					split_between_flags(list, i);
-				i++;
-			}
+			split_on_flags(list, i);
+			i++;
 		}
 		i = 0;
 		list = list->next;

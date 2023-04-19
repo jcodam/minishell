@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/18 19:20:15 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/19 16:47:17 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,13 +367,17 @@ int	cut_to_files(t_tokens *list, int i, int val)
 
 	length = 0;
 	start = i;
+	printf("%s: i = %d\n", __func__, i);
 	while (list->tokens[i] >= val && !ft_strchr("<>", list->content[i]))
 	{
 		length++;
 		i++;
 	}
 	if (i > 0)
+	{
+		length = length - 1;
 		i = i - 1;
+	}
 	if (!list->files)
 	{
 		printf("new_files\n");
@@ -382,15 +386,36 @@ int	cut_to_files(t_tokens *list, int i, int val)
 	else if (list->files)
 	{
 		printf("files already exists\n");
-		add_in_node_file(list, length, i);
+		add_in_node_file(list, length, start);
+		attach_token(list, start);
 	}
 	return (i);
+}
+
+void	attach_token(t_tokens *list, int place)
+{
+	int	*tmp;
+	int	i;
+
+	i = 0;
+	while (list->mini_tok[i] != EOL)
+			i++;
+	tmp = malloc(sizeof(int) * (i + 2));
+	i = 0;
+	while (list->mini_tok[i] != EOL)
+	{
+		tmp[i] = list->mini_tok[i];
+		i++;
+	}
+	tmp[i] = list->tokens[place];
+	tmp[i + 1] = EOL;
+	free(list->mini_tok);
+	list->mini_tok = tmp;
 }
 
 void	transpose_file(t_tokens *list, int length, int start, int val)
 {	
 	int	i;
-	int	*tmp;
 
 	i = 0;
 	if (list->files)
@@ -405,26 +430,12 @@ void	transpose_file(t_tokens *list, int length, int start, int val)
 		list->mini_tok[1] = EOL;
 	}
 	else
-	{
-		while (list->mini_tok[i] != EOL)
-			i++;
-		tmp = malloc(sizeof(int) * (i + 2));
-		i = 0;
-		while (list->mini_tok[i] != EOL)
-		{
-			tmp[i] = list->mini_tok[i];
-			i++;
-		}
-		tmp[i] = EOL;
-		free(list->mini_tok);
-		list->mini_tok = tmp;
-	}
+		attach_token(list, start);
 }
 
 void	transpose_arg(t_tokens *list, int length, int start)
 {
 	int	i;
-	//int	*tmp;
 
 	i = 0;
 	if (list->args)
@@ -435,27 +446,6 @@ void	transpose_arg(t_tokens *list, int length, int start)
 	list->args = malloc(sizeof(char *) * 2);
 	list->args[0] = ft_substr(list->content, start, (length - 1));
 	list->args[1] = 0;
-	// if (!list->mini_tok)
-	// {
-	// 	list->mini_tok = malloc(sizeof(int) * 2);
-	// 	list->mini_tok[0] = val;
-	// 	list->mini_tok[1] = EOL;
-	// }
-	// else
-	// {
-	// 	while (list->mini_tok[i] != EOL)
-	// 		i++;
-	// 	tmp = malloc(sizeof(int) * (i + 2));
-	// 	i = 0;
-	// 	while (list->mini_tok[i] != EOL)
-	// 	{
-	// 		tmp[i] = list->mini_tok[i];
-	// 		i++;
-	// 	}
-	// 	tmp[i] = EOL;
-	// 	free(list->mini_tok);
-	// 	list->mini_tok = tmp;
-	// }
 }
 
 void	add_in_node_file(t_tokens *list, int length, int i)
@@ -470,11 +460,17 @@ void	add_in_node_file(t_tokens *list, int length, int i)
 	j = 0;
 	while (list->files[j])
 	{
-		ft_strlcpy(tmp_files[j], list->files[j], ft_strlen(list->files[j]));
+		tmp_files[j] = ft_strdup(list->files[j]);
 		j++;
 	}
+	tmp_files[j] = malloc(sizeof(char) * (length + 1));
 	tmp_files[j] = ft_substr(list->content, i, length);
 	tmp_files[j + 1] = NULL;
+	j = 0;
+	while (tmp_files[j])
+	{
+		j++;
+	}
 	j = 0;
 	while (list->files[j])
 	{
@@ -492,7 +488,6 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 	j = 0;
 	while (list->args[j])
 		j++;
-	//printf("j: %d\n", j);
 	tmp_args = malloc(sizeof(char *) * (j + 2));
 	j = 0;
 	while (list->args[j])
@@ -513,7 +508,6 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 
 void free_arr_null(char ***ptr)
 {
-	
 	free(**ptr);
 	**ptr = 0;
 }
