@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:04:58 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/19 15:08:56 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	*make_red_op(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == OTHER)
+		while (input[i] != ' ' && input[i]) //&& arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
@@ -238,7 +238,7 @@ int	*make_red_ip(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && arr[i] == OTHER)
+		while (input[i] != ' ' && input[i]) //arr[i] == OTHER)
 			arr[i++] = val;
 		done = 1;
 	}
@@ -247,7 +247,7 @@ int	*make_red_ip(char *input, int *arr, int i)
 
 int pipe_checker(char *input, int i)
 {
-	if (!input[i + 1])
+	if (!input[i + 1] || !is_empty(&input[i + 1]))
 	{
 		write(2, "Minishell: syntax error near unexpected token `newline'\n", \
 		56);
@@ -257,7 +257,7 @@ int pipe_checker(char *input, int i)
 	i++;
 	while (input[i] == ' ')
 		i++;
-	if (input[i] == '|')
+	if (input[i] == '|')// all operators
 	{
 		write(2, "Minishell: syntax error near unexpected token `|'\n", 50);
 		g_exit_code = 258;
