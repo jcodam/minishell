@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 14:17:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/17 20:12:50 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/18 17:27:48 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,35 @@
 
 int	what_cmd2(t_tokens *bigdata, t_super *super);
 
-int	what(t_tokens *bigdata, t_super *super)
-{
-	what_cmd2(bigdata, super);
-	while (bigdata)
-	{
-		if (g_exit_code && bigdata->log_op == 2)
-		{
-			what_cmd2(bigdata, super);
-		}
-		bigdata = bigdata->next;
-	}
-	return (1);
-}
+// int	what(t_tokens *bigdata, t_super *super)
+// {
+// 	what_cmd2(bigdata, super);
+// 	bigdata = bigdata->next;
+// 	while (bigdata)
+// 	{
+// 		if (g_exit_code && bigdata->log_op == OPP_OR)
+// 		{
+// 			what_cmd2(bigdata, super);
+// 		}
+// 		bigdata = bigdata->next;
+// 	}
+// 	return (1);
+// }
 
+	// // ft_putarrs_fd(bigdata->args, 1);
+	// bigdata->args = arr_expander(bigdata->args, super->env, 0);
+	// // ft_putarrs_fd(bigdata->files, 1);
+	// bigdata->files = arr_expander(bigdata->files, super->env, 1);
 int	what_cmd(t_tokens *bigdata, t_super *super)
 {
-	// ft_putarrs_fd(bigdata->args, 1);
-	bigdata->args = arr_expander(bigdata->args, super->env);
-	// ft_putarrs_fd(bigdata->files, 1);
-	bigdata->files = arr_expander(bigdata->files, super->env);
+	what_cmd2(bigdata, super);
+	bigdata = bigdata->next;
 	while (bigdata)
 	{
-		if (bigdata->log_op == 1)
-			what(bigdata, super);
+		if (!g_exit_code && bigdata->log_op == OPP_AND)
+			what_cmd2(bigdata, super);
+		if (g_exit_code && bigdata->log_op == OPP_OR)
+			what_cmd2(bigdata, super);
 		bigdata = bigdata->next;
 	}
 	(void)super;

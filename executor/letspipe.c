@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/17 18:14:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/18 17:29:06 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,12 @@
 
 int	what_cmd1(char **args, t_super *super, int pipes, int fd);
 
-int	stage_files(char **files, int *tokens)
-{
-	int	index;
-
-	index = 0;
-	while (files && files[index])
-	{
-		if (tokens[index] == REDIRECT_IP || tokens[index] == RD_TIL_DELIM)
-			setfd_read(files[index]);
-		else if (tokens[index] == REDIRECT_OP)
-			setfd_write(files[index]);
-		else if (tokens[index] == REDIRECT_APPEND)
-			setfd_append(files[index]);
-		index++;
-	}
-	return (0);
-}
-
 static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 {
 	int	last_pipe;
 
 	last_pipe = 0;
-	if (!bigdata->next || bigdata->next->log_op != 3)
+	if (!bigdata->next || bigdata->next->log_op != OPP_PIPE)
 		last_pipe = 1;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
@@ -61,9 +43,9 @@ void	rrr(t_tokens *bigdata, t_super *super, int *pipefd, int readfd)
 	reset_signal();
 	close(pipefd[0]);
 	dup2(readfd, 0);
-	if (bigdata->next && bigdata->next->log_op == 3)
+	if (bigdata->next && bigdata->next->log_op == OPP_PIPE)
 		dup2(pipefd[1], 1);
-	stage_files(bigdata->files, bigdata->tokens);
+	// stage_files(bigdata->files, bigdata->tokens);
 	error = what_cmd1(bigdata->args, super, 1, 1);
 	close(pipefd[1]);
 	exit(error);
@@ -94,7 +76,7 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 		rrr(bigdata, super, pipefd, readfd);
 	}
 	close(pipefd[1]);
-	if (bigdata->next && bigdata->next->log_op == 3)
+	if (bigdata->next && bigdata->next->log_op == OPP_PIPE)
 		mk_pipes(bigdata->next, pipefd[0], super);
 	close(pipefd[0]);
 	pid = waitpid(pid, &error, WCONTINUED);
@@ -113,9 +95,9 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 		stdio[1] = dup(1);
 		stdio[0] = dup(0);
 	}
-	if (!bigdata->next || bigdata->next->log_op != 3)
+	if (!bigdata->next || bigdata->next->log_op != OPP_PIPE)
 	{
-		stage_files(bigdata->files, bigdata->tokens);
+		// stage_files(bigdata->files, bigdata->tokens);
 		what_cmd1(bigdata->args, super, 0, 1);
 		dup2(stdio[1], 1);
 		dup2(stdio[0], 0);

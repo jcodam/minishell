@@ -6,11 +6,29 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 14:42:42 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/18 17:31:47 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+int	stage_files(char **files, int *tokens)
+{
+	int	index;
+
+	index = 0;
+	while (files && files[index])
+	{
+		if (tokens[index] == REDIRECT_IP || tokens[index] == RD_TIL_DELIM)
+			setfd_read(files[index]);
+		else if (tokens[index] == REDIRECT_OP)
+			setfd_write(files[index]);
+		else if (tokens[index] == REDIRECT_APPEND)
+			setfd_append(files[index]);
+		index++;
+	}
+	return (0);
+}
 
 static int	look_for_cmd(char *line, int *found, char *commend)
 {
@@ -65,13 +83,13 @@ static int	lookcmd(char **args, t_super *super, int *found, int fd)
 	return (0);
 }
 
-int	what_cmd1(char **args, t_super *super, int pipes, int fd)
+int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 {
 	int	found;
 
 	found = 0;
 	if (!args || !*args)
-		return (0);
+		return (1);
 	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
 	{
 		printf("%d\n", g_exit_code);
@@ -84,6 +102,23 @@ int	what_cmd1(char **args, t_super *super, int pipes, int fd)
 		ft_othercmd(args, super, pipes, fd);
 	return (found);
 }
+
+	// ft_putarrs_fd(bigdata->args, 1);
+	// ft_putarrs_fd(bigdata->files, 1);
+int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
+{
+	bigdata->args = arr_expander(bigdata->args, super->env, 0);
+	if (bigdata->files)
+	{
+		bigdata->files = arr_expander(bigdata->files, super->env, 1);
+		if (!bigdata->files)
+			return (1);
+	}
+	stage_files(bigdata->files, bigdata->mini_tok);
+	return (what_cmd3(bigdata->args, super, pipes, 1));
+
+}
+
 	// if (!found && look_for_cmd(*args, &found, "var") 
 	// && ft_arrlen_c(args) == 2)
 	// 	printf("%s\n", ft_getvar(args[1], super->env));

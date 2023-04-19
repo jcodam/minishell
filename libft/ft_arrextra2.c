@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/26 14:26:27 by jbax          #+#    #+#                 */
-/*   Updated: 2023/01/26 18:01:02 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 15:49:41 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**ft_arradd_index(char **arr, char *s, int index)
 	dest = malloc((ft_arrlen_c(arr) + 2) * sizeof(char *));
 	if (!dest)
 		return (NULL);
-	while (arr[count])
+	while (arr && arr[count])
 	{
 		if (count == index)
 		{

@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/17 18:06:30 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/04/19 16:18:26 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME= minishell
 SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty.c\
 	echo.c export.c environment.c unset.c exit.c execve.c expander.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c expand_quotes.c expand_vars.c\
+	split_not_quote.c\
 	parse_input.c parse_quotes.c parsing_list.c\
 	parsing_tools.c tokanize_tools.c fill_node.c\
 	list.c parse_splitter.c
@@ -80,4 +81,3 @@ Norm: $(SRC) $(HEADER)
 	norminette $^
 
 .PHONY: all re fclean clean f norm
-

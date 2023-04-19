@@ -6,11 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2023/04/18 15:09:31 by avon-ben      ########   odam.nl         */
-=======
-/*   Updated: 2023/04/17 19:11:15 by jbax          ########   odam.nl         */
->>>>>>> 627fdc9ccd420b41a58bad532b210856633410ff
+/*   Updated: 2023/04/19 16:20:30 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +71,7 @@ t_tokens	*init_list(void);
 //t_tokens	*new_node(char *input);
 
 char		**copy_env(char **env);
+char		**split_quote(char const *s, char c);
 /* splits the string in a malloc'ed copy of the content 
 of the env string */
 char		*ft_env_content(char *env);
@@ -97,7 +94,7 @@ t_list		*get_wildcard(char *wild);
 void		exit_errbug(char *error, char *debug);
 int			tmpfileswitch(char **line);
 int			is_empty(char *line);
-char		**arr_expander(char **arr, char **env);
+char		**arr_expander(char **arr, char **env, int is_file);
 /* eoh wil be freed and is expected to only have the rellevand data
 so use substring
 eoh = end of heredoc (the string that ends the heredoc)

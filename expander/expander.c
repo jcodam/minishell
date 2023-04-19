@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/17 19:53:13 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 16:23:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	**add_list_to_arr(t_list *list, char **arr, int *index)
 	return (arr);
 }
 
-static char	**expand_wildcard(char **arr)
+static char	**expand_wildcard(char **arr, int *file_error, int is_file)
 {
 	int		index;
 	int		has_wildcard;
@@ -67,6 +67,10 @@ static char	**expand_wildcard(char **arr)
 		if (has_wildcard > -1)
 		{
 			head = get_wildcard(arr[index]);
+			if (is_file && !head && *file_error == -1)
+				*file_error = index;
+			if (is_file && head && ft_lstsize(head) != 1 && *file_error == -1)
+				*file_error = index;
 			arr = ft_arrdell_index(arr, index, free);
 			arr = add_list_to_arr(head, arr, &index);
 			index--;
@@ -77,49 +81,28 @@ static char	**expand_wildcard(char **arr)
 	return (arr);
 }
 
-char	**arr_expander(char **arr, char **env)
+char	**arr_expander(char **arr, char **env, int is_file)
 {
+	char	**temp;
+	int		file_error;
+
+	file_error = -1;
 	if (!arr || !*arr)
 		return (arr);
+	if (is_file)
+		temp = ft_arrdup_c(arr, ft_arrlen_c(arr));
 	arr = expend_vars(arr, env);
-	arr = expand_wildcard(arr);
+	arr = expand_wildcard(arr, &file_error, is_file);
+	if (is_file && file_error > -1)
+	{
+		printf("bash: %s: ambiguous redirect", temp[file_error]);
+		g_exit_code = 1;
+		ft_arrclear_c(temp, ft_arrlen_c(temp));
+		ft_arrclear_c(arr, ft_arrlen_c(arr));
+		return (NULL);
+	}
 	arr = expend_quotes(arr);
 	return (arr);
 }
 
-// void	ex(void)
-// {
-// 	system("leaks -q a.out");
-// }
-
-// int main(int argc, char const *argv[], char **envp)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	(void)envp;
-// 	char **arr;
-// 	char **env;
-// 	char *line;
-// 	int i = 0;
-// 	// t_list *head = NULL;
-// 	// atexit(ex);
-// 	// head = get_wildcard("e*");
-// 	// ft_lstputs_fd(head->next, 1);
-// 	g_exit_code = 42;
-// 	arr = malloc(1 * sizeof(char *));
-// 	arr[0] = 0;
-// 	env = ft_arrdup_c(envp, ft_arrlen_c(envp));
-// 	while (i < 3)
-// 	{
-// 		line = read_the_line();
-// 		arr = ft_arradd_index(arr, line, i);
-// 		i++;
-// 	}
-// 	ft_putarrs_fd(arr, 1);
-// 	arr = arr_expander(arr, env);
-// 	ft_putarrs_fd(arr, 1);
-// 	ft_arrclear_c(arr, ft_arrlen_c(arr));
-// 	ft_arrclear_c(env, ft_arrlen_c(env));
-// 	// system("leaks -q a.out");
-// 	return 0;
-// }
+// bash: temp[int]: ambiguous redirect
