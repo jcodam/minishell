@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/24 16:12:56 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 15:54:34 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 17:25:50 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_arrlen_c(char **arr)
 	size_t	count;
 
 	count = 0;
-	while (arr && arr[count] != '\0')
+	while (arr && arr[count])
 		count++;
 	return (count);
 }

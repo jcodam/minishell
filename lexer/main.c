@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 16:59:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 18:05:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,13 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
+		print_all_tokens(splitted);
+		exit (0);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		// print_all_tokens(splitted);
 		free_list(splitted);
 	}
 	(void)splitted;

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:16:54 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/19 18:08:26 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	trim_spaces(list);
 	list = find_files(list);
 	list = find_args(list);
-	list = check_for_commands(list);
+	list = split_on_flags(list);
 	return (list);
 }
 
@@ -150,56 +150,55 @@ int	*label_vals(int start, int end, int *arr, int sig)
 	return (arr);
 }
 
-t_tokens *check_for_commands(t_tokens *list)
-{
-	int			i;
-	t_tokens	*tmp;
+// t_tokens *check_for_commands(t_tokens *list)
+// {
+// 	//int			i;
+// 	//t_tokens	*tmp;
 
-	tmp = list;
-	i = 0;
-	while (list)
-	{
-		while (list->args[i])
-		{
-			split_on_flags(list, i);
-			i++;
-		}
-		i = 0;
-		list = list->next;
-	}
-	return (tmp);
-}
+// 	//tmp = list;
+// 	//i = 0;
+	
+// 	split_on_flags(list);
+// 	// while (list)
+// 	// {
+// 	// 	while (list->args[i])
+// 	// 	{
+// 	// 		split_on_flags(list, i);
+// 	// 		i++;
+// 	// 	}
+// 	// 	i = 0;
+// 	// 	list = list->next;
+// 	// }
+// 	return (list);
+// }
 
-void	split_between_flags(t_tokens *list, int i)
-{
-	int	end;
-	int	start;
+// void	split_between_flags(t_tokens *list, int i)
+// {
+// 	int	end;
+// 	int	start;
 
-	start = 0;
-	end = 0;
-	while (list->args[i][start] != ' ' && list->args[i][start])
-		start++;
-	while (list->args[i][start] && list->args[i][start] == ' ' \
-	&& list->mini_tok[start] != -2)
-		start++;
-	if (list->args[i][start] == '-')
-	{
-		if (list->args[i][start + 1] == '-')
-		{
-			printf("syntax error");
-		}
-		end = start;
-		while (list->args[i][end] != ' ' && list->args[i][end])
-			end++;
-		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
-		list->args = arg_splitter(list->args, i, start, end);
-		update_mini_tok(list, i, FLAGS);
-	}
-}
+// 	start = 0;
+// 	end = 0;
+// 	while (list->args[i][start] != ' ' && list->args[i][start])
+// 		start++;
+// 	while (list->args[i][start] && list->args[i][start] == ' ' \
+// 	&& list->mini_tok[start] != -2)
+// 		start++;
+// 	if (list->args[i][start] == '-')
+// 	{
+// 		if (list->args[i][start + 1] == '-')
+// 		{
+// 			printf("syntax error");
+// 		}
+// 		end = start;
+// 		while (list->args[i][end] != ' ' && list->args[i][end])
+// 			end++;
+// 		//printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+// 		list->args = arg_splitter(list->args, i, start, end);
+// 		update_mini_tok(list, i, FLAGS);
+// 	}
+// }
 
-//generating a heap overflow
-//also, change so that we are just splitting on spaces;
-//should simply split on spaces if not a file.
 // void	split_on_flags(t_tokens *list, int i)
 // {
 // 	int	end;
@@ -229,17 +228,20 @@ void	split_between_flags(t_tokens *list, int i)
 // 	}
 // }
 
-void	split_on_flags(t_tokens *list, int i)
+t_tokens	*split_on_flags(t_tokens *list)
 {
-	i = 0;
+	int i;
+	t_tokens *tmp;
 	
+	tmp = list;
+	i = 0;
 	while (list)
 	{
-		ft_putendl_fd(list->content, 1);
-		list->args = split_quote(list->content, ' ');
+		list->args = split_quote(list->args[i], ' ');
 		ft_putarrs_fd(list->args, 1);
 		list = list->next;
 	}
+	return (tmp);
 }
 
 char	**arg_splitter(char **args, int i, int start, int end)
@@ -275,11 +277,7 @@ char	**arg_splitter(char **args, int i, int start, int end)
 	}
 	j = 0;
 	while (tmp_args[j])
-	{
-		printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
 		j++;
-	}
-	printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
 	free (args);
 	return (tmp_args);
 }
@@ -346,76 +344,3 @@ void update_mini_tok(t_tokens *list, int i, int val)
 	free(list->mini_tok);
 	list->mini_tok = new;
 }
-
-// t_tokens *revert_quotes(t_tokens *list)
-// {
-// 	if (find_tokens(list->tokens, QUOTE_DL))
-// 		revert_quotes_dl(list);
-// 	if (find_tokens(list->tokens, QUOTE_SL))
-		
-// }
-
-
-// int find_tokens(int *arr, int token)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (arr[i] != token && arr[i] != EOL)
-// 		i++;
-// 	return (i);
-// }
-
-// void revert_quotes_sl(t_tokens *list)
-// {
-// 	int i;
-
-// 	while (list)
-// 	{
-// 		if (i = find_tokens(list->tokens, QUOTE_SL))
-// 		{
-			
-// 		}
-			
-// 	}
-// }	
-
-// void revert_quotes_dl(t_tokens *list, int *arr)
-// {
-// 	int i;
-
-// 	while (list)
-// 	{
-// 		if (i = find_tokens(list->tokens, QUOTE_DL))
-// 		{
-			
-// 		}
-			
-// 	}
-// }	
-
-// remove_from_content(t_tokens* list, int place)
-// {
-// 	size_t len;
-// 	size_t i;
-	
-	
-// 	i = 0;
-// 	while(i < len)
-// 	{
-		
-// 	}
-	
-// }
-
-// t_tokens *pop_start_end(t_tokens *list, int start, int end)
-// {
-// 	int i;
-// 	int len; 
-// 	int *new_arr;
-
-
-// 	i = 0;
-// 	len = ft_strlen(list->content)
-
-// }
