@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/14 16:39:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 18:49:36 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	hor_pos(void)
 	if (!i)
 	{
 		tcsetattr(0, TCSANOW, &restore);
-		fprintf(stderr, "getpos: error reading response!\n");
+		write(2, "getpos: error reading response!\n", 32);
 		return (0);
 	}
 	tcsetattr(0, TCSANOW, &restore);

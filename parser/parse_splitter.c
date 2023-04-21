@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:32:38 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 18:48:02 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ t_tokens *find_args(t_tokens *list)
 			if (list->tokens[i] >= COMMAND)
 			{
 				i = cut_to_args(list, i, list->tokens[i]);
-				printf("i: %d\n", i);
+				// printf("i: %d\n", i);
 			}
 			i++;
 		}
@@ -314,9 +314,10 @@ int	cut_to_args(t_tokens *list, int i, int val)
 	int	length;
 	int	start;
 
+	(void)val;
 	length = 0;
 	start = i;
-	while (list->tokens[i] == val)
+	while (list->tokens[i] >= COMMAND && list->tokens[i] != FILE_T)
 	{
 		length++;
 		i++;
@@ -326,7 +327,7 @@ int	cut_to_args(t_tokens *list, int i, int val)
 	if (!list->args)
 		transpose_arg(list, length, start);
 	else if (list->args)
-		add_in_node_arg(list, length, i);
+		add_in_node_arg(list, length, start);
 	return (i);
 }
 
@@ -334,6 +335,8 @@ t_tokens *find_files(t_tokens *list)
 {
 	t_tokens	*tmp;
 	int			i;
+	int			j;
+	char		*filename;
 
 	i = 0;
 	tmp = list;
@@ -351,6 +354,20 @@ t_tokens *find_files(t_tokens *list)
 					i++;
 				if (list->content[i])
 					i = cut_to_files(list, i, list->tokens[i]);
+			}
+			else if (list->tokens[i] == RD_TIL_DELIM)
+			{
+				while (list->content[i] == '<' || list->content[i] == '>')
+					i++;
+				while (list->content[i] == ' ')
+					i++;
+				if (list->content[i])
+				{
+					i = cut_to_files(list, i, list->tokens[i]);
+					j = ft_arrlen_c(list->files) - 1;
+					filename = heredoc(list->files[j], 1);
+					list->files[j] = filename;
+				}
 			}
 			i++;
 		}

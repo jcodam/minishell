@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/21 15:23:59 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 18:41:40 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = find_files(list);
 	list = find_args(list);
 	list = check_for_commands(list);
+	// print_all_tokens(list);
 	return (list);
 }
 
@@ -169,7 +170,7 @@ void	split_between_flags(t_tokens *list, int i)
 	while (list->args[i][start] != ' ' && list->args[i][start])
 		start++;
 	while (list->args[i][start] && list->args[i][start] == ' ' \
-	&& list->mini_tok[start] != -2)
+	&& list->mini_tok[start] != EOL)
 		start++;
 	if (list->args[i][start] == '-')
 	{
@@ -222,28 +223,36 @@ void	split_on_flags(t_tokens *list, int i)
 {
 	char	**temp;
 	char	**temp1;
+	t_tokens	*tmp;
 	int		j;
 
+	tmp = list;
 	temp1 = NULL;
 	j = 0;
 	i = 0;
 	while (list)
 	{
-		while (list->args[i])
+		while (list->args && list->args[i])
 		{
 			temp = split_quote(list->args[i], ' ');
+			// ft_putarrs_fd(temp, 1);
 			while (temp[j])
 			{
 				temp1 = ft_arradd_index(temp1, temp[j], ft_arrlen_c(temp1));
 				j++;
 			}
+			free(temp);
+			temp = 0;
+			j = 0;
 			i++;
 		}
+		i = 0;
 		list->args = temp1;
-	// ft_putarrs_fd(list->args, 1);
-		// print_all_tokens(list);	
+		temp1 = 0;
 		list = list->next;
 	}
+	// ft_putarrs_fd(tmp->args, 1);
+	// 	print_all_tokens(list);
 }
 // needs freeing
 char	**arg_splitter(char **args, int i, int start, int end)

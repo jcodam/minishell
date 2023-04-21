@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:36:24 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 18:48:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,13 @@ int	print_all_tokens(t_tokens *list)
 		{
 			while (tmp->files[i])
 			{
-				printf("i: %d\n", i);
+				// printf("i: %d\n", i);
 				printf("file no. %d in node %d: [%s]\n", i, j, tmp->files[i]);
 				i++;
 			}
 		}
+		else
+			write(1, "no_files\n", 9);
 		i = 0;
 		if (tmp->args)
 		{
@@ -123,6 +125,8 @@ int	print_all_tokens(t_tokens *list)
 				i++;
 			}
 		}
+		else
+			write(1, "no_args\n", 9);
 		i = 0;
 		if (tmp->mini_tok)
 		{
@@ -136,7 +140,7 @@ int	print_all_tokens(t_tokens *list)
 		}
 		j++;
 		i++;
-		tmp = 0;
+		tmp = tmp->next;
 	}
 	return (1);
 }

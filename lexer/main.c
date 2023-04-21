@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/21 15:28:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 18:44:23 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,28 +99,41 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
+		// print_all_tokens(splitted);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		// print_all_tokens(splitted);
 		free_list(splitted);
 	}
 	(void)splitted;
 	return (0);
 }
 
+void	del_files(char **files, int *tokens)
+{
+	int	index;
+	int	error;
 
+	error = 0;
+	index = 0;
+	while (files && files[index])
+	{
+		if (tokens[index] == RD_TIL_DELIM)
+			error = unlink(files[index]);
+		if (error == -1)
+			write(2, "error cant del herdocfile\n", 26);
+		index++;
+	}
+}
 void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
 
-	print_all_tokens(list);
 	while (list)
 	{
 		tmp = list->next;
-	printf("test");
 		if (list->content)
 			free(list->content);
 		if (list->tokens)
@@ -129,6 +142,7 @@ void	free_list(t_tokens *list)
 		{
 			ft_arrclear_c(list->args, ft_arrlen_c(list->args));
 		}
+		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{
 			ft_arrclear_c(list->files, ft_arrlen_c(list->files));
