@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:28:54 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 15:23:59 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,12 +240,12 @@ void	split_on_flags(t_tokens *list, int i)
 			i++;
 		}
 		list->args = temp1;
-		ft_putarrs_fd(list->args, 1);
-		print_all_tokens(list);
+	// ft_putarrs_fd(list->args, 1);
+		// print_all_tokens(list);	
 		list = list->next;
 	}
 }
-
+// needs freeing
 char	**arg_splitter(char **args, int i, int start, int end)
 {
 	char	**tmp_args;

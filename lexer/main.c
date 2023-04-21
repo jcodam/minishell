@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 16:59:01 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 15:28:08 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,11 @@ void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
 
+	print_all_tokens(list);
 	while (list)
 	{
 		tmp = list->next;
+	printf("test");
 		if (list->content)
 			free(list->content);
 		if (list->tokens)
