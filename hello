@@ -1,8 +1,6 @@
 -echo $"HOME" = HOME !($HOME)
--exit needs to be tested
 -cd no arg need te go to home in env error if not home
 -command <> only input works output is ignored
 -command >< syntex error
 -hello|world = heap overflow  needs 2 command not found
 -moeten permision error infullen voor files 126
--exit - is alfanumber
