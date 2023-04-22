@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 16:47:17 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/20 18:43:51 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,14 +294,16 @@ t_tokens *find_args(t_tokens *list)
 	tmp = list;
 	while (list)
 	{
-		while (list->content[i] && list->tokens[i] != EOL)
+		//while (list->content[i] && (list->tokens[i] != EOL))
+		//while(list->content[i])
+		while (list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= COMMAND)
 			{
 				i = cut_to_args(list, i, list->tokens[i]);
-				printf("i: %d\n", i);
 			}
 			i++;
+		printf("i: %d\n", i);
 		}
 		i = 0;
 		list = list->next;
@@ -314,9 +316,10 @@ int	cut_to_args(t_tokens *list, int i, int val)
 	int	length;
 	int	start;
 
+	val = 0;
 	length = 0;
 	start = i;
-	while (list->tokens[i] == val)
+	while (list->tokens[i] >= COMMAND)
 	{
 		length++;
 		i++;
@@ -326,7 +329,7 @@ int	cut_to_args(t_tokens *list, int i, int val)
 	if (!list->args)
 		transpose_arg(list, length, start);
 	else if (list->args)
-		add_in_node_arg(list, length, i);
+		add_in_node_arg(list, length, start);
 	return (i);
 }
 
@@ -492,9 +495,10 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 	j = 0;
 	while (list->args[j])
 	{
-		ft_strlcpy(tmp_args[j], list->args[j], ft_strlen(list->args[j]));
+		tmp_args[j] = ft_strdup(list->args[j]);
 		j++;
 	}
+	tmp_args[j] = malloc(length + 1);
 	tmp_args[j] = ft_substr(list->content, i, length);
 	tmp_args[j + 1] = NULL;
 	j = 0;

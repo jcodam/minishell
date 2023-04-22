@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 18:05:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/20 18:36:53 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	main(int argc, char **argv, char **envp)
 		line = read_the_line();
 		splitted = main_loop(line);
 		print_all_tokens(splitted);
-		exit (0);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
@@ -111,7 +110,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }
-
 
 void	free_list(t_tokens *list)
 {
@@ -126,11 +124,11 @@ void	free_list(t_tokens *list)
 			free(list->tokens);
 		if (list->args)
 		{
-			ft_arrclear_c(list->args, ft_arrlen_c(list->args));
+			ft_arrclear_c(list->args, (ft_arrlen_c(list->args) - 1));
 		}
 		if (list->files)
 		{
-			ft_arrclear_c(list->files, ft_arrlen_c(list->files));
+			ft_arrclear_c(list->files, (ft_arrlen_c(list->files)));
 		}
 		if (list->mini_tok)
 			free(list->mini_tok);

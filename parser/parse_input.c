@@ -6,14 +6,14 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:08:26 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/21 16:25:37 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
 void		trim_spaces(t_tokens *list);
-int	label_quotess(char *str, int *arr);
+int			label_quotess(char *str, int *arr);
 
 void	print_list(t_tokens *list)
 {
@@ -37,8 +37,9 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = split_on_pipes(list);
 	trim_spaces(list);
 	list = find_files(list);
+	//print_all_tokens(list);
 	list = find_args(list);
-	list = split_on_flags(list);
+	split_on_flags(list);
 	return (list);
 }
 
@@ -152,96 +153,41 @@ int	*label_vals(int start, int end, int *arr, int sig)
 
 // t_tokens *check_for_commands(t_tokens *list)
 // {
-// 	//int			i;
-// 	//t_tokens	*tmp;
+// 	int			i;
 
-// 	//tmp = list;
-// 	//i = 0;
-	
+// 	i = 0;
 // 	split_on_flags(list);
-// 	// while (list)
-// 	// {
-// 	// 	while (list->args[i])
-// 	// 	{
-// 	// 		split_on_flags(list, i);
-// 	// 		i++;
-// 	// 	}
-// 	// 	i = 0;
-// 	// 	list = list->next;
-// 	// }
 // 	return (list);
 // }
 
-// void	split_between_flags(t_tokens *list, int i)
-// {
-// 	int	end;
-// 	int	start;
-
-// 	start = 0;
-// 	end = 0;
-// 	while (list->args[i][start] != ' ' && list->args[i][start])
-// 		start++;
-// 	while (list->args[i][start] && list->args[i][start] == ' ' \
-// 	&& list->mini_tok[start] != -2)
-// 		start++;
-// 	if (list->args[i][start] == '-')
-// 	{
-// 		if (list->args[i][start + 1] == '-')
-// 		{
-// 			printf("syntax error");
-// 		}
-// 		end = start;
-// 		while (list->args[i][end] != ' ' && list->args[i][end])
-// 			end++;
-// 		//printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
-// 		list->args = arg_splitter(list->args, i, start, end);
-// 		update_mini_tok(list, i, FLAGS);
-// 	}
-// }
-
-// void	split_on_flags(t_tokens *list, int i)
-// {
-// 	int	end;
-// 	int	start;
-
-// 	start = 0;
-// 	end = 0;
-// 	while (list->args[i][start] != ' ' && list->args[i][start])
-// 		start++;
-// 	//this does not make sense
-// 	while (list->args[i][start] && list->args[i][start] != '-' \
-// 	&& list->mini_tok[start] != -2)
-// 		start++;
-// 	if (list->args[i][start] == '-')
-// 	{
-// 		if (list->args[i][start + 1] == '-')
-// 		{
-// 			printf("syntax error");
-// 			//exit (0);
-// 		}
-// 		end = start;
-// 		while (list->args[i][end] != ' ' && list->args[i][end])
-// 			end++;
-// 		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
-// 		list->args = arg_splitter(list->args, i, start, end);
-// 		update_mini_tok(list, i, FLAGS);
-// 	}
-// }
-
-t_tokens	*split_on_flags(t_tokens *list)
+void	split_on_flags(t_tokens *list)
 {
-	int i;
-	t_tokens *tmp;
-	
-	tmp = list;
+	char	**temp;
+	char	**temp1;
+	int		j;
+	int 	i;
+
+	temp1 = NULL;
+	j = 0;
 	i = 0;
 	while (list)
 	{
-		list->args = split_quote(list->args[i], ' ');
+		print_array(list->tokens);
 		ft_putarrs_fd(list->args, 1);
+		while (list->args[i])
+		{
+			temp = split_quote(list->args[i], ' ');
+			ft_putarrs_fd(temp, 1);
+			while (temp && temp[j])
+			{
+				temp1 = ft_arradd_index(temp1, temp[j], ft_arrlen_c(temp1));
+				j++;
+			}
+			i++;
+		}
+		list->args = temp1;
 		list = list->next;
 	}
-	return (tmp);
 }
 
 char	**arg_splitter(char **args, int i, int start, int end)
@@ -344,3 +290,59 @@ void update_mini_tok(t_tokens *list, int i, int val)
 	free(list->mini_tok);
 	list->mini_tok = new;
 }
+
+// void	split_between_flags(t_tokens *list, int i)
+// {
+// 	int	end;
+// 	int	start;
+
+// 	start = 0;
+// 	end = 0;
+// 	while (list->args[i][start] != ' ' && list->args[i][start])
+// 		start++;
+// 	while (list->args[i][start] && list->args[i][start] == ' ' \
+// 	&& list->mini_tok[start] != -2)
+// 		start++;
+// 	if (list->args[i][start] == '-')
+// 	{
+// 		if (list->args[i][start + 1] == '-')
+// 		{
+// 			printf("syntax error");
+// 		}
+// 		end = start;
+// 		while (list->args[i][end] != ' ' && list->args[i][end])
+// 			end++;
+// 		//printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+// 		list->args = arg_splitter(list->args, i, start, end);
+// 		update_mini_tok(list, i, FLAGS);
+// 	}
+// }
+
+// void	split_on_flags(t_tokens *list, int i)
+// {
+// 	int	end;
+// 	int	start;
+
+// 	start = 0;
+// 	end = 0;
+// 	while (list->args[i][start] != ' ' && list->args[i][start])
+// 		start++;
+// 	//this does not make sense
+// 	while (list->args[i][start] && list->args[i][start] != '-' \
+// 	&& list->mini_tok[start] != -2)
+// 		start++;
+// 	if (list->args[i][start] == '-')
+// 	{
+// 		if (list->args[i][start + 1] == '-')
+// 		{
+// 			printf("syntax error");
+// 			//exit (0);
+// 		}
+// 		end = start;
+// 		while (list->args[i][end] != ' ' && list->args[i][end])
+// 			end++;
+// 		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
+// 		list->args = arg_splitter(list->args, i, start, end);
+// 		update_mini_tok(list, i, FLAGS);
+// 	}
+// }

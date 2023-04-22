@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 17:36:33 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/20 12:29:19 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 	// ft_putarrs_fd(bigdata->files, 1);
 int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 {
-	//print_all_tokens(bigdata);
 	bigdata->args = arr_expander(bigdata->args, super->env, 0);
 	if (bigdata->files)
 	{
@@ -117,7 +116,6 @@ int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 	}
 	stage_files(bigdata->files, bigdata->mini_tok);
 	return (what_cmd3(bigdata->args, super, pipes, 1));
-
 }
 
 	// if (!found && look_for_cmd(*args, &found, "var") 
