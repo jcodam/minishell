@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/21 18:49:36 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:07:31 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ char	*read_the_line(void)
 	line = readline("type away; ");
 	if (!line)
 	{
-		c = ft_itoa(x);
+		if (g_exit_code == 1)
+			c = ft_itoa(0);
+		else
+			c = ft_itoa(x);
 		s = ft_strjoin("\e[", c);
 		free(c);
 		c = ft_strjoin(s, "G\e[1Atype away; exit\n");

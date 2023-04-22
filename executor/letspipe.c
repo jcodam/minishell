@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 18:25:50 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:25:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,19 @@ static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 	set_signal_parrent();
 }
 
-void	rrr(t_tokens *bigdata, t_super *super, int *pipefd, int readfd)
+static void	start_child(t_tokens *bigdata, t_super *super, int *pipe, int read)
 {
 	int	error;
 
 	reset_signal();
-	close(pipefd[0]);
-	dup2(readfd, 0);
+	close(pipe[0]);
+	dup2(read, 0);
 	if (bigdata->next && bigdata->next->log_op == OPP_PIPE)
-		dup2(pipefd[1], 1);
-	// stage_files(bigdata->files, bigdata->tokens);
+		dup2(pipe[1], 1);
 	error = what_cmd1(bigdata, super, 1, 1);
-	close(pipefd[1]);
-	exit(error);
+	close(pipe[1]);
+	exit(g_exit_code);
 }
-
-// reset_signal();
-// close(pipefd[0]);
-// dup2(readfd, 0);
-// if (bigdata->next && bigdata->next->log_op == 3)
-// 	dup2(pipefd[1], 1);
-// stage_files(bigdata->files, bigdata->tokens);
-// error = what_cmd1(bigdata->args, super, 1, 1);
-// close(pipefd[1]);
-// exit(error);
 
 static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 {
@@ -72,9 +61,7 @@ static int	mk_pipes(t_tokens *bigdata, int readfd, t_super *super)
 		return (0);
 	pid = fork();
 	if (pid == 0)
-	{
-		rrr(bigdata, super, pipefd, readfd);
-	}
+		start_child(bigdata, super, pipefd, readfd);
 	close(pipefd[1]);
 	if (bigdata->next && bigdata->next->log_op == OPP_PIPE)
 		mk_pipes(bigdata->next, pipefd[0], super);
@@ -97,7 +84,6 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 	}
 	if (!bigdata->next || bigdata->next->log_op != OPP_PIPE)
 	{
-		// stage_files(bigdata->files, bigdata->tokens);
 		what_cmd1(bigdata, super, 0, 1);
 		dup2(stdio[1], 1);
 		dup2(stdio[0], 0);

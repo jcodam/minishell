@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/21 18:44:23 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:15:16 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }*/
+		// print_all_tokens(splitted);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -99,7 +100,6 @@ int	main(int argc, char **argv, char **envp)
 		set_signal_parrent();
 		line = read_the_line();
 		splitted = main_loop(line);
-		// print_all_tokens(splitted);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
@@ -123,10 +123,11 @@ void	del_files(char **files, int *tokens)
 		if (tokens[index] == RD_TIL_DELIM)
 			error = unlink(files[index]);
 		if (error == -1)
-			write(2, "error cant del herdocfile\n", 26);
+			perror(files[index]);
 		index++;
 	}
 }
+
 void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;

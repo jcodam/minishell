@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 17:00:31 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 13:56:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		ft_export(t_super *super, char **args, int output_fd);
 void		ft_unset(t_super *super, char **arg);
 void		ft_exit_builtin(char **arg);
 void		ft_pwd(int output_fd);
-void		ft_change_dir(char *path);
+int			ft_change_dir(char *path, char **env);
 void		ft_echo(char **arg, int output_fd);
 void		ft_put_env(t_super *super, int fd);
 void		ft_othercmd(char **arg, t_super *super, int ispipe, int fd);
