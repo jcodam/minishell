@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:38:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/03/30 17:24:33 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/22 16:23:04 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_tokens	*setup_new_node(t_tokens *top)
 	old->next = tmp;
 	tmp->args = 0;
 	tmp->files = 0;
-	//tmp->tokens = 0;
-	//tmp->iter = (old->iter + 1);
+	tmp->tokens = 0;
 	return (tmp);
 }
 
@@ -55,13 +54,3 @@ t_tokens	*lst_end(t_tokens *top)
 	}
 	return (tmp);
 }
-
-// int	get_index(t_tokens *top)
-// {
-// 	t_tokens	*tmp;
-
-// 	tmp = top;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	return (tmp->iter + 1);
-// }

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 12:49:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 18:41:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 17:48:40 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 int	setfd_read(char *filename)
 {
 	int		i;
-	char	*fdname;
+	// char	*fdname;
 
 	i = 0;
-	while (ft_isalnum(filename[i]) || filename[i] == '.' || filename[i] == '_')
-	{
-		i++;
-	}
-	fdname = ft_substr(filename, 0, i);
-	if (!fdname)
-		exit_errbug("malloc fail", "making fdname");
-	i = open(fdname, O_RDONLY);
-	free(fdname);
+	// while (ft_isalnum(filename[i]) || ft_strchr("._/", filename[i]))
+	// {
+	// 	i++;
+	// }
+	// fdname = ft_substr(filename, 0, i);
+	// if (!fdname)
+	// 	exit_errbug("malloc fail", "making fdname");
+	i = open(filename, O_RDONLY);
+	// free(fdname);
 	if (i == -1)
 	{
 		ft_putendl_fd("not open file", 2);

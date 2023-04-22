@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/18 16:09:14 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/21 17:20:36 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ enum e_commands
 	SPC,
 	REDIRECT_IP = 10,
 	REDIRECT_OP,
-	RD_TIL_DELIM,
 	REDIRECT_APPEND,
+	RD_TIL_DELIM,
 	PIPE = 20,
 	SPLIT_AND,
 	SPLIT_OR,

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/18 17:28:27 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 18:36:32 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/21 19:34:31 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ void	ft_change_dir(char *path)
 {
 	int	i;
 
+	if (!path)
+		path = "";
 	i = chdir(path);
-	ft_putnbr_fd(i, 1);
 	if (i == -1)
-		ft_putendl_fd("cd argument is not corect", 1);
+	{
+		ft_putstr_fd("minishell: cd: ", 1);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd(":No such file or directory\n", 1);
+		g_exit_code = 1;
+	}
 }

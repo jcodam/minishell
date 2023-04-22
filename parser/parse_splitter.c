@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/20 18:43:51 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/22 16:46:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,11 +299,8 @@ t_tokens *find_args(t_tokens *list)
 		while (list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= COMMAND)
-			{
 				i = cut_to_args(list, i, list->tokens[i]);
-			}
 			i++;
-		printf("i: %d\n", i);
 		}
 		i = 0;
 		list = list->next;
@@ -316,10 +313,10 @@ int	cut_to_args(t_tokens *list, int i, int val)
 	int	length;
 	int	start;
 
-	val = 0;
+	(void)val;
 	length = 0;
 	start = i;
-	while (list->tokens[i] >= COMMAND)
+	while (list->tokens[i] >= COMMAND && list->tokens[i] != FILE_T)
 	{
 		length++;
 		i++;
@@ -337,6 +334,8 @@ t_tokens *find_files(t_tokens *list)
 {
 	t_tokens	*tmp;
 	int			i;
+	int			j;
+	char		*filename;
 
 	i = 0;
 	tmp = list;
@@ -355,6 +354,20 @@ t_tokens *find_files(t_tokens *list)
 				if (list->content[i])
 					i = cut_to_files(list, i, list->tokens[i]);
 			}
+			else if (list->tokens[i] == RD_TIL_DELIM)
+			{
+				while (list->content[i] == '<' || list->content[i] == '>')
+					i++;
+				while (list->content[i] == ' ')
+					i++;
+				if (list->content[i])
+				{
+					i = cut_to_files(list, i, list->tokens[i]);
+					j = ft_arrlen_c(list->files) - 1;
+					filename = heredoc(list->files[j], 1);
+					list->files[j] = filename;
+				}
+			}
 			i++;
 		}
 		i = 0;
@@ -370,7 +383,6 @@ int	cut_to_files(t_tokens *list, int i, int val)
 
 	length = 0;
 	start = i;
-	printf("%s: i = %d\n", __func__, i);
 	while (list->tokens[i] >= val && !ft_strchr("<>", list->content[i]))
 	{
 		length++;
@@ -382,13 +394,9 @@ int	cut_to_files(t_tokens *list, int i, int val)
 		i = i - 1;
 	}
 	if (!list->files)
-	{
-		printf("new_files\n");
 		transpose_file(list, length, start, val);
-	}
 	else if (list->files)
 	{
-		printf("files already exists\n");
 		add_in_node_file(list, length, start);
 		attach_token(list, start);
 	}
@@ -471,9 +479,7 @@ void	add_in_node_file(t_tokens *list, int length, int i)
 	tmp_files[j + 1] = NULL;
 	j = 0;
 	while (tmp_files[j])
-	{
 		j++;
-	}
 	j = 0;
 	while (list->files[j])
 	{
@@ -521,45 +527,3 @@ void free_str_null(char **ptr)
 	free(*ptr);
 	*ptr = 0;
 }
-
-
-// int main(void)
-// {
-// 	t_tokens	*test;
-// 	char		*str;
-// 	int			*arr;
-// 	int			i;
-// 	int			val;
-
-// 	i = 0;
-// 	arr = malloc(sizeof(int) * 40);
-// 	while (i < 29)
-// 		arr[i++] = 3;
-// 	arr[5] = 12;
-// 	arr[6] = 12;
-// 	arr[9] = 7;
-// 	arr[12] = 12;
-// 	arr[11] = 12;
-// 	arr[i] = -2;
-// 	//printf("array len: %d", ar_len(arr));
-// 	test = malloc (sizeof(t_tokens));
-// 	str = ft_strdup("hello world how are you doing");
-// 	test = primary_split(str, arr, test);
-// 	print_all_tokens(test);
-// 	//system("leaks a.out");
-//}
-
-// if (line && *line)
-// 			what_cmd(list->content, super);
-// while (g_exit_code != 0 && list)
-// if (line && *line)
-// 			what_cmd(line, super);
-
-// while (list)
-
-// *****l
-// ****l
-// ***l
-// **l
-// name1 name2 
-// <		>
