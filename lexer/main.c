@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:58:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/24 14:14:38 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
 	}
 	return (quote_mark);
 }
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;

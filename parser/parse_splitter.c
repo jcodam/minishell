@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/22 16:46:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/24 14:07:13 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	trim_spaces(t_tokens *list)
 
 	while (list)
 	{
-		//printf("list->content: [%s]\n", list->content);
 		arr = list->tokens;
 		tmp = list->content;
 		start = 0;
