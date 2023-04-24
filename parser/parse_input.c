@@ -6,14 +6,14 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/21 18:41:40 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:20:33 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
 void		trim_spaces(t_tokens *list);
-int	label_quotess(char *str, int *arr);
+int			label_quotess(char *str, int *arr);
 
 void	print_list(t_tokens *list)
 {
@@ -39,7 +39,6 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = find_files(list);
 	list = find_args(list);
 	list = check_for_commands(list);
-	// print_all_tokens(list);
 	return (list);
 }
 
@@ -156,7 +155,7 @@ t_tokens *check_for_commands(t_tokens *list)
 	int			i;
 
 	i = 0;
-	split_on_flags(list, i);
+	split_on_flags(list);
 	return (list);
 }
 
@@ -181,50 +180,19 @@ void	split_between_flags(t_tokens *list, int i)
 		end = start;
 		while (list->args[i][end] != ' ' && list->args[i][end])
 			end++;
-		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
 		list->args = arg_splitter(list->args, i, start, end);
 		update_mini_tok(list, i, FLAGS);
 	}
 }
 
-//generating a heap overflow
-//also, change so that we are just splitting on spaces;
-//should simply split on spaces if not a file.
-// void	split_on_flags(t_tokens *list, int i)
-// {
-// 	int	end;
-// 	int	start;
-
-// 	start = 0;
-// 	end = 0;
-// 	while (list->args[i][start] != ' ' && list->args[i][start])
-// 		start++;
-// 	//this does not make sense
-// 	while (list->args[i][start] && list->args[i][start] != '-' \
-// 	&& list->mini_tok[start] != -2)
-// 		start++;
-// 	if (list->args[i][start] == '-')
-// 	{
-// 		if (list->args[i][start + 1] == '-')
-// 		{
-// 			printf("syntax error");
-// 			//exit (0);
-// 		}
-// 		end = start;
-// 		while (list->args[i][end] != ' ' && list->args[i][end])
-// 			end++;
-// 		printf("list->args[i]: %s,\tstart: %d,\tend: %d,\ti: %d\n", list->args[i], start, end, i);
-// 		list->args = arg_splitter(list->args, i, start, end);
-// 		update_mini_tok(list, i, FLAGS);
-// 	}
-// }
-
-void	split_on_flags(t_tokens *list, int i)
+// memory leaks? 
+void	split_on_flags(t_tokens *list)
 {
-	char	**temp;
-	char	**temp1;
+	char		**temp;
+	char		**temp1;
 	t_tokens	*tmp;
-	int		j;
+	int			j;
+	int			i;
 
 	tmp = list;
 	temp1 = NULL;
@@ -235,12 +203,9 @@ void	split_on_flags(t_tokens *list, int i)
 		while (list->args && list->args[i])
 		{
 			temp = split_quote(list->args[i], ' ');
-			// ft_putarrs_fd(temp, 1);
 			while (temp[j])
-			{
-				temp1 = ft_arradd_index(temp1, temp[j], ft_arrlen_c(temp1));
-				j++;
-			}
+				temp1 = ft_arradd_index(temp1, temp[j++], ft_arrlen_c(temp1));
+				//j++;
 			free(temp);
 			temp = 0;
 			j = 0;
@@ -251,9 +216,8 @@ void	split_on_flags(t_tokens *list, int i)
 		temp1 = 0;
 		list = list->next;
 	}
-	// ft_putarrs_fd(tmp->args, 1);
-	// 	print_all_tokens(list);
 }
+
 // needs freeing
 char	**arg_splitter(char **args, int i, int start, int end)
 {
@@ -288,11 +252,7 @@ char	**arg_splitter(char **args, int i, int start, int end)
 	}
 	j = 0;
 	while (tmp_args[j])
-	{
-		printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
 		j++;
-	}
-	printf("tmp_args[%d], [%s]\n", j, tmp_args[j]);
 	free (args);
 	return (tmp_args);
 }
@@ -359,76 +319,3 @@ void update_mini_tok(t_tokens *list, int i, int val)
 	free(list->mini_tok);
 	list->mini_tok = new;
 }
-
-// t_tokens *revert_quotes(t_tokens *list)
-// {
-// 	if (find_tokens(list->tokens, QUOTE_DL))
-// 		revert_quotes_dl(list);
-// 	if (find_tokens(list->tokens, QUOTE_SL))
-		
-// }
-
-
-// int find_tokens(int *arr, int token)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (arr[i] != token && arr[i] != EOL)
-// 		i++;
-// 	return (i);
-// }
-
-// void revert_quotes_sl(t_tokens *list)
-// {
-// 	int i;
-
-// 	while (list)
-// 	{
-// 		if (i = find_tokens(list->tokens, QUOTE_SL))
-// 		{
-			
-// 		}
-			
-// 	}
-// }	
-
-// void revert_quotes_dl(t_tokens *list, int *arr)
-// {
-// 	int i;
-
-// 	while (list)
-// 	{
-// 		if (i = find_tokens(list->tokens, QUOTE_DL))
-// 		{
-			
-// 		}
-			
-// 	}
-// }	
-
-// remove_from_content(t_tokens* list, int place)
-// {
-// 	size_t len;
-// 	size_t i;
-	
-	
-// 	i = 0;
-// 	while(i < len)
-// 	{
-		
-// 	}
-	
-// }
-
-// t_tokens *pop_start_end(t_tokens *list, int start, int end)
-// {
-// 	int i;
-// 	int len; 
-// 	int *new_arr;
-
-
-// 	i = 0;
-// 	len = ft_strlen(list->content)
-
-// }

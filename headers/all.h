@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 16:04:13 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/24 17:18:19 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void		transpose_arg(t_tokens *list, int length, int start);
 t_tokens	*check_for_commands(t_tokens *list);
 char		**arg_splitter(char **args, int i, int start, int end);
 int			count_args(char **args);
-void		split_on_flags(t_tokens *list, int i);
+void		split_on_flags(t_tokens *list);
 char		*mini_space_trimmer(char *string);
 void		update_mini_tok(t_tokens *list, int i, int val);
 void		split_between_flags(t_tokens *list, int i);

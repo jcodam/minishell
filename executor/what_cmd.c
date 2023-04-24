@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 14:58:19 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/24 17:16:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 	if (error)
 		return (1);
 	return (what_cmd3(bigdata->args, super, pipes, 1));
-
 }
 
 	// if (!found && look_for_cmd(*args, &found, "var") 

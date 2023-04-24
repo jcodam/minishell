@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:15:16 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:58:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,12 @@ void	free_list(t_tokens *list)
 			free(list->tokens);
 		if (list->args)
 		{
-			ft_arrclear_c(list->args, ft_arrlen_c(list->args));
+			ft_arrclear_c(list->args, (ft_arrlen_c(list->args) - 1));
 		}
 		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{
-			ft_arrclear_c(list->files, ft_arrlen_c(list->files));
+			ft_arrclear_c(list->files, (ft_arrlen_c(list->files)));
 		}
 		if (list->mini_tok)
 			free(list->mini_tok);
