@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/14 18:49:19 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/24 14:07:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/24 17:43:54 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,14 @@ t_tokens *find_files(t_tokens *list)
 					i = cut_to_files(list, i, list->tokens[i]);
 					j = ft_arrlen_c(list->files) - 1;
 					filename = heredoc(list->files[j], 1);
+					if (!filename)
+					{
+						list->files[j] = 0;
+						list->mini_tok[j] = 0;
+						tmp = 0;
+						free_list(list);
+						return (tmp);
+					}
 					list->files[j] = filename;
 				}
 			}

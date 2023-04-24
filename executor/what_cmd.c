@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:59:02 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/24 17:16:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	lookcmd(char **args, t_super *super, int *found, int fd)
 	else if (look_for_cmd(*args, found, "exit"))
 		ft_exit_builtin(args);
 	else if (look_for_cmd(*args, found, "cd"))
-		ft_change_dir(args[1], super->env);
+		ft_change_dir(args, super);
 	else if (look_for_cmd(*args, found, "env"))
 		ft_put_env(super, fd);
 	else if (look_for_cmd(*args, found, "echo"))
