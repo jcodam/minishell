@@ -1,5 +1,11 @@
--echo $"HOME" = HOME !($HOME)
--moeten permision error infullen voor files 126
--command <> only input works output is ignored
--command >< syntex error
--hello|world = heap overflow  needs 2 command not found
+#-echo $"HOME" = HOME !($HOME)
+#-moeten permision error infullen voor files 126
+#-command <> only input works output is ignored
+#-command >< syntex error
+#-hello|world = heap overflow  needs 2 command not found
+
+-oldpwd
+-pwd
+-cd -
+
+exe onli whit path

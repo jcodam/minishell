@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 15:50:42 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/24 15:51:14 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int	execcmd(char **arg, t_super *super)
 	path = ft_split(location, ':');
 	i = -1;
 	index = 0;
+	if (ft_strchr(*arg, '/'))
+		i = 1;
 	while (i == -1 && path && path[index])
 	{
 		free(location);
@@ -31,7 +33,8 @@ static int	execcmd(char **arg, t_super *super)
 		i = execve(location, &arg[0], super->env);
 		index++;
 	}
-	i = execve(arg[0], &arg[0], super->env);
+	if (i == 1)
+		i = execve(arg[0], &arg[0], super->env);
 	ft_putstr_fd("minishel: ", 2);
 	perror(*arg);
 	i = 127;

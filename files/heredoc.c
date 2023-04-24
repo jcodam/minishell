@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 15:42:24 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/24 15:46:21 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,18 @@ static void	heredoc_loop(char *eoh, int leneof, int fd)
 	exit(0);
 }
 
-static void	mkchild(char *eoh, int fd)
+static void	failed_heredoc(char **fdname)
+{
+	int	error;
+
+	error = unlink(*fdname);
+	if (error == -1)
+		perror(*fdname);
+	free(*fdname);
+	*fdname = 0;
+}
+
+static int	mkchild(char *eoh, int fd, char **fdname)
 {
 	int			i;
 	pid_t		id;
@@ -40,12 +51,19 @@ static void	mkchild(char *eoh, int fd)
 	if (id == -1)
 		exit_errbug("fork failed", "heredoc 50");
 	if (!id)
+	{
+		reset_signal();
 		heredoc_loop(eoh, ft_strlen(eoh), fd);
+	}
 	waitpid(id, &i, 0);
-	if (WIFSIGNALED(i))
-		printf("%d\n", WIFSIGNALED(i));
 	close(fd);
 	free(eoh);
+	if (WIFSIGNALED(i))
+	{
+		failed_heredoc(fdname);
+		return (0);
+	}
+	return (1);
 }
 
 char	*heredoc(char *eoh, int tmpfindex)
@@ -68,7 +86,7 @@ char	*heredoc(char *eoh, int tmpfindex)
 		}
 		else
 		{
-			mkchild(eoh, fd);
+			mkchild(eoh, fd, &fdname);
 			return (fdname);
 		}
 		tmpfindex++;

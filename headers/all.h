@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 13:56:37 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/24 16:04:13 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		ft_export(t_super *super, char **args, int output_fd);
 void		ft_unset(t_super *super, char **arg);
 void		ft_exit_builtin(char **arg);
 void		ft_pwd(int output_fd);
-int			ft_change_dir(char *path, char **env);
+int			ft_change_dir(char **args, t_super *super);
 void		ft_echo(char **arg, int output_fd);
 void		ft_put_env(t_super *super, int fd);
 void		ft_othercmd(char **arg, t_super *super, int ispipe, int fd);
@@ -94,6 +94,7 @@ t_list		*get_wildcard(char *wild);
 void		exit_errbug(char *error, char *debug);
 int			tmpfileswitch(char **line);
 int			is_empty(char *line);
+/*is_file treu >= 1*/
 char		**arr_expander(char **arr, char **env, int is_file);
 /* eoh wil be freed and is expected to only have the rellevand data
 so use substring
