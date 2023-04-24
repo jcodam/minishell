@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 16:05:39 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 15:50:42 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	execcmd(char **arg, t_super *super)
 
 	location = ft_replacevar(ft_strdup("$PATH"), 0, super->env);
 	path = ft_split(location, ':');
-	i = execve(arg[0], &arg[0], super->env);
+	i = -1;
 	index = 0;
 	while (i == -1 && path && path[index])
 	{
@@ -31,10 +31,10 @@ static int	execcmd(char **arg, t_super *super)
 		i = execve(location, &arg[0], super->env);
 		index++;
 	}
-	i = 127;
+	i = execve(arg[0], &arg[0], super->env);
 	ft_putstr_fd("minishel: ", 2);
-	ft_putstr_fd(*arg, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	perror(*arg);
+	i = 127;
 	return (i);
 }
 

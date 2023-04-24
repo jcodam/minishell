@@ -6,12 +6,12 @@
 /*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/08 13:06:25 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 18:02:37 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 17:01:46 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "headers/quotedef.h"
+#include "../libft/libft.h"
+#include "../headers/quotedef.h"
 
 static int	dellim_index(char *str, char c)
 {

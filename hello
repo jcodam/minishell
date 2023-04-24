@@ -19,3 +19,8 @@ drwxr-xr-x  56 avon-ben  piscine    1904 Apr 22 16:33 libft
 drwxr-xr-x  11 avon-ben  piscine     374 Apr 22 14:46 parser
 -rw-r--r--   1 avon-ben  piscine    2258 Apr 19 18:36 split_not_quote.c
 -rw-r--r--   1 avon-ben  piscine       0 Apr 22 16:30 test1
+-echo $"HOME" = HOME !($HOME)
+-moeten permision error infullen voor files 126
+-command <> only input works output is ignored
+-command >< syntex error
+-hello|world = heap overflow  needs 2 command not found

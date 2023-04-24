@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expend_vars.c                                      :+:    :+:            */
+/*   expand_vars.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 18:23:01 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/12 18:39:55 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/22 16:37:26 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char	**rep_vars_inindex(char **arr, int index, int *index2, char **env)
 {
 	char	*var;
 
-	if (ft_isalnum(arr[index][*index2 + 1]) || arr[index][*index2 + 1] == '_')
+	if (ft_isalnum(arr[index][*index2 + 1]) || arr[index][*index2 + 1] == '_'\
+		|| arr[index][*index2 + 1] == '"' || arr[index][*index2 + 1] == '\'')
 	{
 		arr[index] = ft_replacevar(arr[index], *index2, env);
 		*index2 -= 1;

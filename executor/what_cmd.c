@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/20 12:29:19 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/22 16:59:02 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 int	stage_files(char **files, int *tokens)
 {
 	int	index;
+	int	error;
 
 	index = 0;
+	error = 0;
 	while (files && files[index])
 	{
 		if (tokens[index] == REDIRECT_IP || tokens[index] == RD_TIL_DELIM)
-			setfd_read(files[index]);
+			error = setfd_read(files[index]);
 		else if (tokens[index] == REDIRECT_OP)
-			setfd_write(files[index]);
+			error = setfd_write(files[index]);
 		else if (tokens[index] == REDIRECT_APPEND)
-			setfd_append(files[index]);
+			error = setfd_append(files[index]);
+		if (error)
+			return (1);
 		index++;
 	}
 	return (0);
@@ -71,7 +75,7 @@ static int	lookcmd(char **args, t_super *super, int *found, int fd)
 	else if (look_for_cmd(*args, found, "exit"))
 		ft_exit_builtin(args);
 	else if (look_for_cmd(*args, found, "cd"))
-		ft_change_dir(args[1]);
+		ft_change_dir(args[1], super->env);
 	else if (look_for_cmd(*args, found, "env"))
 		ft_put_env(super, fd);
 	else if (look_for_cmd(*args, found, "echo"))
@@ -107,6 +111,8 @@ int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 	// ft_putarrs_fd(bigdata->files, 1);
 int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 {
+	int	error;
+
 	bigdata->args = arr_expander(bigdata->args, super->env, 0);
 	if (bigdata->files)
 	{
@@ -114,7 +120,9 @@ int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 		if (!bigdata->files)
 			return (1);
 	}
-	stage_files(bigdata->files, bigdata->mini_tok);
+	error = stage_files(bigdata->files, bigdata->mini_tok);
+	if (error)
+		return (1);
 	return (what_cmd3(bigdata->args, super, pipes, 1));
 }
 
