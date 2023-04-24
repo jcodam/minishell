@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 14:14:38 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/24 18:31:48 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
+		block_signal();
 		splitted = main_loop(line);
 		if (splitted)
 			what_cmd(splitted, super);
