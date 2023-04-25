@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/22 16:39:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/25 21:16:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,6 @@ int	*command_after_pipe(char *input, int *arr)
 	return (arr);
 }
 
-void	*ms_calloc(size_t nmemb, size_t size)
-{
-	char	*ptr;
-	size_t	i;
-
-	i = 0;
-	ptr = (void *) malloc(sizeof(size));
-	if (ptr == NULL)
-		return (NULL);
-	while (i < size)
-	{
-		ptr[i] = nmemb;
-		i++;
-	}
-	return (ptr);
-}
-
 int	*check_commands(char *input, int *arr)
 {
 	int	i;
@@ -78,29 +61,6 @@ int	*check_commands(char *input, int *arr)
 	return (arr);
 }
 
-int	*check_operators(char *input, int *arr)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (!check_ampersand(input, arr, i))
-			return (NULL);
-		if (!check_OR(input, arr, i))
-			return (NULL);
-		if (!check_pipes(input, arr, i))
-			return (NULL);
-		if (!check_r_arrow(input, arr, i))
-			return (NULL);
-		if (!check_l_arrow(input, arr, i))
-			return (NULL);
-		i++;
-	}
-	return (arr);
-}
-
-
 int	content_before(char *input, int i)
 {
 	if (i == 0)
@@ -115,87 +75,6 @@ int	content_before(char *input, int i)
 		}
 		return (0);
 	}
-}
-
-int OR_error_checker(char *input, int i)
-{
-	if (input[i + 2] == '|' || !content_before(input, i))
-	{
-		write(2, "minishell: syntax error near unexpected token `||'\n", 51);
-		g_exit_code = 258;
-		return (0);
-	}
-	return (1);
-}
-
-int check_OR (char *input, int * arr, int i)
-{
-	if (input[i] == '|' && input[i + 1] == '|' && \
-	arr[i] == OTHER && arr[i + 1] == OTHER)
-	{
-		if (!OR_error_checker(input, i))
-			return (0);
-		arr[i] = SPLIT_OR;
-		arr[i + 1] = SPLIT_OR;
-	}
-	return (1);
-}
-
-int amp_checker(char *input, int i)
-{
-	if (input[i + 2] == '&' || !content_before(input, i))
-	{
-		write(2, "minishell: syntax error near unexpected token `&&'\n", 51);
-		g_exit_code = 258;
-		return (0);
-	}
-	return (1);
-}
-
-int	check_ampersand(char *input, int *arr, int i)
-{
-	if (input[i] == '&' && input[i + 1] == '&' && \
-	arr[i] == OTHER && arr[i + 1] == OTHER)
-	{
-		if (!amp_checker(input, i))
-			return (0);
-		arr[i] = SPLIT_AND;
-		arr[i + 1] = SPLIT_AND;
-	}
-	return (1);
-}
-
-int	check_pipes(char *input, int *arr, int i)
-{
-	if (input[i] == '|' && arr[i] == OTHER)
-	{
-		if (!pipe_checker(input, i))
-			return (0);
-		arr[i] = PIPE;
-	}
-	return (1);
-}
-
-int check_l_arrow(char *input, int *arr, int i)
-{
-	if (input[i] == '<' && arr[i] == OTHER)
-	{
-		if (!red_ip_checker(input, i))
-			return (0);
-		arr = make_red_ip(input, arr, i);
-	}
-	return (1);
-}
-
-int check_r_arrow(char *input, int *arr, int i)
-{
-	if (input[i] == '>' && arr[i] == OTHER)
-	{
-		if (!red_op_checker(input, i))
-			return (0);
-		arr = make_red_op(input, arr, i);
-	}
-	return (1);
 }
 
 int	*make_red_op(char *input, int *arr, int i)
@@ -248,81 +127,3 @@ int	*make_red_ip(char *input, int *arr, int i)
 	return (arr);
 }
 
-int pipe_checker(char *input, int i)
-{
-	if (!input[i + 1] || !is_empty(&input[i + 1]))
-	{
-		write(2, "Minishell: syntax error near unexpected token `newline'\n", \
-		56);
-		g_exit_code = 258;
-		return (0);
-	}
-	i++;
-	while (ft_iswhite_space(input[i]))
-		i++;
-	if (ft_strrchr("|&", input[i]))
-	{
-		if (input[i + 1] == '|' && input[i] == '|')
-			printf("Minishell: syntax error near unexpected token `||'\n");
-		else
-			printf("Minishell: syntax error near unexpected token `%c'\n", input[i]);
-		g_exit_code = 258;
-		return (0);
-	}
-	return (1);
-}
-
-int red_op_checker(char *input, int i)
-{
-	if (!input[i + 1])
-	{
-		write(2, "Minishell: syntax error near unexpected token `newline'\n", \
-		56);
-		g_exit_code = 258;
-		return (0);
-	}
-	i++;
-	while (ft_iswhite_space(input[i]))
-		i++;
-	if (ft_strrchr("|&", input[i]))
-	{
-		if (input[i + 1] == '|' && input[i] == '|')
-			printf("Minishell: syntax error near unexpected token `||'\n");
-		else
-			printf("Minishell: syntax error near unexpected token `%c'\n", \
-			input[i]);
-		g_exit_code = 258;
-		return (0);
-	}
-	if (input[i] == '>' && input[i + 1] == '>')
-	{
-		write(2, "Minishell: syntax error near unexpected token `>'\n", 50);
-		g_exit_code = 258;
-		return (0);
-	}
-	return (1);
-}
-
-int red_ip_checker(char *input, int i)
-{
-	if (!input[i + 1])
-	{
-		write(2, "Minishell: syntax error near unexpected token `newline'\n", \
-		56);
-		g_exit_code = 258;
-		return (0);
-	}
-	i++;
-	while (ft_iswhite_space(input[i]))
-		i++;
-	if (input[i] == '<')
-	{
-		if (input[i + 1] == '<')
-		{
-			write(2, "Minishell: syntax error near unexpected token `<'\n", 50);
-			g_exit_code = 258;
-			return (0);
-		}
-	}
-	return (1);
-}

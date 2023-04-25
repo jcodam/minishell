@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 17:30:22 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/25 22:23:40 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ int			*ms_arrdup(int *arr, int len);
 void		free_list(t_tokens *list);
 void		transpose_file(t_tokens *list, int length, int start, int val);
 void		transpose_arg(t_tokens *list, int length, int start);
-t_tokens	*check_for_commands(t_tokens *list);
 char		**arg_splitter(char **args, int i, int start, int end);
 int			count_args(char **args);
 void		split_on_flags(t_tokens *list);
@@ -196,5 +195,14 @@ void		free_arr_null(char ***ptr);
 void		free_str_null(char **ptr);
 //int 		find_tokens(int *arr, int token);
 void		attach_token(t_tokens *list, int i);
+int			content_before(char *input, int i);
+t_tokens 	*check_for_commands(t_tokens *list);
+void		cut_off_file_symbol(t_tokens *list, int i);
+t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j, \
+			t_tokens *tmp);
+t_tokens 	*heredoc_func(t_tokens *list, int j, t_tokens *tmp);
+int 		check_empty_delims(char *input, int *arr);
+void 		syntax_err_message(int val);
+
 
 #endif

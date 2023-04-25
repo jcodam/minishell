@@ -6,7 +6,7 @@
 /*   By: jbax <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/08 13:06:25 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 17:18:08 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/25 20:58:27 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	**split_quote(char *s, char c)
 
 	if (!s || !*s)
 		return (NULL);
-	dest = NULL;
+	dest = 0;
 	len[0] = 0;
 	len[1] = dellim_index(s, c);
 	while (len[1] > -1)

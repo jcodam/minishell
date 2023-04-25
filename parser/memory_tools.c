@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   list.c                                             :+:    :+:            */
+/*   memory_tools.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/20 17:50:32 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/06 20:04:03 by avon-ben      ########   odam.nl         */
+/*   Created: 2023/04/25 17:49:28 by avon-ben      #+#    #+#                 */
+/*   Updated: 2023/04/25 17:49:28 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
-t_tokens	*new_node(char *input)
+void	*ms_calloc(size_t nmemb, size_t size)
 {
-	t_tokens	*new;
+	char	*ptr;
+	size_t	i;
 
-	new = malloc(sizeof(t_tokens));
-	new->content = input;
-	new->next = 0;
-	return (new);
+	i = 0;
+	ptr = (void *) malloc(sizeof(size));
+	if (ptr == NULL)
+		return (NULL);
+	while (i < size)
+	{
+		ptr[i] = nmemb;
+		i++;
+	}
+	return (ptr);
+}
+
+void	free_arr_null(char ***ptr)
+{
+	free(**ptr);
+	**ptr = 0;
+}
+
+void	free_str_null(char **ptr)
+{
+	free(*ptr);
+	*ptr = 0;
 }

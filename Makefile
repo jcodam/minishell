@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/04/19 16:18:26 by jbax          ########   odam.nl          #
+#    Updated: 2023/04/25 21:40:32 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,18 @@ SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty
 	echo.c export.c environment.c unset.c exit.c execve.c expander.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c expand_quotes.c expand_vars.c\
 	split_not_quote.c\
-	parse_input.c parse_quotes.c parsing_list.c\
-	parsing_tools.c tokanize_tools.c fill_node.c\
-	list.c parse_splitter.c
+	main_parser.c parse_quotes.c parsing_list.c syntax_checkers.c\
+	parsing_tools.c tokanize_tools.c fill_node.c syntax_checker_tools.c\
+	parse_splitter.c cutting_tools.c libft_variations.c memory_tools.c \
+	mini_tokanizer.c parse_cleaner.c seeking_tools.c \
+	splitting_tools.c transpose.c \
+	
 
 wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/expand_quotes.o $(OBF_DIR)/expand_vars.o\
  $(OBF_DIR)/wildcard.o $(OBF_DIR)/expander.o $(OBF_DIR)/exit.o $(OBF_DIR)/readline.o
 
 OBF_DIR= OBF
-	
+
 OBF= $(SRC:%.c=$(OBF_DIR)/%.o)
 
 HEADER= builtins_data_struct.h all.h structures.h
