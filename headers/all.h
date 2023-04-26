@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/25 22:23:40 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 14:38:36 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,13 +196,14 @@ void		free_str_null(char **ptr);
 //int 		find_tokens(int *arr, int token);
 void		attach_token(t_tokens *list, int i);
 int			content_before(char *input, int i);
-t_tokens 	*check_for_commands(t_tokens *list);
-void		cut_off_file_symbol(t_tokens *list, int i);
+t_tokens	*check_for_commands(t_tokens *list);
+int			cut_off_file_symbol(t_tokens *list, int i);
 t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j, \
 			t_tokens *tmp);
-t_tokens 	*heredoc_func(t_tokens *list, int j, t_tokens *tmp);
-int 		check_empty_delims(char *input, int *arr);
-void 		syntax_err_message(int val);
-
+t_tokens	*heredoc_func(t_tokens *list, int j, t_tokens *tmp);
+int			check_empty_delims(char *input, int *arr);
+void		syntax_err_message(int val);
+int			move_to_cut_point(t_tokens *list, int i);
+void		free_some_stuff(char **args);
 
 #endif

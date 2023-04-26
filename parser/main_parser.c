@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 22:30:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/25 22:35:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_tokens	*main_loop(char *input)
 
 int	*tokanize(char *input, int *arr)
 {
-	int val;
-	
+	int	val;
+
 	label_quotess(input, arr);
 	while (arr)
 	{

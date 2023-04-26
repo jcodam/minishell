@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:46:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 17:59:10 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 14:10:21 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ar_len(int *arr)
 	len = 0;
 	if (!arr)
 		return (0);
-	while (arr[len] != -2)
+	while (arr[len] != EOL)
 		len++;
 	return (len);
 }

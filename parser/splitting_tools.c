@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 16:39:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 21:52:57 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 14:38:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,25 @@ char	**arg_splitter(char **args, int i, int start, int end)
 		j++;
 	}
 	tmp_args[j + 1] = 0;
+	free_some_stuff(args);
+	return (tmp_args);
+}
+
+void	free_some_stuff(char **args)
+{
+	int	j;
+
 	j = 0;
 	while (args[j])
 	{
-		free (args[j]);
+		free(args[j]);
 		j++;
 	}
-	j = 0;
-	while (tmp_args[j])
-		j++;
+	//this does not seem to do anything
+	//j = 0;
+	//while (tmp_args[j])
+	//	j++;
 	free (args);
-	return (tmp_args);
 }
 
 void	fill_node_split(t_tokens *node, int split_point, int noc)
@@ -95,7 +103,6 @@ void	fill_node_split(t_tokens *node, int split_point, int noc)
 
 t_tokens	*check_for_commands(t_tokens *list)
 {
-
 	split_on_flags(list);
 	return (list);
 }

@@ -1,11 +1,19 @@
-#-echo $"HOME" = HOME !($HOME)
-#-moeten permision error infullen voor files 126
-#-command <> only input works output is ignored
-#-command >< syntex error
-#-hello|world = heap overflow  needs 2 command not found
-
--oldpwd
--pwd
--cd -
-
-exe onli whit path
+total 424
+drwxr-xr-x  18 avon-ben  piscine     612 Apr 26 14:25 .
+drwx------  15 avon-ben  piscine     510 Apr 25 21:34 ..
+drwxr-xr-x  15 avon-ben  piscine     510 Apr 25 22:33 .git
+-rw-r--r--   1 avon-ben  piscine     121 Apr 12 19:38 .gitignore
+drwxr-xr-x   2 avon-ben  piscine      68 Apr 24 17:48 .tempdir
+drwxr-xr-x   3 avon-ben  piscine     102 Feb 20 15:42 .vscode
+-rw-r--r--   1 avon-ben  piscine    2543 Apr 25 21:40 Makefile
+drwxr-xr-x  42 avon-ben  piscine    1428 Apr 26 14:25 OBF
+drwxr-xr-x  13 avon-ben  piscine     442 Apr 24 17:22 executor
+drwxr-xr-x   8 avon-ben  piscine     272 Apr 22 16:58 expander
+drwxr-xr-x   4 avon-ben  piscine     136 Apr 24 17:22 files
+-rw-r--r--   1 avon-ben  piscine     250 Apr 18 15:21 git_push.sh
+drwxr-xr-x   7 avon-ben  piscine     238 Apr 24 17:22 headers
+-rw-r--r--   1 avon-ben  piscine       0 Apr 26 14:25 hello
+drwxr-xr-x   5 avon-ben  piscine     170 Apr 25 22:31 lexer
+drwxr-xr-x  56 avon-ben  piscine    1904 Apr 26 13:33 libft
+-rwxr-xr-x   1 avon-ben  piscine  202556 Apr 26 14:25 minishell
+drwxr-xr-x  20 avon-ben  piscine     680 Apr 25 20:59 parser
