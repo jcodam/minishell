@@ -6,11 +6,28 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/22 16:23:32 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 13:43:22 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+int	*calloc_array(int len, int type)
+{
+	int	*ret;
+	int	i;
+
+	i = 0;
+	if (!len || !type)
+		return (NULL);
+	ret = malloc((len + 1) * sizeof(type));
+	while (i <= len)
+	{
+		ret[i] = -2;
+		i++;
+	}
+	return (ret);
+}
 
 int	*make_arr(int len)
 {
@@ -30,37 +47,6 @@ int	*make_arr(int len)
 	return (arr);
 }
 
-void	print_array(int *arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i] != EOL)
-	{
-		ft_putnbr_fd(arr[i], 1);
-		write(1, " ", 1);
-		i++;
-	}
-	ft_putnbr_fd(arr[i], 1);
-}
-
-void	ms_lstadd_back(t_tokens **lst, t_tokens *new)
-{
-	t_tokens	*temp;
-
-	temp = (*lst);
-	if (!*lst)
-		(*lst) = new;
-	else
-	{
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
-	}
-}
-
 int	*label_spaces(char *input, int *arr)
 {
 	int	i;
@@ -77,6 +63,7 @@ int	*label_spaces(char *input, int *arr)
 	return (arr);
 }
 
+//function that prints all the parsed data.
 int	print_all_tokens(t_tokens *list)
 {
 	t_tokens	*tmp;
@@ -142,4 +129,20 @@ int	print_all_tokens(t_tokens *list)
 		tmp = tmp->next;
 	}
 	return (1);
+}
+
+void	print_array(int *arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i] != EOL)
+	{
+		ft_putnbr_fd(arr[i], 1);
+		write(1, " ", 1);
+		i++;
+	}
+	ft_putnbr_fd(arr[i], 1);
 }

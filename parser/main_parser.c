@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_input.c                                      :+:    :+:            */
+/*   main_parser.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/22 16:20:33 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/25 22:35:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,6 @@
 
 void		trim_spaces(t_tokens *list);
 int			label_quotess(char *str, int *arr);
-
-void	print_list(t_tokens *list)
-{
-	while (list != NULL)
-	{
-		printf("%s\t[%s]\n", __func__, list->content);
-		list = list->next;
-	}
-}
-
-t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
-{
-	list->content = input;
-	list->tokens = arr;
-	list->log_op = 1;
-	list->args = 0;
-	list->files = 0;
-	list->mini_tok = 0;
-	list = split_on_amps(list);
-	list = split_on_or(list);
-	list = split_on_pipes(list);
-	trim_spaces(list);
-	list = find_files(list);
-	list = find_args(list);
-	list = check_for_commands(list);
-	return (list);
-}
 
 t_tokens	*main_loop(char *input)
 {
@@ -62,6 +35,8 @@ t_tokens	*main_loop(char *input)
 
 int	*tokanize(char *input, int *arr)
 {
+	int	val;
+
 	label_quotess(input, arr);
 	while (arr)
 	{
@@ -69,44 +44,69 @@ int	*tokanize(char *input, int *arr)
 		arr = command_after_pipe(input, arr);
 		arr = label_spaces(input, arr);
 		arr = check_commands(input, arr);
+		val = check_empty_delims(input, arr);
+		if (val)
+		{
+			syntax_err_message(val);
+			return (NULL);
+		}
 		if (arr)
 			return (arr);
 	}
 	return (NULL);
 }
 
-int	find_pipe(int *arr, int max, int position)
+void	syntax_err_message(int val)
 {
-	while (position <= max)
-	{
-		if (arr[position] == PIPE)
-			return (position);
-		position++;
-	}
-	return (position);
+	if (val == 20)
+		printf("syntax error near unexpected token `|'\n");
+	else if (val == 21)
+		printf("syntax error near unexpected token `&&'\n");
+	else if (val == 22)
+		printf("syntax error near unexpected token `||'\n");
 }
 
-t_tokens	*split_into_list(char *input, int *arr, t_tokens *top)
+t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 {
-	static int	start = 0;
-	int			max;
-	int			end;
+	list->content = input;
+	list->tokens = arr;
+	list->log_op = 1;
+	list->args = 0;
+	list->files = 0;
+	list->mini_tok = 0;
+	list = split_on_amps(list);
+	list = split_on_or(list);
+	list = split_on_pipes(list);
+	trim_spaces(list);
+	list = find_files(list);
+	list = find_args(list);
+	list = check_for_commands(list);
+	return (list);
+}
 
-	end = 0;
-	max = ft_strlen(input);
-	while (start < max)
-	{
-		end = (start + get_node_length(arr, start));
-		if (start == 0)
-			fill_node(top, input, start, end);
-		else
-			top = get_node(start, arr, input, top);
-		if (start == end)
-			start++;
-		else
-			start = end;
-	}
-	return (top);
+// splits the content of a node at the position given as 'split_points' and 
+// places the righthand part of the string in a new node in the linked list.
+// noc determines the amount of characters to be splitted on 
+// (i.e. for '&&' noc would be 2)
+// if node_nr is given, it determines the node in which the 
+// string should be split
+void	split_to_node(t_tokens *node, int split_point, int noc)
+{
+	t_tokens	*new;
+
+	new = malloc(sizeof(t_tokens));
+	new->content = 0;
+	new->tokens = 0;
+	new->args = 0;
+	new->files = 0;
+	new->mini_tok = 0;
+	new->log_op = 0;
+	if (node->next)
+		new->next = node->next;
+	else
+		new->next = 0;
+	node->next = new;
+	fill_node_split(node, split_point, noc);
 }
 
 t_tokens	*get_node(int start, int *arr, char *input, t_tokens *top)
@@ -148,15 +148,6 @@ int	*label_vals(int start, int end, int *arr, int sig)
 		}
 	}
 	return (arr);
-}
-
-t_tokens *check_for_commands(t_tokens *list)
-{
-	int			i;
-
-	i = 0;
-	split_on_flags(list);
-	return (list);
 }
 
 void	split_between_flags(t_tokens *list, int i)
@@ -218,45 +209,6 @@ void	split_on_flags(t_tokens *list)
 	}
 }
 
-// needs freeing
-char	**arg_splitter(char **args, int i, int start, int end)
-{
-	char	**tmp_args;
-	int		current;
-	int		j;
-
-	j = 0;
-	current = count_args(args);
-	tmp_args = malloc(sizeof(char *) * (current + 2));
-	while (j < i)
-	{
-		ft_strlcpy(tmp_args[j], args[j], (sizeof(args[j]) + 1));
-		j++;
-	}
-	tmp_args[j + 1] = ft_substr(args[i], start, end);
-	tmp_args[j] = ft_substr(args[i], 0, (start - 1));
-	tmp_args[j + 1] = mini_space_trimmer(tmp_args[j + 1]);
-	tmp_args[j] = mini_space_trimmer(tmp_args[j]);
-	j++;
-	while (args[j])
-	{
-		ft_strlcpy(tmp_args[j + 1], args[j], (sizeof(args[j]) + 1));
-		j++;
-	}
-	tmp_args[j + 1] = 0;
-	j = 0;
-	while (args[j])
-	{
-		free (args[j]);
-		j++;
-	}
-	j = 0;
-	while (tmp_args[j])
-		j++;
-	free (args);
-	return (tmp_args);
-}
-
 int	count_args(char **args)
 {
 	int	i;
@@ -265,57 +217,4 @@ int	count_args(char **args)
 	while (args[i])
 		i++;
 	return (i);
-}
-
-char	*mini_space_trimmer(char *string)
-{
-	int		start;
-	int		end;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	start = 0;
-	end = ft_strlen(string);
-	while (string[start] == ' ')
-		start++;
-	while (string[end - 1] == ' ')
-		end--;
-	tmp = malloc(sizeof(char) * ((end - start) + 1));
-	while (start < end)
-	{
-		tmp[i] = string[start];
-		i++;
-		start++;
-	}
-	tmp[i] = 0;
-	free (string);
-	return (tmp);
-}
-
-void update_mini_tok(t_tokens *list, int i, int val)
-{
-	int	len;
-	int	*new;
-	int	j;
-
-	len = 0;
-	j = 0;
-	while (list->mini_tok[len] != -2)
-		len++;
-	new = malloc(sizeof(int) * (len + 2));
-	while (j <= i)
-	{
-		new[j] = list->mini_tok[j];
-		j++;
-	}
-	new[j] = val;
-	while (list->mini_tok[j] != -2)
-	{
-		new[j + 1] = list->mini_tok[j];
-		j++;
-	}
-	new[j + 1] = -2;
-	free(list->mini_tok);
-	list->mini_tok = new;
 }

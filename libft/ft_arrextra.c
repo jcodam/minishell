@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/24 16:12:56 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/20 18:41:00 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 14:26:08 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_arrclear_c(char **arr, size_t len)
 	count = 0;
 	while (count < len)
 	{
-		printf("arr[%zu]: %s\n", count, arr[count]);
 		free(arr[count]);
 		count++;
 	}

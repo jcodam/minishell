@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:38:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/22 16:23:04 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/25 17:59:34 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ t_tokens	*setup_new_node(t_tokens *top)
 	return (tmp);
 }
 
+void	ms_lstadd_back(t_tokens **lst, t_tokens *new)
+{
+	t_tokens	*temp;
+
+	temp = (*lst);
+	if (!*lst)
+		(*lst) = new;
+	else
+	{
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
+	}
+}
+
 t_tokens	*lst_end(t_tokens *top)
 {
 	t_tokens	*tmp;
@@ -53,4 +68,14 @@ t_tokens	*lst_end(t_tokens *top)
 		tmp = tmp->next;
 	}
 	return (tmp);
+}
+
+t_tokens	*new_node(char *input)
+{
+	t_tokens	*new;
+
+	new = malloc(sizeof(t_tokens));
+	new->content = input;
+	new->next = 0;
+	return (new);
 }
