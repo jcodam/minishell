@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 17:16:20 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/26 18:18:04 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,6 @@ static int	look_for_cmd(char *line, int *found, char *commend)
 	*found += 1;
 	return (1);
 }
-
-// static char	**mkarg(char *line)
-// {
-// 	char	**args;
-// 	int		i;
-// 	char	*temp;
-
-// 	i = 0;
-// 	args = malloc(1 * sizeof(char *));
-// 	args[0] = 0;
-// 	temp = singlearg(line, &i);
-// 	while (temp)
-// 	{
-// 		if (*temp)
-// 			args = ft_arradd_index(args, temp, 100);
-// 		temp = singlearg(line, &i);
-// 	}
-// 	return (args);
-// }
 
 static int	lookcmd(char **args, t_super *super, int *found, int fd)
 {

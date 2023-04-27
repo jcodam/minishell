@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 22:35:29 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/27 19:13:17 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ int	*tokanize(char *input, int *arr)
 	while (arr)
 	{
 		arr = check_operators(input, arr);
+		if (!arr)
+			return (NULL);
 		arr = command_after_pipe(input, arr);
+		if (!arr)
+			return (NULL);
 		arr = label_spaces(input, arr);
 		arr = check_commands(input, arr);
 		val = check_empty_delims(input, arr);
@@ -49,6 +53,10 @@ int	*tokanize(char *input, int *arr)
 		{
 			syntax_err_message(val);
 			return (NULL);
+		}
+		for (int i = 0; arr[i] != EOL; i++)
+		{
+			printf("[%d] ", arr[i]);
 		}
 		if (arr)
 			return (arr);
@@ -208,6 +216,7 @@ void	split_on_flags(t_tokens *list)
 		list = list->next;
 	}
 }
+// 28
 
 int	count_args(char **args)
 {

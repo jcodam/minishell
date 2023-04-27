@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:19:07 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 17:50:24 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 17:46:02 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ void	add_in_node_file(t_tokens *list, int length, int i)
 	tmp_files[j] = malloc(sizeof(char) * (length + 1));
 	tmp_files[j] = ft_substr(list->content, i, length);
 	tmp_files[j + 1] = NULL;
-	j = 0;
-	while (tmp_files[j])
-		j++;
 	j = 0;
 	while (list->files[j])
 	{

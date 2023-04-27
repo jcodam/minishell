@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:46:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 14:10:21 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 17:49:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	newstr[i] = '\0';
 	return (newstr);
 }
-

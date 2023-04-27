@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 21:16:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 17:47:39 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,3 @@ int	*make_red_ip(char *input, int *arr, int i)
 	}
 	return (arr);
 }
-

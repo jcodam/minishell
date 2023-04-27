@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/26 13:41:58 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/27 14:51:52 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	main(int argc, char **argv, char **envp)
 		line = read_the_line();
 		block_signal();
 		splitted = main_loop(line);
-		print_all_tokens(splitted);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
@@ -114,6 +113,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }
+		// print_all_tokens(splitted);
 
 void	del_files(char **files, int *tokens)
 {

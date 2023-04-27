@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 16:39:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 14:38:29 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 16:00:30 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,6 @@ void	free_some_stuff(char **args)
 		free(args[j]);
 		j++;
 	}
-	//this does not seem to do anything
-	//j = 0;
-	//while (tmp_args[j])
-	//	j++;
 	free (args);
 }
 

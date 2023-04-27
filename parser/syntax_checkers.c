@@ -6,11 +6,14 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 16:15:04 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 17:04:38 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+static const char	*g_syntax_er = {
+	"Minishell: syntax error near unexpected token"};
 
 int	red_op_checker(char *input, int i)
 {
@@ -29,8 +32,7 @@ int	red_op_checker(char *input, int i)
 		if (input[i + 1] == '|' && input[i] == '|')
 			printf("Minishell: syntax error near unexpected token `||'\n");
 		else
-			printf("Minishell: syntax error near unexpected token `%c'\n", \
-			input[i]);
+			printf("%s `%c'\n", g_syntax_er, input[i]);
 		g_exit_code = 258;
 		return (0);
 	}
@@ -92,7 +94,7 @@ int	pipe_checker(char *input, int i)
 	return (1);
 }
 
-int	OR_error_checker(char *input, int i)
+int	or_error_checker(char *input, int i)
 {
 	if ((input[i + 2] == '|') || !content_before(input, i))
 	{

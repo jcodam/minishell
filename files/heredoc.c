@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 15:46:21 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/26 15:41:21 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 #include <fcntl.h>
 #include <errno.h>
 
+static int	strsame(char *eoh, int leneof, char *line)
+{
+	int	len_line;
+
+	len_line = ft_strlen(line);
+	if (ft_strncmp(line, eoh, leneof))
+		return (0);
+	if (leneof != len_line)
+		return (0);
+	return (1);
+}
+
 static void	heredoc_loop(char *eoh, int leneof, int fd)
 {
 	char	*line;
 
 	line = NULL;
 	line = readline("> ");
-	if (!line || !ft_strncmp(line, eoh, leneof))
+	if (!line || strsame(eoh, leneof, line))
 	{
 		exit(0);
 	}

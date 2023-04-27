@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:49:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 14:24:42 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 21:12:51 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ t_tokens	*find_args(t_tokens *list)
 	tmp = list;
 	while (list)
 	{
-		//while (list->content[i] && (list->tokens[i] != EOL))
-		//while(list->content[i])
 		while (list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= COMMAND)
@@ -78,7 +76,7 @@ t_tokens	*find_args(t_tokens *list)
 // 		//while (list->content[i] && list->tokens[i] != EOL)
 // 		while (list->tokens[i] != EOL)
 // 		{
-// 			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] <= \
+// 			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] <=
 // 			REDIRECT_APPEND)
 // 			{
 // 				while (list->content[i] == '<' || list->content[i] == '>')
@@ -117,13 +115,20 @@ t_tokens	*find_args(t_tokens *list)
 // 	}
 // 	return (tmp);
 // }
+// int	move_to_cut_point(t_tokens *list, int i)
+// {
+// 	while (list->content[i] == '<' || list->content[i] == '>')
+// 		i++;
+// 	while (list->content[i] == ' ')
+// 		i++;
+// 	return (i);
+// }
+// i = move_to_cut_point(list, i);
 
-
-t_tokens *find_files(t_tokens *list)
+t_tokens	*find_files(t_tokens *list)
 {
 	t_tokens	*tmp;
 	int			i;
-	int			j;
 
 	i = 0;
 	tmp = list;
@@ -131,17 +136,13 @@ t_tokens *find_files(t_tokens *list)
 	{
 		while (list->tokens[i] != EOL)
 		{
-			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] <= REDIRECT_APPEND)
+			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] \
+				<= REDIRECT_APPEND)
 				i = cut_off_file_symbol(list, i);
 			else if (list->tokens[i] == RD_TIL_DELIM)
 			{
-				j = ft_arrlen_c(list->files) - 1;
-				i = move_to_cut_point(list, i);
-				if (list->content[i])
-				{
-					i = cut_off_file_symbol(list, i);
-					tmp = heredoc_func(list, j, tmp);
-				}
+				i = cut_off_file_symbol(list, i);
+				tmp = heredoc_func(list, tmp);
 				if (!tmp)
 					return (tmp);
 			}
@@ -164,7 +165,7 @@ int	cut_off_file_symbol(t_tokens *list, int i)
 	return (i);
 }
 
-// t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j,\
+// t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j,
 // t_tokens *tmp)
 // {
 // 	while (list->content[i] == '<' || list->content[i] == '>')
@@ -179,20 +180,12 @@ int	cut_off_file_symbol(t_tokens *list, int i)
 // 	return (tmp);
 // }
 
-int	move_to_cut_point(t_tokens *list, int i)
-{
-	while (list->content[i] == '<' || list->content[i] == '>')
-		i++;
-	while (list->content[i] == ' ')
-		i++;
-	return (i);
-}
-
-t_tokens *heredoc_func(t_tokens *list, int j, t_tokens *tmp)
+t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp)
 {
 	char	*filename;
+	int		j;
 
-	j = ft_arrlen_c((list->files) - 1);
+	j = ft_arrlen_c((list->files)) - 1;
 	filename = heredoc(list->files[j], 1);
 	if (!filename)
 	{
@@ -215,7 +208,7 @@ int	*check_operators(char *input, int *arr)
 	{
 		if (!check_ampersand(input, arr, i))
 			return (NULL);
-		if (!check_OR(input, arr, i))
+		if (!check_or(input, arr, i))
 			return (NULL);
 		if (!check_pipes(input, arr, i))
 			return (NULL);

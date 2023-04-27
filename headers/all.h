@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/26 14:38:36 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 18:01:42 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ void		fuzer(t_tokens *list);
 void		split_args(t_tokens *list);
 //t_tokens	*split_on_pipes(char *input, int *arr, t_tokens *top);
 int			amp_checker(char *input, int i);
-int			check_OR(char *input, int *arr, int i);
+int			check_or(char *input, int *arr, int i);
 int			check_ampersand(char *input, int *arr, int i);
-int			OR_error_checker(char *input, int i);
+int			or_error_checker(char *input, int i);
 int			check_pipes(char *input, int *arr, int i);
 int			check_l_arrow(char *input, int *arr, int i);
 int			check_r_arrow(char *input, int *arr, int i);
@@ -200,10 +200,9 @@ t_tokens	*check_for_commands(t_tokens *list);
 int			cut_off_file_symbol(t_tokens *list, int i);
 t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j, \
 			t_tokens *tmp);
-t_tokens	*heredoc_func(t_tokens *list, int j, t_tokens *tmp);
+t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
 int			check_empty_delims(char *input, int *arr);
 void		syntax_err_message(int val);
-int			move_to_cut_point(t_tokens *list, int i);
 void		free_some_stuff(char **args);
 
 #endif

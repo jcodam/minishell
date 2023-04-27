@@ -6,18 +6,18 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:13 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/25 17:55:05 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/04/26 21:09:45 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
-int	check_OR(char *input, int *arr, int i)
+int	check_or(char *input, int *arr, int i)
 {
 	if (input[i] == '|' && input[i + 1] == '|' && \
 	arr[i] == OTHER && arr[i + 1] == OTHER)
 	{
-		if (!OR_error_checker(input, i))
+		if (!or_error_checker(input, i))
 			return (0);
 		arr[i] = SPLIT_OR;
 		arr[i + 1] = SPLIT_OR;
