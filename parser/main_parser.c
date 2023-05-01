@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/27 19:13:17 by jbax          ########   odam.nl         */
+/*   Updated: 2023/04/30 17:18:54 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ int	*tokanize(char *input, int *arr)
 		{
 			syntax_err_message(val);
 			return (NULL);
-		}
-		for (int i = 0; arr[i] != EOL; i++)
-		{
-			printf("[%d] ", arr[i]);
 		}
 		if (arr)
 			return (arr);
