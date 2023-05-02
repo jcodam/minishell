@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 17:41:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/02 18:02:25 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
+		// system("leaks minishell");
 		block_signal();
 		splitted = main_loop(line);
 		if (splitted)
@@ -149,10 +150,9 @@ void	free_list(t_tokens *list)
 		if (list->tokens)
 			free(list->tokens);
 		if (list->args)
+		{
 			ft_arrclear_c(list->args, (ft_arrlen_c(list->args)));
-		// printf("[0]%p [1]%p\n", list, list->files);
-		// ft_putarrs_fd(list->files, 1);
-		// printf("%lu\n", ft_arrlen_c(list->files));
+		}
 		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{
