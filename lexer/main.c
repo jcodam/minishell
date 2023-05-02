@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/30 17:17:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/01 14:39:16 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		system("leaks minishell");
+		// system("leaks minishell");
 		block_signal();
 		splitted = main_loop(line);
 		if (splitted)
