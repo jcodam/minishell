@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 17:47:39 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 12:40:30 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,7 @@ int	*check_commands(char *input, int *arr)
 		i++;
 	}
 	return (arr);
-}
-
-int	content_before(char *input, int i)
-{
-	if (i == 0)
-		return (0);
-	else
-	{
-		while (i)
-		{
-			if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
-				return (1);
-			i--;
-		}
-		return (0);
-	}
-}
+}	
 
 int	*make_red_op(char *input, int *arr, int i)
 {
@@ -95,7 +79,7 @@ int	*make_red_op(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && input[i])
+		while (!ft_strrchr("|&<> ", input[i]) && input[i])
 			arr[i++] = val;
 		done = 1;
 	}
@@ -120,7 +104,7 @@ int	*make_red_ip(char *input, int *arr, int i)
 	{
 		while (input[i] == ' ')
 			arr[i++] = val;
-		while (input[i] != ' ' && input[i])
+		while (input[i] != ' ' && arr[i] != -2)
 			arr[i++] = val;
 		done = 1;
 	}

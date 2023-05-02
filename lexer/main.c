@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/27 14:51:52 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 17:41:59 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }*/
-		// print_all_tokens(splitted);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -104,16 +103,19 @@ int	main(int argc, char **argv, char **envp)
 		block_signal();
 		splitted = main_loop(line);
 		if (splitted)
+		{
 			what_cmd(splitted, super);
+		}
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+		// print_all_tokens(splitted);
 		free_list(splitted);
+		// system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
 }
-		// print_all_tokens(splitted);
 
 void	del_files(char **files, int *tokens)
 {
@@ -135,22 +137,28 @@ void	del_files(char **files, int *tokens)
 void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
-
+	// print_all_tokens(list);
 	while (list)
 	{
 		tmp = list->next;
 		if (list->content)
+		{
 			free(list->content);
+			list->content = 0;
+		}
 		if (list->tokens)
 			free(list->tokens);
 		if (list->args)
-		{
-			ft_arrclear_c(list->args, (ft_arrlen_c(list->args) - 1));
-		}
+			ft_arrclear_c(list->args, (ft_arrlen_c(list->args)));
+		// printf("[0]%p [1]%p\n", list, list->files);
+		// ft_putarrs_fd(list->files, 1);
+		// printf("%lu\n", ft_arrlen_c(list->files));
 		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{
+			// printf("[0]%p [1]%p\n", list, list->files[0]);
 			ft_arrclear_c(list->files, (ft_arrlen_c(list->files)));
+			
 		}
 		if (list->mini_tok)
 			free(list->mini_tok);

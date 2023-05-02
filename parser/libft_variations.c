@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:46:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 17:49:51 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 12:32:06 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,22 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	newstr[i] = '\0';
 	return (newstr);
+}
+
+int	*ft_arrdup(int *source, int len)
+{
+	int	i;
+	int	*dest;
+
+	i = 0;
+	dest = malloc((len + 1) * sizeof(int));
+	if (!dest)
+		return (NULL);
+	while (i < len)
+	{
+		dest[i] = source[i];
+		i++;
+	}
+	dest[i] = -2;
+	return (dest);
 }

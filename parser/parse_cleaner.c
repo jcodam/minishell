@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:53:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 19:23:53 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 12:17:16 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,6 @@ char	*mini_space_trimmer(char *string)
 	free (string);
 	return (tmp);
 }
-
-//new function, check for:
-// type away; cat <hello | && echo ll
-// Minishell: syntax error near unexpected token `&'
-// type away; cat <hello  & | echo ll
-// ll
-// cat: &: No such file or directory
-// arr[0]: cat
-// arr[0]: hello
-// arr[0]: echo
-// type away; cat <hello  & || echo ll
-// cat: &: No such file or directory
-// ll
-// arr[0]: cat
-// arr[0]: hello
-// arr[0]: echo
-// type away; cat <hello  &| echo ll
-// ll
-// cat: &: No such file or directory
-// arr[0]: cat
-// arr[0]: hello
-// arr[0]: echo
-// type away; cat <hello  &&| echo ll
-//among others
 
 int	check_empty_delims(char *input, int *arr)
 {

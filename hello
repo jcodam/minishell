@@ -1,6 +1,30 @@
-tesst deze
+-&&
+-||
+-|
+-ls -la&&
 
+syntax check different scenario's!
 
--dsd && |
--echo  && <<
-- |fs
+//new function, check for:
+// type away; cat <hello | && echo ll
+// Minishell: syntax error near unexpected token `&'
+// type away; cat <hello  & | echo ll
+// ll
+// cat: &: No such file or directory
+// arr[0]: cat
+// arr[0]: hello
+// arr[0]: echo
+// type away; cat <hello  & || echo ll
+// cat: &: No such file or directory
+// ll
+// arr[0]: cat
+// arr[0]: hello
+// arr[0]: echo
+// type away; cat <hello  &| echo ll
+// ll
+// cat: &: No such file or directory
+// arr[0]: cat
+// arr[0]: hello
+// arr[0]: echo
+// type away; cat <hello  &&| echo ll
+//among others

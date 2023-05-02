@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 18:27:02 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 17:48:17 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 17:20:00 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	*calloc_array(int len, int type)
 	i = 0;
 	if (!len || !type)
 		return (NULL);
-	ret = malloc((len + 1) * sizeof(type));
+	ret = malloc((len + 1) * sizeof(int));
 	while (i <= len)
 	{
 		ret[i] = -2;
@@ -63,7 +63,22 @@ int	*label_spaces(char *input, int *arr)
 	return (arr);
 }
 
-//function that prints all the parsed data.
+void	print_array(int *arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i] != EOL)
+	{
+		ft_putnbr_fd(arr[i], 1);
+		write(1, " ", 1);
+		i++;
+	}
+	ft_putnbr_fd(arr[i], 1);
+}
+
 int	print_all_tokens(t_tokens *list)
 {
 	t_tokens	*tmp;
@@ -90,6 +105,7 @@ int	print_all_tokens(t_tokens *list)
 		}
 		if (tmp->log_op)
 			printf("log_op of node %d: %d\n", i, tmp->log_op);
+			
 		if (tmp->files)
 		{
 			while (tmp->files[i])
@@ -129,20 +145,4 @@ int	print_all_tokens(t_tokens *list)
 		tmp = tmp->next;
 	}
 	return (1);
-}
-
-void	print_array(int *arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i] != EOL)
-	{
-		ft_putnbr_fd(arr[i], 1);
-		write(1, " ", 1);
-		i++;
-	}
-	ft_putnbr_fd(arr[i], 1);
 }
