@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:39:20 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/02 18:07:52 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pipe_checker(char *input, int i)
 int	or_error_checker(char *input, int i)
 {
 	if ((input[i + 2] == '|') || !content_before(input, i) || \
-	!content_after(input, i))
+	!content_after(input, i + 1))
 	{
 		write(2, "minishell: syntax error near unexpected token `||'\n", 51);
 		g_exit_code = 258;
@@ -55,7 +55,7 @@ int	or_error_checker(char *input, int i)
 int	amp_checker(char *input, int i)
 {
 	if (input[i + 2] == '&' || !content_before(input, i) || \
-	!content_after(input, i))
+	!content_after(input, i + 1))
 	{
 		write(2, "minishell: syntax error near unexpected token `&&'\n", 51);
 		g_exit_code = 258;

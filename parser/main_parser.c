@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 18:03:29 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 16:35:57 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_tokens	*main_loop(char *input)
 
 	len = ft_strlen(input);
 	arr = make_arr(len);
-	//arr = tokanize(input, arr);
-	//if (!arr)
 	if (!tokanize(input, arr))
 	{
 		free(arr);
@@ -78,4 +76,3 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = check_for_commands(list);
 	return (list);
 }
-

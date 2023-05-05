@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 18:36:23 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/03 15:45:10 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_export_no_arguments(char **env, int output_fd)
 {
 	t_list	*head;
 
+	if (!*env)
+		return ;
 	head = ft_lstnew_ascii(env);
 	if (!head)
 		exit(1);

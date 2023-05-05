@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/02 12:17:33 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:17:54 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/02 18:12:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	*check_operators(char *input, int *arr)
 	while (input[i])
 	{
 		if (!check_ampersand(input, arr, i))
-			return (arr);
+			return (0);
 		if (!check_or(input, arr, i))
 			return (0);
 		if (!check_pipes(input, arr, i))

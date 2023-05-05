@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:49:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 18:03:40 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 16:51:44 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,35 @@ int	find_tokens(int val, t_tokens *list)
 
 t_tokens	*find_args(t_tokens *list)
 {
-	t_tokens	*tmp;
+	t_tokens	*head;
 	int			i;
 
 	i = 0;
-	tmp = list;
+	head = list;
 	while (list)
 	{
-		while (list->tokens[i] != EOL)
+		while (list->tokens && list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= COMMAND)
-			{
-				i = cut_to_args(list, i, list->tokens[i]);
-			}
+				i = cut_to_args(list, i);
 			i++;
 		}
 		i = 0;
 		list = list->next;
 	}
-	return (tmp);
+	return (head);
 }
 
 t_tokens	*find_files(t_tokens *list)
 {
-	t_tokens	*tmp;
+	t_tokens	*head;
 	int			i;
 
 	i = 0;
-	tmp = list;
+	head = list;
 	while (list)
 	{
-		while (list->tokens[i] != EOL)
+		while (list->tokens && list->tokens[i] != EOL)
 		{
 			if (list->tokens[i] >= REDIRECT_IP && list->tokens[i] \
 				<= REDIRECT_APPEND)
@@ -81,16 +79,16 @@ t_tokens	*find_files(t_tokens *list)
 			else if (list->tokens[i] == RD_TIL_DELIM)
 			{
 				i = cut_off_file_symbol(list, i);
-				tmp = heredoc_func(list, tmp);
-				if (!tmp)
-					return (tmp);
+				head = heredoc_func(list, head);
+				if (!head)
+					return (head);
 			}
 			i++;
 		}
 		i = 0;
 		list = list->next;
 	}
-	return (tmp);
+	return (head);
 }
 
 // t_tokens *find_files(t_tokens *list)

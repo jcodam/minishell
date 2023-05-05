@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:46:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:32:06 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 16:55:38 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	*ms_arrdup(int *arr, int len)
 	i = 0;
 	if (!arr || !len)
 		return (NULL);
-	newarr = malloc(sizeof(int) * len);
+	newarr = malloc(sizeof(int) * (len + 1));
 	while (i <= len)
 	{
 		newarr[i] = arr[i];
@@ -42,6 +42,17 @@ int	*ms_arrdup(int *arr, int len)
 	return (newarr);
 }
 
+size_t	ft_arrlen_i(int *arr)
+{
+	size_t	count;
+
+	count = 0;
+	while (arr && arr[count])
+		count++;
+	return (count);
+}
+
+
 int	*ft_subarr(int *arr, size_t start, size_t len)
 {
 	size_t			i;
@@ -49,11 +60,13 @@ int	*ft_subarr(int *arr, size_t start, size_t len)
 	size_t			arrlen;
 
 	i = 0;
-	if (!arr)
+	if (!arr || len == 0)
 		return (0);
 	arrlen = ar_len(arr);
 	if (start > arrlen)
 		return (0);
+	if (len > arrlen - start)
+		return (ft_arrdup(arr + start, (ft_arrlen_i(arr) - start)));
 	newarr = calloc_array((len + 2), -2);
 	if (!newarr)
 	{
@@ -76,8 +89,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t			strlen;
 
 	i = 0;
-	if (s == 0)
-		return (NULL);
+	if (s == 0 || len == 0)
+		return (ft_strdup(""));
 	strlen = ft_strlen(s);
 	if (start > strlen)
 		return (ft_strdup(""));

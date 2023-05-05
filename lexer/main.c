@@ -6,12 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 18:02:25 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 16:54:57 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 #include "../headers/quotedef.h"
+//#include <crtdbg.h>
 
 int	g_exit_code = 0;
 
@@ -26,31 +27,6 @@ void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
 	super->term_struct = term_struct;
 }
 
-/*static int	nb_of_non_quotes(char *str)
-{
-	int	index;
-	int	quote_mark;
-	int	nb_non_quotes;
-
-	nb_non_quotes = 0;
-	quote_mark = NO_QUOTE;
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == '"' && quote_mark == NO_QUOTE)
-			quote_mark = DOUBLE_QUOTE;
-		else if (str[index] == '"' && quote_mark == DOUBLE_QUOTE)
-			quote_mark = NO_QUOTE;
-		else if (str[index] == '\'' && quote_mark == NO_QUOTE)
-			quote_mark = SINGLE_QUOTE;
-		else if (str[index] == '\'' && quote_mark == SINGLE_QUOTE)
-			quote_mark = NO_QUOTE;
-		index++;
-	}
-	return (quote_mark);
-}
-
-
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
@@ -66,53 +42,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		while (nb_of_non_quotes(line) > NO_QUOTE)
-			line = read_the_line_again(line);
-		if (line)
-		{
-			ft_putendl_fd(line,1);
-		// splitted = main_loop(line);
-		// if (splitted)
-		// 	what_cmd(splitted, super);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		// free_list(splitted);
-		free(line);
-		}
-	}
-	(void)splitted;
-	return (0);
-}*/
-
-int	main(int argc, char **argv, char **envp)
-{
-	char				*line;
-	t_tokens			*splitted;
-	t_super				*super;
-	struct termios		term_struct;
-
-	(void)argc;
-	(void)argv;
-	super = malloc(sizeof(t_super));
-	prep_terms(super, envp, &term_struct);
-	while (1)
-	{
-		set_signal_parrent();
-		line = read_the_line();
-		// system("leaks minishell");
-		block_signal();
 		splitted = main_loop(line);
+		block_signal();
 		if (splitted)
-		{
 			what_cmd(splitted, super);
-		}
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		// print_all_tokens(splitted);
 		free_list(splitted);
-		// system("leaks minishell");
 	}
 	(void)splitted;
 	return (0);
@@ -138,7 +75,7 @@ void	del_files(char **files, int *tokens)
 void	free_list(t_tokens *list)
 {
 	t_tokens	*tmp;
-	// print_all_tokens(list);
+
 	while (list)
 	{
 		tmp = list->next;
@@ -150,15 +87,11 @@ void	free_list(t_tokens *list)
 		if (list->tokens)
 			free(list->tokens);
 		if (list->args)
-		{
 			ft_arrclear_c(list->args, (ft_arrlen_c(list->args)));
-		}
 		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{
-			// printf("[0]%p [1]%p\n", list, list->files[0]);
 			ft_arrclear_c(list->files, (ft_arrlen_c(list->files)));
-			
 		}
 		if (list->mini_tok)
 			free(list->mini_tok);

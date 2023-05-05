@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/02 18:02:47 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/05/04 16:08:51 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,10 @@ SAN= -fsanitize=address
 
 OO= -O3
 
-all:$(NAME)
+# all:$(NAME)
+
+all:
+	@$(MAKE) $(NAME) -j4
 
 a.out: $(OBF_DIR) $(wild)
 	$(CC) $(CFLAGS) $@ $(wild) $(RLINE) 

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 16:59:31 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/04 18:50:37 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 void		rl_clear_history(void);
 void		rl_replace_line(const char *text, int clear_undo);
 /* DEFINE'S */
-# define DEBUG(x) printf("%p, %s:%d\n", x, __FILE__, __LINE__)
+//# define DEBUG(x) printf("%p, %s:%d\n", x, __FILE__, __LINE__)
 # define EMPTY 1
 # define FULL 0
 /* 1 Global */
@@ -177,7 +177,7 @@ void		trim_spaces(t_tokens *list);
 t_tokens	*find_files(t_tokens *list);
 t_tokens	*find_args(t_tokens *list);
 int			cut_to_files(t_tokens *list, int i, int val);
-int			cut_to_args(t_tokens *list, int i, int val);
+int			cut_to_args(t_tokens *list, int i);
 void		add_in_node_file(t_tokens *list, int length, int i);
 void		add_in_node_arg(t_tokens *list, int length, int i);
 int			*calloc_array(int len, int type);
@@ -206,5 +206,6 @@ int			content_after(char *input, int i);
 void		write_relevant_message(char *input, int i);
 int			copy_and_free(char **tmp_args, char **args, int j);
 void		free_after_split(t_tokens *list, char **temp1, int i);
+int			*ft_arrdup(int *source, int len);
 
 #endif

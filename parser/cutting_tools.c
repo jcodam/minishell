@@ -6,18 +6,17 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:58:41 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:55:14 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 15:51:09 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
-int	cut_to_args(t_tokens *list, int i, int val)
+int	cut_to_args(t_tokens *list, int i)
 {
 	int	length;
 	int	start;
 
-	(void)val;
 	length = 0;
 	start = i;
 	while (list->tokens[i] >= COMMAND && list->tokens[i] != FILE_T)

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:53:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:17:16 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 16:56:29 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ void	trim_spaces(t_tokens *list)
 		tmp = list->content;
 		start = 0;
 		end = ((ft_strlen(list->content)) - 1);
-		if (end < 0)
-			end = 0;
 		while (list->content[start] == ' ')
 			start++;
-		while (list->content[end] == ' ')
+		if (end < start)
+			end = (start + 1);
+		while (list->content[end] == ' ' && end >= (start + 1))
 			end--;
 		list->content = ft_substr(tmp, start, (end - start));
 		list->tokens = ft_subarr(arr, start, (end - start));
+		if (!list->tokens)
+			free(list->tokens);
+		if (!list->content)
+			free(list->content);
 		free(arr);
 		free(tmp);
 		list = list->next;
@@ -48,11 +52,16 @@ char	*mini_space_trimmer(char *string)
 
 	i = 0;
 	start = 0;
-	end = ft_strlen(string);
+	end = (ft_strlen(string) - 1);
 	while (string[start] == ' ')
 		start++;
-	while (string[end - 1] == ' ')
+	if (end < start)
+		end = (start + 1);
+	while (string[end] == ' ' && end > start)
 		end--;
+	// while (string[end] == ' ')
+	// 	end--;
+	//printf("malloc size: %d\n", ((end - start) + 1));
 	tmp = malloc(sizeof(char) * ((end - start) + 1));
 	while (start < end)
 	{
@@ -60,7 +69,7 @@ char	*mini_space_trimmer(char *string)
 		i++;
 		start++;
 	}
-	tmp[i] = 0;
+	tmp[i] = '\0';
 	free (string);
 	return (tmp);
 }
@@ -82,11 +91,8 @@ int	check_empty_delims(char *input, int *arr)
 			if (arr[i] == SPLIT_AND || arr[i] == SPLIT_OR)
 				i++;
 			while ((arr[i] < PIPE || arr[i] > SPLIT_OR) && arr[i] != EOL)
-			{
-				if (!ft_iswhite_space(input[i]))
+				if (!ft_iswhite_space(input[i++]))
 					set = 1;
-				i++;
-			}
 			if (!set)
 				return (arr[i]);
 			set = 0;
