@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 19:14:24 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 20:16:55 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		splitted = main_loop(line);
 		block_signal();
+		splitted = main_loop(line);
 		if (splitted)
 			what_cmd(splitted, super);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);

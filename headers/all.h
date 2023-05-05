@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 19:12:48 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 20:25:04 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int			ar_len(int *arr);
 int			*ft_arrdup(int *source, int len);
 int			*ms_arrdup(int *arr, int len);
 int			*ft_subarr(int *arr, size_t start, size_t len);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
 
 // main_parser.c
 t_tokens	*main_loop(char *input);

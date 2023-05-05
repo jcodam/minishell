@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:19:07 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 16:48:32 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 20:22:05 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	transpose_arg(t_tokens *list, int length, int start)
 		list->args = NULL;
 	}
 	list->args = malloc(sizeof(char *) * 2);
-	list->args[0] = ft_substr(list->content, start, (length - 1));
+	list->args[0] = ft_substr(list->content, start, length);
 	list->args[1] = 0;
 }
 

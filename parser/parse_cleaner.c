@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:53:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 18:09:19 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 20:14:11 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	trim_spaces(t_tokens *list)
 		arr = list->tokens;
 		tmp = list->content;
 		start = 0;
-		end = ((ft_strlen(list->content)) - 1);
+		end = ((ft_strlen(list->content)));
 		while (list->content[start] == ' ')
 			start++;
 		if (end < start)
@@ -48,7 +48,7 @@ char	*mini_space_trimmer(char *string)
 
 	i = 0;
 	start = 0;
-	end = (ft_strlen(string) - 1);
+	end = (ft_strlen(string));
 	while (string[start] == ' ')
 		start++;
 	if (end < start)
