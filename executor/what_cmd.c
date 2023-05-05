@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/26 18:18:04 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 19:31:11 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 	found = 0;
 	if (!args || !*args)
 		return (1);
-	if (look_for_cmd(*args, &found, "$?") && ft_arrlen_c(args) == 1)
+	if (look_for_cmd(*args, &found, "?") && ft_arrlen_c(args) == 1)
 	{
 		printf("%d\n", g_exit_code);
 		g_exit_code = 0;

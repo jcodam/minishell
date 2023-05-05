@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/01 14:39:16 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 18:10:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,65 +26,48 @@ void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
 	super->term_struct = term_struct;
 }
 
-/*static int	nb_of_non_quotes(char *str)
+static int	set_shlvl(t_super *super, int nbr)
 {
-	int	index;
-	int	quote_mark;
-	int	nb_non_quotes;
+	char	**exprt;
+	char	*temp;
+	char	*temp1;
 
-	nb_non_quotes = 0;
-	quote_mark = NO_QUOTE;
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == '"' && quote_mark == NO_QUOTE)
-			quote_mark = DOUBLE_QUOTE;
-		else if (str[index] == '"' && quote_mark == DOUBLE_QUOTE)
-			quote_mark = NO_QUOTE;
-		else if (str[index] == '\'' && quote_mark == NO_QUOTE)
-			quote_mark = SINGLE_QUOTE;
-		else if (str[index] == '\'' && quote_mark == SINGLE_QUOTE)
-			quote_mark = NO_QUOTE;
-		index++;
-	}
-	return (quote_mark);
+	exprt = 0;
+	temp = ft_itoa(nbr);
+	temp1 = ft_strjoin("SHLVL=", temp);
+	free(temp);
+	temp = ft_strdup("export");
+	exprt = ft_arradd_index(exprt, temp, 0);
+	exprt = ft_arradd_index(exprt, temp1, 1);
+	ft_export(super, exprt, 1);
+	ft_arrclear_c(exprt, ft_arrlen_c(exprt));
+	return (0);
 }
 
-
-int	main(int argc, char **argv, char **envp)
+static int	shell_level(t_super *super)
 {
-	char				*line;
-	t_tokens			*splitted;
-	t_super				*super;
-	struct termios		term_struct;
+	char	*shelllvl;
+	int		shel;
 
-	(void)argc;
-	(void)argv;
-	super = malloc(sizeof(t_super));
-	prep_terms(super, envp, &term_struct);
-	while (1)
+	shelllvl = ft_arrnstr(super->env, "SHLVL=", &shel);
+	if (!shelllvl)
+		shel = 1;
+	else
+		shel = ft_atoi(shelllvl + 6);
+	if (shel == 2147483647)
+		shel = -1;
+	shel++;
+	if (shel < 0)
+		shel = 0;
+	else if (shel == 2147483647)
 	{
-		set_signal_parrent();
-		line = read_the_line();
-		while (nb_of_non_quotes(line) > NO_QUOTE)
-			line = read_the_line_again(line);
-		if (line)
-		{
-			ft_putendl_fd(line,1);
-		// splitted = main_loop(line);
-		// if (splitted)
-		// 	what_cmd(splitted, super);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
-		// free_list(splitted);
-		free(line);
-		}
+		ft_putstr_fd("minishell: warning: shell level (2147483647)", 2);
+		ft_putstr_fd(" too high, resetting to 1\n", 2);
+		shel = 1;
 	}
-	(void)splitted;
+	set_shlvl(super, shel);
 	return (0);
-}*/
-		// print_all_tokens(splitted);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -97,15 +80,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	super = malloc(sizeof(t_super));
 	prep_terms(super, envp, &term_struct);
+	shell_level(super);
 	while (1)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		// system("leaks minishell");
 		block_signal();
 		splitted = main_loop(line);
+		system("leaks minishell");
 		if (splitted)
 			what_cmd(splitted, super);
+		system("leaks minishell");
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);

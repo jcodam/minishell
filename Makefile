@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/01 13:45:46 by jbax          ########   odam.nl          #
+#    Updated: 2023/05/04 16:23:48 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ lib=libft/libft.a
 CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror
-CFLAGS+= $(SAN)
+# CFLAGS+= $(SAN)
 CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
