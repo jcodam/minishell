@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:46:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 16:55:38 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 18:05:35 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@ int	ar_len(int *arr)
 	while (arr[len] != EOL)
 		len++;
 	return (len);
+}
+
+int	*ft_arrdup(int *source, int len)
+{
+	int	i;
+	int	*dest;
+
+	i = 0;
+	dest = malloc((len + 1) * sizeof(int));
+	if (!dest)
+		return (NULL);
+	while (i < len)
+	{
+		dest[i] = source[i];
+		i++;
+	}
+	dest[i] = -2;
+	return (dest);
 }
 
 int	*ms_arrdup(int *arr, int len)
@@ -42,17 +60,6 @@ int	*ms_arrdup(int *arr, int len)
 	return (newarr);
 }
 
-size_t	ft_arrlen_i(int *arr)
-{
-	size_t	count;
-
-	count = 0;
-	while (arr && arr[count])
-		count++;
-	return (count);
-}
-
-
 int	*ft_subarr(int *arr, size_t start, size_t len)
 {
 	size_t			i;
@@ -66,7 +73,7 @@ int	*ft_subarr(int *arr, size_t start, size_t len)
 	if (start > arrlen)
 		return (0);
 	if (len > arrlen - start)
-		return (ft_arrdup(arr + start, (ft_arrlen_i(arr) - start)));
+		return (ft_arrdup(arr + start, (ar_len(arr) - start)));
 	newarr = calloc_array((len + 2), -2);
 	if (!newarr)
 	{
@@ -111,20 +118,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (newstr);
 }
 
-int	*ft_arrdup(int *source, int len)
-{
-	int	i;
-	int	*dest;
+// size_t	ft_arrlen_i(int *arr)
+// {
+// 	size_t	count;
 
-	i = 0;
-	dest = malloc((len + 1) * sizeof(int));
-	if (!dest)
-		return (NULL);
-	while (i < len)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-	dest[i] = -2;
-	return (dest);
-}
+// 	count = 0;
+// 	while (arr && arr[count])
+// 		count++;
+// 	return (count);
+// }

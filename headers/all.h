@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/04 18:50:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 18:04:10 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 void		rl_clear_history(void);
 void		rl_replace_line(const char *text, int clear_undo);
 /* DEFINE'S */
-//# define DEBUG(x) printf("%p, %s:%d\n", x, __FILE__, __LINE__)
 # define EMPTY 1
 # define FULL 0
 /* 1 Global */
@@ -69,10 +68,9 @@ void		ft_othercmd(char **arg, t_super *super, int ispipe, int fd);
 int			print_all_tokens(t_tokens *list);
 int			tokanize_main(char *input, t_tokens *list);
 t_tokens	*init_list(void);
-//t_tokens	*new_node(char *input);
 
 char		**copy_env(char **env);
-char		**split_quote(char const *s, char c);
+
 /* splits the string in a malloc'ed copy of the content 
 of the env string */
 char		*ft_env_content(char *env);
@@ -112,44 +110,103 @@ int			setfd_write(char *filename);
 int			setfd_read(char *filename);
 
 // @alex functions 
-t_tokens	*main_loop(char *input);
-int			*make_arr(int len);
-void		print_array(int *arr);
-int			*tokanize(char *input, int *arr);
-int			*label_quotes(char *input, int *arr, int data);
-int			*label_vals(int start, int end, int *arr, int sig);
-int			*check_operators(char *input, int *arr);
-int			*command_after_pipe(char *input, int *arr);
-int			*label_spaces(char *input, int *arr);
-int			*check_commands(char *input, int *arr);
-void		add_node(int start, int *arr, char *input, t_tokens *top);
-t_tokens	*split_into_list(char *input, int *arr, t_tokens *list);
-void		ms_lstadd_back(t_tokens **lst, t_tokens *new);
+
+//main.c
+void		free_list(t_tokens *list);
+
+// cutting_tools.c:
+int			cut_to_files(t_tokens *list, int i, int val);
+int			cut_to_args(t_tokens *list, int i);
+int			cut_off_file_symbol(t_tokens *list, int i);
+
+// fill_node.c
 void		fill_node(t_tokens *top, char *input, int start, int end);
-int			get_node_length(int *arr, int start);
 t_tokens	*get_node(int start, int *arr, char *input, t_tokens *tmp);
-t_tokens	*lst_end(t_tokens *top);
-int			get_index(t_tokens *top);
-t_tokens	*setup_new_node(t_tokens *top);
-char		get_quote_type(int type);
+
+// heredoc_wrap.c
+t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
+
+// internal_splitters.c
+void		split_on_flags(t_tokens *list);
+
+// libft_variations.c
+int			ar_len(int *arr);
+int			*ft_arrdup(int *source, int len);
+int			*ms_arrdup(int *arr, int len);
+int			*ft_subarr(int *arr, size_t start, size_t len);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+
+// main_parser.c
+t_tokens	*main_loop(char *input);
+int			*tokanize(char *input, int *arr);
+t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
+
+// memory_tools.c
 void		*ms_calloc(size_t nmemb, size_t size);
-t_arglist	*add_node_args(t_arglist *args, t_tokens *source);
-t_arglist	*convert_list(t_tokens *source);
-int			*make_red_op(char *input, int *arr, int i);
-int			*make_red_ip(char *input, int *arr, int i);
-int			pipe_checker(char *input, int i);
-int			red_op_checker(char *input, int i);
-int			red_ip_checker(char *input, int i);
-void		mini_tokenizer(t_tokens *node);
-void		fuzer(t_tokens *list);
-void		split_args(t_tokens *list);
-int			amp_checker(char *input, int i);
-int			check_or(char *input, int *arr, int i);
-int			check_ampersand(char *input, int *arr, int i);
-int			or_error_checker(char *input, int i);
-int			check_pipes(char *input, int *arr, int i);
-int			check_l_arrow(char *input, int *arr, int i);
-int			check_r_arrow(char *input, int *arr, int i);
+void		free_arr_null(char ***ptr);
+void		free_str_null(char **ptr);
+void		free_some_stuff(char **args);
+
+//mini_tokanizer.c
+void		attach_token(t_tokens *list, int i);
+void		update_mini_tok(t_tokens *list, int i, int val);
+
+//parse_cleaner.c
+void		trim_spaces(t_tokens *list);
+char		*mini_space_trimmer(char *string);
+int			check_empty_delims(char *input, int *arr);
+
+//parse_operators.c
+int			*check_operators(char *input, int *arr);
+
+//parse_quotes.c
+int			label_quotess(char *str, int *arr);
+int			*label_quotes(char *input, int *arr, int data);
+char		get_quote_type(int type);
+
+//parse_splitter.c
+t_tokens	*split_on_amps(t_tokens *list);
+t_tokens	*split_on_or(t_tokens *list);
+t_tokens	*split_on_pipes(t_tokens *list);
+
+//parsing_list.c
+int			get_node_length(int *arr, int start);
+t_tokens	*setup_new_node(t_tokens *top);
+void		ms_lstadd_back(t_tokens **lst, t_tokens *new);
+t_tokens	*lst_end(t_tokens *top);
+t_tokens	*new_node(char *input);
+
+//parsing_tools.c
+int			*calloc_array(int len, int type);
+int			*make_arr(int len);
+int			*label_spaces(char *input, int *arr);
+void		print_array(int *arr);
+int			print_all_tokens(t_tokens *list);
+
+//seeking_tools.c
+int			find_pipe(int *arr, int max, int position);
+
+/**
+ * finds the first instance of a specified token in the array. 
+ * returns -1 if there is no instance of the token
+ */
+int			find_tokens(int val, t_tokens *list);
+t_tokens	*find_files(t_tokens *list);
+t_tokens	*find_args(t_tokens *list);
+
+//simple_tools.c
+int			*label_vals(int start, int end, int *arr, int sig);
+t_tokens	*check_for_commands(t_tokens *list);
+int			count_args(char **args);
+int			content_before(char *input, int i);
+int			content_after(char *input, int i);
+
+//split_not_quote.c
+char		**split_quote(char const *s, char c);
+
+//splitting_tools.c
+t_tokens	*split_into_list(char *input, int *arr, t_tokens *list);
+void		fill_node_split(t_tokens	*node, int split_point, int noc);
 /**
  * splits the content of a node at the position given as 'split_points' and 
  * places the righthand part of the string in a new node in the linked list. 
@@ -159,53 +216,38 @@ int			check_r_arrow(char *input, int *arr, int i);
  * should be split
  */
 void		split_to_node(t_tokens *node, int split_point, int noc);
-t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
-int			*ft_subarr(int *arr, size_t start, size_t len);
-int			ar_len(int *arr);
-void		fill_node_split(t_tokens	*node, int split_point, int noc);
-/**
- * finds the first instance of a specified token in the array. 
- * returns -1 if there is no instance of the token
- */
-int			find_tokens(int val, t_tokens *list);
-t_tokens	*split_on_amps(t_tokens *list);
-int			find_tokens(int val, t_tokens *list);
-void		print_tokens(int *arr);
-t_tokens	*split_on_or(t_tokens *list);
-t_tokens	*split_on_pipes(t_tokens *list);
-void		trim_spaces(t_tokens *list);
-t_tokens	*find_files(t_tokens *list);
-t_tokens	*find_args(t_tokens *list);
-int			cut_to_files(t_tokens *list, int i, int val);
-int			cut_to_args(t_tokens *list, int i);
-void		add_in_node_file(t_tokens *list, int length, int i);
-void		add_in_node_arg(t_tokens *list, int length, int i);
-int			*calloc_array(int len, int type);
-int			*ms_arrdup(int *arr, int len);
-void		free_list(t_tokens *list);
+
+//syntax_chcker_main.c
+int			syntax_checker(char *input, int *arr);
+
+//syntax_checker_tools.c
+int			check_or(char *input, int *arr, int i);
+int			check_ampersand(char *input, int *arr, int i);
+int			check_pipes(char *input, int *arr, int i);
+int			check_l_arrow(char *input, int *arr, int i);
+int			check_r_arrow(char *input, int *arr, int i);
+
+//syntax_checkers.c
+int			pipe_checker(char *input, int i);
+int			or_error_checker(char *input, int i);
+int			amp_checker(char *input, int i);
+int			red_op_checker(char *input, int i);	
+int			red_ip_checker(char *input, int i);
+
+//syntax_messaging.c
+void		syntax_err_message(int val);
+void		write_relevant_message(char *input, int i);
+
+//tokanize_tools.c
+int			*command_after_pipe(char *input, int *arr);
+int			*check_commands(char *input, int *arr);
+int			*make_red_op(char *input, int *arr, int i);
+int			*make_red_ip(char *input, int *arr, int i);
+
+//transpose.c
 void		transpose_file(t_tokens *list, int length, int start, int val);
 void		transpose_arg(t_tokens *list, int length, int start);
-int			count_args(char **args);
-void		split_on_flags(t_tokens *list);
-char		*mini_space_trimmer(char *string);
-void		update_mini_tok(t_tokens *list, int i, int val);
-void		free_arr_null(char ***ptr);
-void		free_str_null(char **ptr);
-void		attach_token(t_tokens *list, int i);
-int			content_before(char *input, int i);
-t_tokens	*check_for_commands(t_tokens *list);
-int			cut_off_file_symbol(t_tokens *list, int i);
-t_tokens	*cut_off_files_symbol_and_heredoc(t_tokens *list, int i, int j, \
-			t_tokens *tmp);
-t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
-int			check_empty_delims(char *input, int *arr);
-void		syntax_err_message(int val);
-void		free_some_stuff(char **args);
-int			syntax_checker(char *input, int *arr);
-int			content_after(char *input, int i);
-void		write_relevant_message(char *input, int i);
-int			copy_and_free(char **tmp_args, char **args, int j);
-void		free_after_split(t_tokens *list, char **temp1, int i);
-int			*ft_arrdup(int *source, int len);
+void		add_in_node_file(t_tokens *list, int length, int i);
+void		add_in_node_arg(t_tokens *list, int length, int i);
 
 #endif

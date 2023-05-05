@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   heredoc_wrap.c                                     :+:    :+:            */
+/*   syntax_checker_main.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/02 12:22:20 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 17:12:14 by avon-ben      ########   odam.nl         */
+/*   Created: 2023/05/05 18:03:28 by avon-ben      #+#    #+#                 */
+/*   Updated: 2023/05/05 18:06:04 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 
-t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp)
+int	syntax_checker(char *input, int *arr)
 {
-	char	*filename;
-	int		j;
+	int	i;
+	int	val;
 
-	j = ft_arrlen_c((list->files)) - 1;
-	filename = heredoc(list->files[j], 1);
-	if (j == -1)
+	i = 0;
+	while (arr[i] != -2)
 	{
-		free_list(tmp);
-		return (tmp);
+		if (arr[i] == PIPE)
+		{
+			if (!content_before(input, i))
+				return (9);
+		}
+		i++;
 	}
-	if (!filename)
-	{
-		list->files[j] = 0;
-		list->mini_tok[j] = 0;
-		free_list(tmp);
-		tmp = 0;
-		return (tmp);
-	}
-	list->files[j] = filename;
-	return (tmp);
+	val = check_empty_delims(input, arr);
+	if (val)
+		return (val);
+	return (0);
 }
