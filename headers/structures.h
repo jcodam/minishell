@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 18:03:40 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/21 17:20:36 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/04 15:10:09 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ enum e_commands
 {
 	EOL = -2,
 	OTHER = -1,
-	SPC,
+	SPC = 1,
 	REDIRECT_IP = 10,
 	REDIRECT_OP,
 	REDIRECT_APPEND,

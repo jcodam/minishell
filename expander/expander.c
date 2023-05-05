@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/19 16:23:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 17:54:38 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ char	**arr_expander(char **arr, char **env, int is_file)
 		ft_arrclear_c(arr, ft_arrlen_c(arr));
 		return (NULL);
 	}
+	if (is_file)
+		ft_arrclear_c(temp, ft_arrlen_c(temp));
 	arr = expend_quotes(arr);
 	return (arr);
 }

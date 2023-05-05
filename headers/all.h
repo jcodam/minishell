@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/26 18:01:42 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/04 18:50:37 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 void		rl_clear_history(void);
 void		rl_replace_line(const char *text, int clear_undo);
 /* DEFINE'S */
+//# define DEBUG(x) printf("%p, %s:%d\n", x, __FILE__, __LINE__)
 # define EMPTY 1
 # define FULL 0
 /* 1 Global */
@@ -142,7 +143,6 @@ int			red_ip_checker(char *input, int i);
 void		mini_tokenizer(t_tokens *node);
 void		fuzer(t_tokens *list);
 void		split_args(t_tokens *list);
-//t_tokens	*split_on_pipes(char *input, int *arr, t_tokens *top);
 int			amp_checker(char *input, int i);
 int			check_or(char *input, int *arr, int i);
 int			check_ampersand(char *input, int *arr, int i);
@@ -177,7 +177,7 @@ void		trim_spaces(t_tokens *list);
 t_tokens	*find_files(t_tokens *list);
 t_tokens	*find_args(t_tokens *list);
 int			cut_to_files(t_tokens *list, int i, int val);
-int			cut_to_args(t_tokens *list, int i, int val);
+int			cut_to_args(t_tokens *list, int i);
 void		add_in_node_file(t_tokens *list, int length, int i);
 void		add_in_node_arg(t_tokens *list, int length, int i);
 int			*calloc_array(int len, int type);
@@ -185,15 +185,12 @@ int			*ms_arrdup(int *arr, int len);
 void		free_list(t_tokens *list);
 void		transpose_file(t_tokens *list, int length, int start, int val);
 void		transpose_arg(t_tokens *list, int length, int start);
-char		**arg_splitter(char **args, int i, int start, int end);
 int			count_args(char **args);
 void		split_on_flags(t_tokens *list);
 char		*mini_space_trimmer(char *string);
 void		update_mini_tok(t_tokens *list, int i, int val);
-void		split_between_flags(t_tokens *list, int i);
 void		free_arr_null(char ***ptr);
 void		free_str_null(char **ptr);
-//int 		find_tokens(int *arr, int token);
 void		attach_token(t_tokens *list, int i);
 int			content_before(char *input, int i);
 t_tokens	*check_for_commands(t_tokens *list);
@@ -204,5 +201,11 @@ t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
 int			check_empty_delims(char *input, int *arr);
 void		syntax_err_message(int val);
 void		free_some_stuff(char **args);
+int			syntax_checker(char *input, int *arr);
+int			content_after(char *input, int i);
+void		write_relevant_message(char *input, int i);
+int			copy_and_free(char **tmp_args, char **args, int j);
+void		free_after_split(t_tokens *list, char **temp1, int i);
+int			*ft_arrdup(int *source, int len);
 
 #endif

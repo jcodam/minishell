@@ -6,12 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 18:10:20 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 18:12:35 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 #include "../headers/quotedef.h"
+//#include <crtdbg.h>
 
 int	g_exit_code = 0;
 
@@ -85,9 +86,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signal_parrent();
 		line = read_the_line();
-		block_signal();
 		splitted = main_loop(line);
-		system("leaks minishell");
+		block_signal();
 		if (splitted)
 			what_cmd(splitted, super);
 		system("leaks minishell");
@@ -99,7 +99,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)splitted;
 	return (0);
 }
-		// print_all_tokens(splitted);
 
 void	del_files(char **files, int *tokens)
 {
@@ -126,13 +125,14 @@ void	free_list(t_tokens *list)
 	{
 		tmp = list->next;
 		if (list->content)
+		{
 			free(list->content);
+			list->content = 0;
+		}
 		if (list->tokens)
 			free(list->tokens);
 		if (list->args)
-		{
 			ft_arrclear_c(list->args, (ft_arrlen_c(list->args)));
-		}
 		del_files(list->files, list->mini_tok);
 		if (list->files)
 		{

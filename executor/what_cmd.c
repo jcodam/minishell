@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 19:31:11 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 18:13:26 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,23 @@ int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 	// ft_putarrs_fd(bigdata->files, 1);
 int	what_cmd1(t_tokens *bigdata, t_super *super, int pipes)
 {
-	int	error;
+	int	err_files;
+	int	err_args;
 
-	bigdata->args = arr_expander(bigdata->args, super->env, 0);
+	err_files = 0;
+	err_args = 0;
+	if (bigdata->args && bigdata->args[0])
+		bigdata->args = arr_expander(bigdata->args, super->env, 0);
+	else
+		err_args = 1;
 	if (bigdata->files)
 	{
 		bigdata->files = arr_expander(bigdata->files, super->env, 1);
 		if (!bigdata->files)
 			return (1);
+		err_files = stage_files(bigdata->files, bigdata->mini_tok);
 	}
-	error = stage_files(bigdata->files, bigdata->mini_tok);
-	if (error)
+	if (err_files || err_args)
 		return (1);
 	return (what_cmd3(bigdata->args, super, pipes, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:47:26 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/24 14:03:38 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/03 19:32:18 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,28 @@ void	fill_node(t_tokens *node, char *input, int start, int end)
 	}
 	string[i] = '\0';
 	node->content = string;
+}
+
+t_tokens	*get_node(int start, int *arr, char *input, t_tokens *top)
+{
+	int			end;
+	char		*str;
+	int			i;
+	t_tokens	*tmp;
+
+	i = 0;
+	end = start;
+	while (arr[end] == arr[start])
+		end++;
+	if (arr[start] != SPC)
+	{
+		tmp = setup_new_node(top);
+		str = ms_calloc(0, ((end - start) + 1));
+		while (start < end)
+			str[i++] = input[start++];
+		str[i] = '\0';
+		tmp->content = str;
+		tmp->next = 0;
+	}
+	return (top);
 }

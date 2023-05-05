@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:19:07 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 17:46:02 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 16:48:32 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,17 @@ void	add_in_node_file(t_tokens *list, int length, int i)
 		tmp_files[j] = ft_strdup(list->files[j]);
 		j++;
 	}
-	tmp_files[j] = malloc(sizeof(char) * (length + 1));
 	tmp_files[j] = ft_substr(list->content, i, length);
 	tmp_files[j + 1] = NULL;
 	j = 0;
 	while (list->files[j])
 	{
 		free (list->files[j]);
+		list->files[j] = 0;
 		j++;
 	}
+	free(list->files);
+	list->files = 0;
 	list->files = tmp_files;
 }
 
@@ -89,14 +91,16 @@ void	add_in_node_arg(t_tokens *list, int length, int i)
 		tmp_args[j] = ft_strdup(list->args[j]);
 		j++;
 	}
-	tmp_args[j] = malloc(length + 1);
 	tmp_args[j] = ft_substr(list->content, i, length);
 	tmp_args[j + 1] = NULL;
 	j = 0;
 	while (list->args[j])
 	{
 		free (list->args[j]);
+		list->args[j] = 0;
 		j++;
 	}
+	free(list->args);
+	list->args = 0;
 	list->args = tmp_args;
 }

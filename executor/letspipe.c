@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:25:51 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 17:42:22 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 {
 	static int	stdio[2] = {0, 0};
 
-	if (!bigdata->args || !bigdata->args[0])
-		return (0);
 	if (!stdio[0] || !stdio[1])
 	{
 		stdio[1] = dup(1);

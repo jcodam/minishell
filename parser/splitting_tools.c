@@ -6,11 +6,13 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 16:39:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/04/26 16:00:30 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/02 17:03:37 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+int		*ft_arrdup(int *source, int len);
 
 t_tokens	*split_into_list(char *input, int *arr, t_tokens *top)
 {
@@ -35,49 +37,6 @@ t_tokens	*split_into_list(char *input, int *arr, t_tokens *top)
 	return (top);
 }
 
-// needs freeing
-char	**arg_splitter(char **args, int i, int start, int end)
-{
-	char	**tmp_args;
-	int		current;
-	int		j;
-
-	j = 0;
-	current = count_args(args);
-	tmp_args = malloc(sizeof(char *) * (current + 2));
-	while (j < i)
-	{
-		ft_strlcpy(tmp_args[j], args[j], (sizeof(args[j]) + 1));
-		j++;
-	}
-	tmp_args[j + 1] = ft_substr(args[i], start, end);
-	tmp_args[j] = ft_substr(args[i], 0, (start - 1));
-	tmp_args[j + 1] = mini_space_trimmer(tmp_args[j + 1]);
-	tmp_args[j] = mini_space_trimmer(tmp_args[j]);
-	j++;
-	while (args[j])
-	{
-		ft_strlcpy(tmp_args[j + 1], args[j], (sizeof(args[j]) + 1));
-		j++;
-	}
-	tmp_args[j + 1] = 0;
-	free_some_stuff(args);
-	return (tmp_args);
-}
-
-void	free_some_stuff(char **args)
-{
-	int	j;
-
-	j = 0;
-	while (args[j])
-	{
-		free(args[j]);
-		j++;
-	}
-	free (args);
-}
-
 void	fill_node_split(t_tokens *node, int split_point, int noc)
 {
 	char		*str;
@@ -86,19 +45,44 @@ void	fill_node_split(t_tokens *node, int split_point, int noc)
 	size_t		len;
 
 	len = ft_strlen(node->content);
-	node_2_len = (len - (split_point + noc) - 1);
-	arr = node->tokens;
-	str = node->content;
+	node_2_len = (len - (split_point + noc));
+	arr = ft_arrdup(node->tokens, ar_len(node->tokens));
+	str = ft_strdup(node->content);
+	free(node->content);
+	free(node->tokens);
+	node->content = 0;
+	node->tokens = 0;
 	node->next->content = ft_substr(str, (split_point + noc), \
 	node_2_len);
 	node->content = ft_substr(str, 0, (split_point - 1));
 	node->next->tokens = ft_subarr(arr, (split_point + noc), \
 	node_2_len);
 	node->tokens = ft_subarr(arr, 0, (split_point - 1));
+	free(arr);
+	free(str);
 }
 
-t_tokens	*check_for_commands(t_tokens *list)
+// splits the content of a node at the position given as 'split_points' and 
+// places the righthand part of the string in a new node in the linked list.
+// noc determines the amount of characters to be splitted on 
+// (i.e. for '&&' noc would be 2)
+// if node_nr is given, it determines the node in which the 
+// string should be split
+void	split_to_node(t_tokens *node, int split_point, int noc)
 {
-	split_on_flags(list);
-	return (list);
+	t_tokens	*new;
+
+	new = malloc(sizeof(t_tokens));
+	new->content = 0;
+	new->tokens = 0;
+	new->args = 0;
+	new->files = 0;
+	new->mini_tok = 0;
+	new->log_op = 0;
+	if (node->next)
+		new->next = node->next;
+	else
+		new->next = 0;
+	node->next = new;
+	fill_node_split(node, split_point, noc);
 }

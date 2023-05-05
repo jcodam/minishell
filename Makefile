@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/04 16:23:48 by jbax          ########   odam.nl          #
+#    Updated: 2023/05/05 18:11:59 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,9 @@ SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty
 	main_parser.c parse_quotes.c parsing_list.c syntax_checkers.c\
 	parsing_tools.c tokanize_tools.c fill_node.c syntax_checker_tools.c\
 	parse_splitter.c cutting_tools.c libft_variations.c memory_tools.c \
-	mini_tokanizer.c parse_cleaner.c seeking_tools.c \
-	splitting_tools.c transpose.c \
+	mini_tokanizer.c parse_cleaner.c seeking_tools.c heredoc_wrap.c\
+	splitting_tools.c transpose.c syntax_messaging.c parse_operators.c\
+	internal_splitters.c simple_tools.c
 	
 
 wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/expand_quotes.o $(OBF_DIR)/expand_vars.o\
@@ -48,7 +49,10 @@ SAN= -fsanitize=address
 
 OO= -O3
 
-all:$(NAME)
+# all:$(NAME)
+
+all:
+	@$(MAKE) $(NAME) -j4
 
 a.out: $(OBF_DIR) $(wild)
 	$(CC) $(CFLAGS) $@ $(wild) $(RLINE) 
