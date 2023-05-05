@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/04 16:08:51 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/05/05 18:05:12 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty
 	parse_splitter.c cutting_tools.c libft_variations.c memory_tools.c \
 	mini_tokanizer.c parse_cleaner.c seeking_tools.c heredoc_wrap.c\
 	splitting_tools.c transpose.c syntax_messaging.c parse_operators.c\
-	internal_splitters.c simple_tools.c
+	internal_splitters.c simple_tools.c syntax_checker_main.c
 	
 
 wild= $(OBF_DIR)/envget.o $(OBF_DIR)/environment.o $(OBF_DIR)/expand_quotes.o $(OBF_DIR)/expand_vars.o\

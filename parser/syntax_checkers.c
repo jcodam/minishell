@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 18:07:52 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 18:03:50 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,6 @@ int	amp_checker(char *input, int i)
 		return (0);
 	}
 	return (1);
-}
-
-int	syntax_checker(char *input, int *arr)
-{
-	int	i;
-	int	val;
-
-	i = 0;
-	while (arr[i] != -2)
-	{
-		if (arr[i] == PIPE)
-		{
-			if (!content_before(input, i))
-				return (9);
-		}
-		i++;
-	}
-	val = check_empty_delims(input, arr);
-	if (val)
-		return (val);
-	return (0);
 }
 
 int	red_op_checker(char *input, int i)
