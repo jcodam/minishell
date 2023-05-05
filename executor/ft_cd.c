@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/18 17:28:27 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 17:03:32 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 18:43:58 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,17 @@ int	ft_change_dir(char **args, t_super *super)
 	int		i;
 	char	*path;
 
+	i = 0;
 	path = cd_cases(args, super);
 	if (!path)
 		return (0);
-	i = chdir(path);
+	if (path[0])
+		i = chdir(path);
 	if (i == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		perror(path);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(":No such file or directory\n", 2);
 		g_exit_code = 1;
 	}
 	else
@@ -115,6 +118,3 @@ int	ft_change_dir(char **args, t_super *super)
 		free(path);
 	return (0);
 }
-
-	// ft_putstr_fd(path, 1);
-	// ft_putstr_fd(":No such file or directory\n", 1);

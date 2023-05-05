@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/24 15:51:14 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 18:50:16 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static int	execcmd(char **arg, t_super *super)
 	if (i == 1)
 		i = execve(arg[0], &arg[0], super->env);
 	ft_putstr_fd("minishel: ", 2);
-	perror(*arg);
+	ft_putstr_fd(*arg, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	i = 127;
 	return (i);
 }
