@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 18:12:35 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/05 19:14:24 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 		block_signal();
 		if (splitted)
 			what_cmd(splitted, super);
-		system("leaks minishell");
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
@@ -98,49 +97,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	(void)splitted;
 	return (0);
-}
-
-void	del_files(char **files, int *tokens)
-{
-	int	index;
-	int	error;
-
-	error = 0;
-	index = 0;
-	while (files && files[index])
-	{
-		if (tokens[index] == RD_TIL_DELIM)
-			error = unlink(files[index]);
-		if (error == -1)
-			perror(files[index]);
-		index++;
-	}
-}
-
-void	free_list(t_tokens *list)
-{
-	t_tokens	*tmp;
-
-	while (list)
-	{
-		tmp = list->next;
-		if (list->content)
-		{
-			free(list->content);
-			list->content = 0;
-		}
-		if (list->tokens)
-			free(list->tokens);
-		if (list->args)
-			ft_arrclear_c(list->args, (ft_arrlen_c(list->args)));
-		del_files(list->files, list->mini_tok);
-		if (list->files)
-		{
-			ft_arrclear_c(list->files, (ft_arrlen_c(list->files)));
-		}
-		if (list->mini_tok)
-			free(list->mini_tok);
-		free(list);
-		list = tmp;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 18:04:10 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 19:12:48 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ void		ft_put_env(t_super *super, int fd);
 void		ft_othercmd(char **arg, t_super *super, int ispipe, int fd);
 
 int			print_all_tokens(t_tokens *list);
-int			tokanize_main(char *input, t_tokens *list);
-t_tokens	*init_list(void);
-
 char		**copy_env(char **env);
 
 /* splits the string in a malloc'ed copy of the content 
@@ -110,10 +107,6 @@ int			setfd_write(char *filename);
 int			setfd_read(char *filename);
 
 // @alex functions 
-
-//main.c
-void		free_list(t_tokens *list);
-
 // cutting_tools.c:
 int			cut_to_files(t_tokens *list, int i, int val);
 int			cut_to_args(t_tokens *list, int i);
@@ -122,6 +115,7 @@ int			cut_off_file_symbol(t_tokens *list, int i);
 // fill_node.c
 void		fill_node(t_tokens *top, char *input, int start, int end);
 t_tokens	*get_node(int start, int *arr, char *input, t_tokens *tmp);
+void		free_list(t_tokens *list);
 
 // heredoc_wrap.c
 t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
@@ -185,7 +179,6 @@ int			print_all_tokens(t_tokens *list);
 
 //seeking_tools.c
 int			find_pipe(int *arr, int max, int position);
-
 /**
  * finds the first instance of a specified token in the array. 
  * returns -1 if there is no instance of the token
@@ -232,11 +225,11 @@ int			pipe_checker(char *input, int i);
 int			or_error_checker(char *input, int i);
 int			amp_checker(char *input, int i);
 int			red_op_checker(char *input, int i);	
-int			red_ip_checker(char *input, int i);
 
 //syntax_messaging.c
 void		syntax_err_message(int val);
 void		write_relevant_message(char *input, int i);
+int			red_ip_checker(char *input, int i);
 
 //tokanize_tools.c
 int			*command_after_pipe(char *input, int *arr);
