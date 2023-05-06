@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:58:41 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 15:51:09 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 20:21:57 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ int	cut_to_files(t_tokens *list, int i, int val)
 		i++;
 	}
 	if (i > 0)
-	{
-		length = length - 1;
 		i = i - 1;
-	}
 	if (!list->files)
 		transpose_file(list, length, start, val);
 	else if (list->files)

@@ -6,14 +6,11 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 18:03:50 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/05 19:13:28 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
-
-static const char	*g_syntax_er = {
-	"Minishell: syntax error near unexpected token"};
 
 int	pipe_checker(char *input, int i)
 {
@@ -30,10 +27,13 @@ int	pipe_checker(char *input, int i)
 	if (ft_strrchr("|&", input[i]))
 	{
 		if (input[i + 1] == '|' && input[i] == '|')
-			printf("Minishell: syntax error near unexpected token `||'\n");
+			write(2, "Minishell: syntax error near unexpected token `||'", 50);
 		else
-			printf("Minishell: syntax error near unexpected token `%c'\n", \
-			input[i]);
+		{
+			write(2, "Minishell: syntax error near unexpected token `", 47);
+			write(2, &input[i], 1);
+			write(2, "'\n", 2);
+		}
 		g_exit_code = 258;
 		return (0);
 	}
@@ -64,7 +64,7 @@ int	amp_checker(char *input, int i)
 	return (1);
 }
 
-int	red_op_checker(char *input, int i)
+static int	pre_checker(char *input, int i)
 {
 	if (!content_after(input, i))
 	{
@@ -74,12 +74,24 @@ int	red_op_checker(char *input, int i)
 	i++;
 	while (ft_iswhite_space(input[i]))
 		i++;
+	return (i);
+}
+
+int	red_op_checker(char *input, int i)
+{
+	i = pre_checker(input, i);
+	if (i == 0)
+		return (0);
 	if (ft_strrchr("|&", input[i]))
 	{
 		if (input[i + 1] == '|' && input[i] == '|')
-			printf("Minishell: syntax error near unexpected token `||'\n");
+			write(2, "Minishell: syntax error near unexpected token `||'\n", 51);
 		else
-			printf("%s `%c'\n", g_syntax_er, input[i]);
+		{
+			write(2, "Minishell: syntax error near unexpected token `", 47);
+			write(2, &input[i], 1);
+			write(2, "'\n", 2);
+		}
 		g_exit_code = 258;
 		return (0);
 	}
@@ -88,28 +100,6 @@ int	red_op_checker(char *input, int i)
 		write(2, "Minishell: syntax error near unexpected token `>'\n", 50);
 		g_exit_code = 258;
 		return (0);
-	}
-	return (1);
-}
-
-int	red_ip_checker(char *input, int i)
-{
-	if (!content_after(input, i))
-	{
-		write_relevant_message(input, i);
-		return (0);
-	}
-	i++;
-	while (ft_iswhite_space(input[i]))
-		i++;
-	if (input[i] == '<')
-	{
-		if (input[i + 1] == '<')
-		{
-			write(2, "Minishell: syntax error near unexpected token `<'\n", 50);
-			g_exit_code = 258;
-			return (0);
-		}
 	}
 	return (1);
 }
