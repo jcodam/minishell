@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 19:13:28 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 15:19:52 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	pipe_checker(char *input, int i)
 	if (ft_strrchr("|&", input[i]))
 	{
 		if (input[i + 1] == '|' && input[i] == '|')
-			write(2, "Minishell: syntax error near unexpected token `||'", 50);
+			write(2, "Minishell: syntax error near unexpected token `||'\n", 51);
 		else
 		{
 			write(2, "Minishell: syntax error near unexpected token `", 47);

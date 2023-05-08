@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/03 15:45:10 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 16:25:07 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_export_no_arguments(char **env, int output_fd)
 
 static int	is_valid(char *arg)
 {
-	if (ft_isdigit(*arg))
+	if (ft_isdigit(*arg) || *arg == 0)
 		return (1);
 	while (ft_isalnum(*arg) || *arg == '_')
 		arg++;

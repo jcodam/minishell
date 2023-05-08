@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 20:12:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 16:21:13 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	*tokanize(char *input, int *arr)
 	if (val)
 	{
 		syntax_err_message(val);
-		free(arr);
+		return (NULL);
 	}
 	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 13:18:11 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/21 20:02:34 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/08 15:36:10 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	exit_errbug(char *error, char *debug)
 {
-	printf("%s\n%s\n", error, debug);
+	ft_putendl_fd(error, 2);
+	(void)debug;
 	exit(g_exit_code);
 }
 

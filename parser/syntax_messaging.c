@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/05 18:06:16 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 19:14:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 15:18:51 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	syntax_err_message(int val)
 {
 	if (val == 20 || val == 9)
-		ft_putendl_fd("syntax error near unexpected token `|'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
 	else if (val == 21)
-		ft_putendl_fd("syntax error near unexpected token `&&'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `&&'", 2);
 	else if (val == 22)
-		ft_putendl_fd("syntax error near unexpected token `||'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `||'", 2);
 }
 
 void	write_relevant_message(char *input, int i)

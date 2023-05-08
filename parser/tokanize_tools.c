@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:31 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:40:30 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 16:07:26 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	*command_after_pipe(char *input, int *arr)
 		if (arr[i] == PIPE)
 		{
 			i++;
-			while (input[i] != ' ' && input[i])
+			while (input[i] != ' ' && input[i] && arr[i] != PIPE)
 			{
 				arr[i] = COMMAND;
 				i++;

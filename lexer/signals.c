@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/03/22 18:33:29 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/08 15:37:49 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,3 @@ void	reset_signal(void)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
-
-// {
-// 	struct sigaction	sagnal_struct;
-
-// 	sagnal_struct.sa_flags = SA_RESTART;
-// 	sagnal_struct.__sigaction_u.__sa_handler = &sighandler_parent;
-// 	sigaction(SIGINT, &sagnal_struct, NULL);
-// 	sigaction(SIGQUIT, &sagnal_struct, NULL);
-// }

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 17:42:22 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 16:47:01 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 	}
 	else if (last_pipe)
 		g_exit_code = (error / 256);
-	set_signal_parrent();
 }
 
 static void	start_child(t_tokens *bigdata, t_super *super, int *pipe, int read)

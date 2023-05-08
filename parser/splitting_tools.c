@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 16:39:08 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 17:03:37 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 16:09:35 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fill_node_split(t_tokens *node, int split_point, int noc)
 	node->tokens = 0;
 	node->next->content = ft_substr(str, (split_point + noc), \
 	node_2_len);
-	node->content = ft_substr(str, 0, (split_point - 1));
+	node->content = ft_substr(str, 0, (split_point));
 	node->next->tokens = ft_subarr(arr, (split_point + noc), \
 	node_2_len);
 	node->tokens = ft_subarr(arr, 0, (split_point - 1));

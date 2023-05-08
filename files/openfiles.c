@@ -6,18 +6,13 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 12:49:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:18:26 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/08 15:42:39 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 #include <fcntl.h>
 #include <errno.h>
-
-// void	put_file_error()
-// {
-// 	if (errno)
-// }
 
 int	setfd_read(char *filename)
 {
