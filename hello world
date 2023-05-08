@@ -1,0 +1,2 @@
+[cat <"./hello world" ]
+cat <minishell.h|ls
