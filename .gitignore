@@ -18,3 +18,4 @@ git*
 .Vscode
 *.sh
 issues
+./minishell_tester
