@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 18:23:01 by jbax          #+#    #+#                 */
-/*   Updated: 2023/04/22 16:37:26 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/08 19:43:18 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,24 @@ static char	**rep_vars_inindex(char **arr, int index, int *index2, char **env)
 	return (arr);
 }
 
+static char	**remove_empty_args(char **arr)
+{
+	int	index;
+
+	index = 0;
+	while (arr && arr[index])
+	{
+		if (!arr[index][0])
+		{
+			arr = ft_arrdell_index(arr, index, free);
+			if (!arr)
+				exit_errbug("malloc failed", "");
+		}
+		index++;
+	}
+	return (arr);
+}
+
 char	**expend_vars(char **arr, char **env)
 {
 	int		index;
@@ -84,5 +102,6 @@ char	**expend_vars(char **arr, char **env)
 			index++;
 		}
 	}
+	arr = remove_empty_args(arr);
 	return (arr);
 }

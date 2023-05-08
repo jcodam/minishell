@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 17:54:38 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 19:20:32 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	strcmpindex(char *str, char c, int i)
 			quote_mark = SINGLE_QUOTE;
 		else if (str[index] == '\'' && quote_mark == SINGLE_QUOTE)
 			quote_mark = NO_QUOTE;
-		else if (str[index] == '$' && c == '$' && quote_mark < SINGLE_QUOTE)
+		else if (str[index] == '$' && c == '$' && quote_mark == DOUBLE_QUOTE
+			&& str[index + 1] != '"')
+			return (index);
+		else if (str[index] == '$' && c == '$' && quote_mark < DOUBLE_QUOTE)
 			return (index);
 		else if (str[index] == '*' && c == '*' && quote_mark < DOUBLE_QUOTE)
 			return (index);
