@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/20 16:58:47 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 16:25:07 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 19:16:15 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	is_valid(char *arg)
 	return (0);
 }
 
-static void	checkandadd(t_super *super, char **args, int fd)
+static void	checkandadd(t_super *super, char **args)
 {
 	int		index;
 	char	*var;
@@ -71,9 +71,9 @@ static void	checkandadd(t_super *super, char **args, int fd)
 		index = -1;
 		if (is_valid(var))
 		{
-			ft_putstr_fd("minishel: export: `", fd);
-			ft_putstr_fd(*args, fd);
-			ft_putstr_fd("': not a valid identifier\n", fd);
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(*args, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 			g_exit_code = 1;
 		}
 		else
@@ -94,6 +94,6 @@ void	ft_export(t_super *super, char **args, int output_fd)
 		ft_export_no_arguments(super->env, output_fd);
 	else
 	{
-		checkandadd(super, args + 1, output_fd);
+		checkandadd(super, args + 1);
 	}
 }
