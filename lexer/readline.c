@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/02 20:14:56 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/08 17:19:17 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,29 @@ char	*read_the_line(void)
 			c = ft_itoa(0);
 		else
 			c = ft_itoa(x);
+		s = ft_strjoin("\e[", c);
+		free(c);
+		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
+		ft_putstr_fd(c, 1);
+		exit(g_exit_code);
+	}
+	if (is_empty_line(line) == FULL)
+		add_history(line);
+	return (line);
+}
+
+char	*first_read_line(void)
+{
+	char	*c;
+	char	*line;
+	char	*s;
+
+	line = NULL;
+	rl_outstream = stderr;
+	line = readline("type away; ");
+	if (!line)
+	{
+		c = ft_itoa(0);
 		s = ft_strjoin("\e[", c);
 		free(c);
 		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
@@ -100,35 +123,3 @@ static int	hor_pos(void)
 	tcsetattr(0, TCSANOW, &restore);
 	return (i);
 }
-
-// char	*read_the_line_again(char *first_half)
-// {
-// 	char	*c;
-// 	char	*line;
-// 	int		x;
-// 	char	*s;
-
-// 	line = NULL;
-// 	rl_outstream = stderr;
-// 	x = hor_pos();
-// 	line = readline("> ");
-// 	if (!line)
-// 	{
-// 		c = ft_itoa(x);
-// 		s = ft_strjoin("\e[", c);
-// 		free(c);
-// 		c = ft_strjoin(s, "G\e[1Aminishell; 
-// syntax error: unexpected end of file\n");
-// 		ft_putstr_fd(c, 1);
-// 		free(c);
-// 		free(s);
-// 		free(first_half);
-// 		return (0);
-// 	}
-// 	s = ft_strjoin(first_half, line);
-// 	if (is_empty_line(s) == FULL)
-// 		add_history(s);
-// 	free(first_half);
-// 	free(line);
-// 	return (s);
-// }

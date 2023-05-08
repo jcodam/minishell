@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 16:44:31 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 17:40:00 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,33 @@ static int	shell_level(t_super *super)
 	return (0);
 }
 
+static void	options_pipes(int argc, char **argv, t_super *super)
+{
+	char		*line;
+	t_tokens	*splitted;
+	int			options;
+
+	shell_level(super);
+	options = 0;
+	if (argc == 3 && !ft_strncmp(argv[1], "-c", 2))
+		options = 1;
+	set_signal_parrent();
+	if (options)
+		line = ft_strdup(argv[2]);
+	else
+		line = first_read_line();
+	block_signal();
+	splitted = main_loop(line);
+	if (splitted)
+		what_cmd(splitted, super);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
+	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+	free_list(splitted);
+	if (options)
+		exit(g_exit_code);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
@@ -77,15 +104,16 @@ int	main(int argc, char **argv, char **envp)
 	t_super				*super;
 	struct termios		term_struct;
 
-	(void)argc;
-	(void)argv;
 	super = malloc(sizeof(t_super));
 	prep_terms(super, envp, &term_struct);
-	shell_level(super);
+	options_pipes(argc, argv, super);
 	while (1)
 	{
 		set_signal_parrent();
-		line = read_the_line();
+		if (isatty(STDIN_FILENO))
+			line = read_the_line();
+		else
+			line = first_read_line();
 		block_signal();
 		splitted = main_loop(line);
 		if (splitted)
@@ -95,6 +123,5 @@ int	main(int argc, char **argv, char **envp)
 		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 		free_list(splitted);
 	}
-	(void)splitted;
 	return (0);
 }
