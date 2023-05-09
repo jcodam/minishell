@@ -6,11 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-<<<<<<< HEAD
-#    Updated: 2023/05/09 15:33:06 by avon-ben      ########   odam.nl          #
-=======
-#    Updated: 2023/05/09 16:12:05 by jbax          ########   odam.nl          #
->>>>>>> 6ae06fa37d7afda825767254c29455bd405cb09f
+#    Updated: 2023/05/09 18:49:11 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +41,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror
 # CFLAGS+= $(SAN)
-CFLAGS+= --coverage
+# CFLAGS+= --coverage
 CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
