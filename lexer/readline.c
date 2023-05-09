@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 18:03:59 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 20:26:40 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,20 @@ char	*read_the_line(void)
 
 char	*first_read_line(void)
 {
-	//char	*c;
+	char	*c;
 	char	*line;
-	//char	*s;
+	char	*s;
 
 	line = NULL;
 	rl_outstream = stderr;
 	line = readline("type away; ");
 	if (!line)
 	{
-		// c = ft_itoa(0);
-		// s = ft_strjoin("\e[", c);
-		// free(c);
-		//c = ft_strjoin(s, "G\e[1Atype away; exit\n");
-		ft_putstr_fd("exit\n", 2);
+		c = ft_itoa(0);
+		s = ft_strjoin("\e[", c);
+		free(c);
+		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
+		ft_putstr_fd(c, 2);
 		exit(g_exit_code);
 	}
 	if (is_empty_line(line) == FULL)

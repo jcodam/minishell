@@ -6,12 +6,37 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 15:32:55 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/08 20:21:17 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
 #include "../headers/signal_list.h"
+#include <errno.h>
+#include <sys/stat.h>
+
+static int	put_set_err(char *arg)
+{
+	struct stat	st;
+
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(arg, 2);
+	if (!stat(arg, &st))
+	{
+		if (S_ISDIR(st.st_mode))
+		{
+			ft_putstr_fd(": is a directory\n", 2);
+			return (126);
+		}
+	}
+	if (errno == EACCES)
+	{
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (126);
+	}
+	ft_putstr_fd(": command not found\n", 2);
+	return (127);
+}
 
 static int	execcmd(char **arg, t_super *super)
 {
@@ -35,10 +60,7 @@ static int	execcmd(char **arg, t_super *super)
 	}
 	if (i == 1)
 		i = execve(arg[0], &arg[0], super->env);
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(*arg, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	i = 127;
+	i = put_set_err(*arg);
 	return (i);
 }
 
