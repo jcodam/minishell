@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 17:15:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/09 16:40:03 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,6 @@ int			red_op_checker(char *input, int i);
 //syntax_messaging.c
 void		syntax_err_message(int val);
 void		write_relevant_message(char *input, int i);
-int			red_ip_checker(char *input, int i);
 
 //tokanize_tools.c
 int			*command_after_pipe(char *input, int *arr);

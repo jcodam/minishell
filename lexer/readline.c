@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 20:26:40 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/09 18:43:54 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ char	*read_the_line(void)
 char	*first_read_line(void)
 {
 	char	*c;
-	char	*line;
 	char	*s;
+	char	*line;
 
 	line = NULL;
 	rl_outstream = stderr;

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 18:54:13 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/01 20:25:11 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/09 17:11:52 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_l_arrow(char *input, int *arr, int i)
 {
 	if (input[i] == '<' && arr[i] == OTHER)
 	{
-		if (!red_ip_checker(input, i))
+		if (!red_op_checker(input, i))
 			return (0);
 		arr = make_red_ip(input, arr, i);
 	}

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/05 18:06:16 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/08 15:18:51 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/09 16:40:58 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,4 @@ void	write_relevant_message(char *input, int i)
 		write(2, "'\n", 2);
 	}
 	g_exit_code = 258;
-}
-
-int	red_ip_checker(char *input, int i)
-{
-	if (!content_after(input, i))
-	{
-		write_relevant_message(input, i);
-		return (0);
-	}
-	i++;
-	while (ft_iswhite_space(input[i]))
-		i++;
-	if (input[i] == '<')
-	{
-		if (input[i + 1] == '<')
-		{
-			write(2, "Minishell: syntax error near unexpected token `<'\n", 50);
-			g_exit_code = 258;
-			return (0);
-		}
-	}
-	return (1);
 }

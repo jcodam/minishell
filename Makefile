@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/08 15:46:36 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/05/09 15:33:06 by avon-ben      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
 clean:
-	@rm -f $(OBF) $(OBF_DIR)
+	@rm -rf $(OBF) $(OBF_DIR)
 
 fclean:
 	@rm -rf $(OBF) $(OBF_DIR) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:58:41 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 20:21:57 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/09 17:03:37 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	cut_to_files(t_tokens *list, int i, int val)
 	start = i;
 	while (list->tokens[i] >= val && !ft_strchr("<>", list->content[i]))
 	{
+		list->tokens[i] = val;
 		length++;
 		i++;
 	}
