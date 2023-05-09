@@ -1,2 +1,0 @@
-type away; echo "exit_code ->$? user ->$USER home -> $HOME"
-type away; exit
