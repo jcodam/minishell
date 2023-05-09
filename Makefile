@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/08 15:46:36 by avon-ben      ########   odam.nl          #
+#    Updated: 2023/05/09 16:12:05 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror
 # CFLAGS+= $(SAN)
+CFLAGS+= --coverage
 CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
@@ -70,7 +71,7 @@ $(OBF_DIR):
 	mkdir $(OBF_DIR)
 
 clean:
-	@rm -f $(OBF) $(OBF_DIR)
+	@rm -rf $(OBF) $(OBF_DIR)
 
 fclean:
 	@rm -rf $(OBF) $(OBF_DIR) $(NAME)
