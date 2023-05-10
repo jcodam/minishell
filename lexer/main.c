@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 16:14:19 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 16:31:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ static int	set_shlvl(t_super *super, int nbr)
 	char	**exprt;
 	char	*temp;
 	char	*temp1;
+	int		dash;
 
 	exprt = 0;
+	dash = ft_env_index(super->env, "_");
+	if (dash >= 0)
+		super->env = ft_arrdell_index(super->env, dash, free);
 	temp = ft_itoa(nbr);
 	temp1 = ft_strjoin("SHLVL=", temp);
 	free(temp);
