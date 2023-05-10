@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:27:00 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 16:47:01 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/10 15:34:15 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ static void	set_exit_code(t_super *super, t_tokens *bigdata, int error)
 	last_pipe = 0;
 	if (!bigdata->next || bigdata->next->log_op != OPP_PIPE)
 		last_pipe = 1;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+	set_term(super->restore_term, TCSANOW);
 	if (last_pipe && error > 0 && error < 16)
 	{
 		ft_putendl_fd((char *)g_signals[error], 2);
@@ -88,6 +86,5 @@ int	what_cmd2(t_tokens *bigdata, t_super *super)
 	}
 	block_signal();
 	mk_pipes(bigdata, 0, super);
-	set_signal_parrent();
 	return (g_exit_code);
 }

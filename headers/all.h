@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 17:15:33 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 15:56:30 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int	g_exit_code;
  * Set the signal parent object
  * set the use of ctr + c to read from newline
  */
-void		set_signal_parrent(void);
+void		set_signal_parrent(char set);
 /**
  * @brief jordan
  * sets the signals to do nothing
  */
 void		block_signal(void);
 void		reset_signal(void);
+void		set_term(struct termios *term, int option);
 /**
  * @brief jordan
  * use the readline and handels eof and history
@@ -131,7 +132,7 @@ int			*ms_arrdup(int *arr, int len);
 int			*ft_subarr(int *arr, size_t start, size_t len);
 
 // main_parser.c
-t_tokens	*main_loop(char *input);
+t_tokens	*main_loop(char *input, t_super *term);
 int			*tokanize(char *input, int *arr);
 t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
 

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:49:07 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/09 15:39:23 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 15:47:38 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*read_the_line(void)
 		free(c);
 		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
 		ft_putstr_fd(c, 1);
-		exit(g_exit_code);
+		return (0);
 	}
 	if (is_empty_line(line) == FULL)
 		add_history(line);
@@ -57,8 +57,8 @@ char	*read_the_line(void)
 
 char	*first_read_line(void)
 {
-	// char	*c;
-	// char	*s;
+	char	*c;
+	char	*s;
 	char	*line;
 
 	line = NULL;
@@ -66,12 +66,12 @@ char	*first_read_line(void)
 	line = readline("type away; ");
 	if (!line)
 	{
-		// c = ft_itoa(0);
-		// s = ft_strjoin("\e[", c);
-		// free(c);
-		// c = ft_strjoin(s, "G\e[1Atype away; exit\n");
-		// ft_putstr_fd(c, 2);
-		exit(g_exit_code);
+		c = ft_itoa(0);
+		s = ft_strjoin("\e[", c);
+		free(c);
+		c = ft_strjoin(s, "G\e[1Atype away; exit\n");
+		ft_putstr_fd(c, 2);
+		return (0);
 	}
 	if (is_empty_line(line) == FULL)
 		add_history(line);

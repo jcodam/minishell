@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 13:18:11 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 20:24:35 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 16:09:53 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,10 @@ void	ft_exit_builtin(char **arg)
 		exit(g_exit_code);
 	if (check_arg(arg[1]))
 	{
-		if (!arg[2])
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(arg[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(255);
-		}
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(arg[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		exit(255);
 	}
 	if (arg[2])
 	{

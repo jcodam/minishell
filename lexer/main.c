@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/09 17:03:49 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 15:58:15 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 
 int	g_exit_code = 0;
 
-void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
+t_super	*prep_terms(char **envp, struct termios *term_struct)
 {
+	t_super	*super;
+
+	super = malloc(sizeof(t_super));
+	tcgetattr(STDIN_FILENO, super->restore_term);
+	tcgetattr(STDOUT_FILENO, super->restore_term);
+	tcgetattr(STDERR_FILENO, super->restore_term);
 	tcgetattr(STDIN_FILENO, term_struct);
 	tcgetattr(STDOUT_FILENO, term_struct);
 	tcgetattr(STDERR_FILENO, term_struct);
@@ -24,6 +30,7 @@ void	prep_terms(t_super *super, char **envp, struct termios *term_struct)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, term_struct);
 	super->env = copy_env(envp);
 	super->term_struct = term_struct;
+	return (super);
 }
 
 static int	set_shlvl(t_super *super, int nbr)
@@ -79,18 +86,19 @@ static void	options_pipes(int argc, char **argv, t_super *super)
 	options = 0;
 	if (argc == 3 && !ft_strncmp(argv[1], "-c", 2))
 		options = 1;
-	set_signal_parrent();
+	set_signal_parrent('p');
+	set_term(super->term_struct, TCSAFLUSH);
 	if (options)
 		line = ft_strdup(argv[2]);
 	else
 		line = first_read_line();
+	set_term(super->restore_term, TCSANOW);
+	if (!line)
+		exit(g_exit_code);
 	block_signal();
-	splitted = main_loop(line);
+	splitted = main_loop(line, super);
 	if (splitted)
 		what_cmd(splitted, super);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 	free_list(splitted);
 	if (options)
 		exit(g_exit_code);
@@ -103,23 +111,23 @@ int	main(int argc, char **argv, char **envp)
 	t_super				*super;
 	struct termios		term_struct;
 
-	super = malloc(sizeof(t_super));
-	prep_terms(super, envp, &term_struct);
+	super = prep_terms(envp, &term_struct);
 	options_pipes(argc, argv, super);
 	while (1)
 	{
-		set_signal_parrent();
+		set_signal_parrent('p');
+		set_term(super->term_struct, TCSAFLUSH);
 		if (isatty(STDIN_FILENO))
 			line = read_the_line();
 		else
 			line = first_read_line();
+		set_term(super->restore_term, TCSANOW);
+		if (!line)
+			exit(g_exit_code);
 		block_signal();
-		splitted = main_loop(line);
+		splitted = main_loop(line, super);
 		if (splitted)
 			what_cmd(splitted, super);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-		tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
 		free_list(splitted);
 	}
 	return (0);

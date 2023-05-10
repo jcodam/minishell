@@ -6,11 +6,20 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 14:42:30 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 15:37:49 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/10 15:00:05 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/all.h"
+
+void	sighandler_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 2);
+		exit(1);
+	}
+}
 
 void	sighandler_parent(int signum)
 {
@@ -22,15 +31,20 @@ void	sighandler_parent(int signum)
 		rl_redisplay();
 		g_exit_code = 1;
 	}
-	if (signum == SIGQUIT)
-	{
-	}
 }
 
-void	set_signal_parrent(void)
+void	set_signal_parrent(char set)
 {
-	signal(SIGINT, sighandler_parent);
-	signal(SIGQUIT, sighandler_parent);
+	if (set == 'p')
+	{
+		signal(SIGINT, sighandler_parent);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (set == 'h')
+	{
+		signal(SIGINT, sighandler_heredoc);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 void	block_signal(void)

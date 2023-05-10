@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 15:19:09 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 20:21:17 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 15:26:50 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ static int	lets_fork(char **arg, t_super *super)
 		exit(error);
 	}
 	pid = waitpid(pid, &error, WCONTINUED);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDOUT_FILENO, TCSAFLUSH, super->term_struct);
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, super->term_struct);
+	set_term(super->restore_term, TCSANOW);
 	return (error);
 }
 
@@ -108,7 +106,6 @@ void	ft_othercmd(char **arg, t_super *super, int ispipe, int fd)
 		}
 		else
 			g_exit_code = (error / 256);
-		set_signal_parrent();
 	}
 	else
 	{

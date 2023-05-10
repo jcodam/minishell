@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   and_or_loop.c                                      :+:    :+:            */
+/*   term_handler.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/12 14:17:03 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 15:43:24 by jbax          ########   odam.nl         */
+/*   Created: 2023/05/10 15:02:16 by jbax          #+#    #+#                 */
+/*   Updated: 2023/05/10 15:10:37 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/all.h"
+#include "../headers/builtins_data_struct.h"
+#include <termios.h>
+#include <unistd.h>
 
-int	what_cmd2(t_tokens *bigdata, t_super *super);
-
-int	what_cmd(t_tokens *bigdata, t_super *super)
+void	set_term(struct termios *term, int option)
 {
-	what_cmd2(bigdata, super);
-	bigdata = bigdata->next;
-	while (bigdata)
-	{
-		if (!g_exit_code && bigdata->log_op == OPP_AND)
-			what_cmd2(bigdata, super);
-		if (g_exit_code && bigdata->log_op == OPP_OR)
-			what_cmd2(bigdata, super);
-		bigdata = bigdata->next;
-	}
-	return (1);
+	tcsetattr(STDIN_FILENO, option, term);
+	tcsetattr(STDOUT_FILENO, option, term);
+	tcsetattr(STDERR_FILENO, option, term);
 }

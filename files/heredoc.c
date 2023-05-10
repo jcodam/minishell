@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 20:22:44 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/10 15:52:22 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	heredoc_loop(char *eoh, int leneof, int fd)
 	exit(0);
 }
 
-static void	failed_heredoc(char **fdname)
+static void	failed_heredoc(char **fdname, int sig)
 {
 	int	error;
 
@@ -52,6 +52,10 @@ static void	failed_heredoc(char **fdname)
 		perror(*fdname);
 	free(*fdname);
 	*fdname = 0;
+	if (WIFSIGNALED(sig))
+		g_exit_code = 1;
+	else
+		g_exit_code = (sig / 256);
 }
 
 static int	mkchild(char *eoh, int fd, char **fdname)
@@ -64,15 +68,15 @@ static int	mkchild(char *eoh, int fd, char **fdname)
 		exit_errbug("fork failed", "heredoc 50");
 	if (!id)
 	{
-		reset_signal();
+		set_signal_parrent('h');
 		heredoc_loop(eoh, ft_strlen(eoh), fd);
 	}
 	waitpid(id, &i, 0);
 	close(fd);
 	free(eoh);
-	if (WIFSIGNALED(i))
+	if (i)
 	{
-		failed_heredoc(fdname);
+		failed_heredoc(fdname, i);
 		return (0);
 	}
 	return (1);

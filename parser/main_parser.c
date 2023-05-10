@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/08 16:21:13 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/10 15:59:07 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int			label_quotess(char *str, int *arr);
 
-t_tokens	*main_loop(char *input)
+t_tokens	*main_loop(char *input, t_super *term)
 {
 	int			len;
 	int			*arr;
 	t_tokens	*list;
 
+	set_term(term->term_struct, TCSAFLUSH);
 	len = ft_strlen(input);
 	arr = make_arr(len);
 	if (!tokanize(input, arr))
@@ -32,6 +33,7 @@ t_tokens	*main_loop(char *input)
 	list->content = 0;
 	list->next = 0;
 	list = primary_split(input, arr, list);
+	set_term(term->restore_term, TCSANOW);
 	return (list);
 }
 

@@ -6,7 +6,7 @@
 #    By: jbax <jbax@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/01/17 18:03:37 by jbax          #+#    #+#                  #
-#    Updated: 2023/05/09 16:12:05 by jbax          ########   odam.nl          #
+#    Updated: 2023/05/10 15:38:12 by jbax          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME= minishell
 SRC= and_or_loop.c readline.c signals.c main.c pwd.c what_cmd.c ft_cd.c is_empty.c\
 	echo.c export.c environment.c unset.c exit.c execve.c expander.c\
 	envget.c letspipe.c heredoc.c openfiles.c wildcard.c expand_quotes.c expand_vars.c\
-	split_not_quote.c\
+	split_not_quote.c term_handler.c\
 	main_parser.c parse_quotes.c parsing_list.c syntax_checkers.c\
 	parsing_tools.c tokanize_tools.c fill_node.c syntax_checker_tools.c\
 	parse_splitter.c cutting_tools.c libft_variations.c memory_tools.c \
@@ -41,7 +41,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -Wextra -Werror
 # CFLAGS+= $(SAN)
-CFLAGS+= --coverage
+# CFLAGS+= --coverage
 CFLAGS+= -o
 
 RLINE= -lreadline -L ~/.brew/opt/readline/lib/ $(lib)
@@ -53,7 +53,7 @@ OO= -O3
 # all:$(NAME)
 
 all:
-	@$(MAKE) $(NAME) -j4
+	@$(MAKE) $(NAME) -j
 
 a.out: $(OBF_DIR) $(wild)
 	$(CC) $(CFLAGS) $@ $(wild) $(RLINE) 
