@@ -1,8 +1,0 @@
-
--- [cat <"./hello world" ]
--- cat <minishell.h|ls
-
-ls >"./outfiles/outfile with spaces"
-cat <"./test_files/file name with spaces"
-
-make clean does not work

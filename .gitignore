@@ -11,7 +11,7 @@ OBF
 obj
 *.a
 *.o
-minishell
+minishell*
 pipe.c
 *_ex
 git*
@@ -20,3 +20,4 @@ git*
 issues
 ./minishell_tester
 ttt
+.git*

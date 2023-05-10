@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/02 12:34:36 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:40:16 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/09 16:19:10 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ int	content_before(char *input, int i)
 
 int	content_after(char *input, int i)
 {
-	if (input[i + 1] == input[i])
-		i++;
-	i++;
 	while (input[i])
 	{
 		if (!ft_iswhite_space(input[i]))
