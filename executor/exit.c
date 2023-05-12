@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 13:18:11 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 16:09:53 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/12 16:36:13 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	exit_errbug(char *error, char *debug)
 
 static int	check_arg(char *arg)
 {
+	while (ft_iswhite_space(*arg))
+		arg++;
 	if (*arg == '+' || *arg == '-')
 		arg++;
 	if (!*arg)
@@ -32,9 +34,10 @@ static int	check_arg(char *arg)
 	return (1);
 }
 
-void	ft_exit_builtin(char **arg)
+void	ft_exit_builtin(char **arg, int pipes)
 {
-	ft_putstr_fd("exit\n", 2);
+	if (!pipes)
+		ft_putstr_fd("exit\n", 1);
 	if (!arg || !*(&arg[1]))
 		exit(g_exit_code);
 	if (check_arg(arg[1]))

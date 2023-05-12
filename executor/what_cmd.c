@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/17 18:03:43 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/05 18:13:26 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/12 16:24:38 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ static int	look_for_cmd(char *line, int *found, char *commend)
 	return (1);
 }
 
-static int	lookcmd(char **args, t_super *super, int *found, int fd)
+static int	lookcmd(char **args, t_super *super, int *found, int pipes)
 {
 	if (look_for_cmd(*args, found, "pwd"))
-		ft_pwd(fd);
+		ft_pwd(1);
 	else if (look_for_cmd(*args, found, "exit"))
-		ft_exit_builtin(args);
+		ft_exit_builtin(args, pipes);
 	else if (look_for_cmd(*args, found, "cd"))
 		ft_change_dir(args, super);
 	else if (look_for_cmd(*args, found, "env"))
-		ft_put_env(super, fd);
+		ft_put_env(super, 1);
 	else if (look_for_cmd(*args, found, "echo"))
-		ft_echo(args + 1, fd);
+		ft_echo(args + 1, 1);
 	else if (look_for_cmd(*args, found, "export"))
-		ft_export(super, args, fd);
+		ft_export(super, args, 1);
 	else if (look_for_cmd(*args, found, "unset"))
 		ft_unset(super, args);
 	return (0);
@@ -82,7 +82,7 @@ int	what_cmd3(char **args, t_super *super, int pipes, int fd)
 		return (0);
 	}
 	g_exit_code = 0;
-	lookcmd(args, super, &found, fd);
+	lookcmd(args, super, &found, pipes);
 	if (!found)
 		ft_othercmd(args, super, pipes, fd);
 	return (found);

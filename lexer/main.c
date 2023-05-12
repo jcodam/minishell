@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/11 15:00:29 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 16:31:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/12 16:22:20 by jbax          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ t_super	*prep_terms(char **envp, struct termios *term_struct)
 	t_super	*super;
 
 	super = malloc(sizeof(t_super));
+	if (!super)
+		exit_errbug("start up, malloc failed", "");
+	super->restore_term = malloc(sizeof(struct termios));
+	if (!super->restore_term)
+		exit_errbug("start up, malloc failed", "");
 	tcgetattr(STDIN_FILENO, super->restore_term);
 	tcgetattr(STDOUT_FILENO, super->restore_term);
 	tcgetattr(STDERR_FILENO, super->restore_term);
