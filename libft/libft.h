@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/05 17:16:08 by jbax          #+#    #+#                 */
-/*   Updated: 2023/02/28 16:20:10 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 15:52:27 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 if no numbers in string retuns 0
 if number cant fit in a int returns -1 */
 int		ft_atoi(const char *nptr);
+
+/* changes a string to a long 
+if no numbers in string retuns 0
+if number cant fit in a long returns -1 */
+long	ft_atoi_l(const char *str);
 
 /* allocates (with malloc) memory of nmemb units times
 the size of each unit */
