@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/06 15:13:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 15:52:22 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 17:57:54 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ static int	strsame(char *eoh, int leneof, char *line)
 	return (1);
 }
 
-static void	heredoc_loop(char *eoh, int leneof, int fd)
+static void	heredoc_loop(char *eoh, int leneof, int fd, t_super *env)
 {
-	char	*line;
+	char	**line;
 
-	line = NULL;
-	line = readline("> ");
-	if (!line || strsame(eoh, leneof, line))
+	line = malloc(sizeof(char *) * 2);
+	line[1] = NULL;
+	line[0] = readline("> ");
+	if (!line[0] || strsame(eoh, leneof, line[0]))
 	{
 		exit(0);
 	}
-	write(fd, line, ft_strlen(line));
+	expend_vars(line, env->env);
+	write(fd, line[0], ft_strlen(line[0]));
 	write(fd, "\n", 1);
-	free(line);
-	heredoc_loop(eoh, leneof, fd);
+	ft_arrclear_c(line, 1);
+	heredoc_loop(eoh, leneof, fd, env);
 	exit(0);
 }
 
@@ -58,7 +60,7 @@ static void	failed_heredoc(char **fdname, int sig)
 		g_exit_code = (sig / 256);
 }
 
-static int	mkchild(char *eoh, int fd, char **fdname)
+static int	mkchild(char *eoh, int fd, char **fdname, t_super *env)
 {
 	int			i;
 	pid_t		id;
@@ -69,7 +71,7 @@ static int	mkchild(char *eoh, int fd, char **fdname)
 	if (!id)
 	{
 		set_signal_parrent('h');
-		heredoc_loop(eoh, ft_strlen(eoh), fd);
+		heredoc_loop(eoh, ft_strlen(eoh), fd, env);
 	}
 	waitpid(id, &i, 0);
 	close(fd);
@@ -82,7 +84,7 @@ static int	mkchild(char *eoh, int fd, char **fdname)
 	return (1);
 }
 
-char	*heredoc(char *eoh, int tmpfindex)
+char	*heredoc(char *eoh, int tmpfindex, t_super *env)
 {
 	static char	*basename = ".tempdir/.tmpfile_heredoc_";
 	char		*fdname;
@@ -102,7 +104,7 @@ char	*heredoc(char *eoh, int tmpfindex)
 		}
 		else
 		{
-			mkchild(eoh, fd, &fdname);
+			mkchild(eoh, fd, &fdname, env);
 			return (fdname);
 		}
 		tmpfindex++;

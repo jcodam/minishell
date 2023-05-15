@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/04 18:15:23 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/08 19:20:32 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 16:24:06 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	**arr_expander(char **arr, char **env, int is_file)
 	if (is_file)
 		temp = ft_arrdup_c(arr, ft_arrlen_c(arr));
 	arr = expend_vars(arr, env);
+	arr = remove_empty_args(arr);
 	arr = expand_wildcard(arr, &file_error, is_file);
 	if (is_file && file_error > -1)
 	{

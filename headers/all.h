@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 17:57:55 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/12 16:25:42 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 16:25:53 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,16 @@ eoh = end of heredoc (the string that ends the heredoc)
 tmpfindex wil start trying to creat a temp file 
 that ends with that number, use 1 for normal behavior
 retuns malloced pointer of the tmp file name */
-char		*heredoc(char *eoh, int tmpfindex);
+char		*heredoc(char *eoh, int tmpfindex, t_super *env);
 /* set a fd in append mode 0 if error*/
 int			setfd_append(char *filename);
 /* set a fd in write mode 0 if error*/
 int			setfd_write(char *filename);
 /* sets a fd in read mode 0 if error*/
 int			setfd_read(char *filename);
+/* expands the variable*/
+char		**expend_vars(char **arr, char **env);
+char		**remove_empty_args(char **arr);
 
 // @alex functions 
 // cutting_tools.c:
@@ -120,7 +123,7 @@ t_tokens	*get_node(int start, int *arr, char *input, t_tokens *tmp);
 void		free_list(t_tokens *list);
 
 // heredoc_wrap.c
-t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp);
+t_tokens	*heredoc_func(t_tokens *list, t_tokens *tmp, t_super *env);
 
 // internal_splitters.c
 void		split_on_flags(t_tokens *list);
@@ -134,7 +137,7 @@ int			*ft_subarr(int *arr, size_t start, size_t len);
 // main_parser.c
 t_tokens	*main_loop(char *input, t_super *term);
 int			*tokanize(char *input, int *arr);
-t_tokens	*primary_split(char *input, int *arr, t_tokens *list);
+t_tokens	*primary_split(char *input, int *arr, t_tokens *list, t_super *env);
 
 // memory_tools.c
 void		*ms_calloc(size_t nmemb, size_t size);
@@ -185,7 +188,7 @@ int			find_pipe(int *arr, int max, int position);
  * returns -1 if there is no instance of the token
  */
 int			find_tokens(int val, t_tokens *list);
-t_tokens	*find_files(t_tokens *list);
+t_tokens	*find_files(t_tokens *list, t_super *env);
 t_tokens	*find_args(t_tokens *list);
 
 //simple_tools.c

@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/20 15:35:35 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/10 15:59:07 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 16:14:43 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_tokens	*main_loop(char *input, t_super *term)
 	list = malloc(sizeof(t_tokens));
 	list->content = 0;
 	list->next = 0;
-	list = primary_split(input, arr, list);
+	list = primary_split(input, arr, list, term);
 	set_term(term->restore_term, TCSANOW);
 	return (list);
 }
@@ -61,7 +61,7 @@ int	*tokanize(char *input, int *arr)
 	return (arr);
 }
 
-t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
+t_tokens	*primary_split(char *input, int *arr, t_tokens *list, t_super *env)
 {
 	list->content = input;
 	list->tokens = arr;
@@ -73,7 +73,7 @@ t_tokens	*primary_split(char *input, int *arr, t_tokens *list)
 	list = split_on_or(list);
 	list = split_on_pipes(list);
 	trim_spaces(list);
-	list = find_files(list);
+	list = find_files(list, env);
 	list = find_args(list);
 	list = check_for_commands(list);
 	return (list);

@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 18:23:01 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/10 14:25:37 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 16:23:28 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	**rep_vars_inindex(char **arr, int index, int *index2, char **env)
 	return (arr);
 }
 
-static char	**remove_empty_args(char **arr)
+char	**remove_empty_args(char **arr)
 {
 	int	index;
 
@@ -103,6 +103,5 @@ char	**expend_vars(char **arr, char **env)
 			index++;
 		}
 	}
-	arr = remove_empty_args(arr);
 	return (arr);
 }

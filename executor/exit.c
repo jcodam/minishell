@@ -6,7 +6,7 @@
 /*   By: jbax <jbax@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 13:18:11 by jbax          #+#    #+#                 */
-/*   Updated: 2023/05/12 16:36:13 by jbax          ########   odam.nl         */
+/*   Updated: 2023/05/15 15:55:33 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	ft_exit_builtin(char **arg, int pipes)
 		g_exit_code = 1;
 	}
 	else
-		exit(ft_atoi(arg[1]) % 256);
+		exit(ft_atoi_l(arg[1]) % 256);
 }

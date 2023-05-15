@@ -6,7 +6,7 @@
 /*   By: avon-ben <avon-ben@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/25 17:49:10 by avon-ben      #+#    #+#                 */
-/*   Updated: 2023/05/05 17:40:19 by avon-ben      ########   odam.nl         */
+/*   Updated: 2023/05/15 16:15:06 by avon-ben      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_tokens	*find_args(t_tokens *list)
 	return (head);
 }
 
-t_tokens	*find_files(t_tokens *list)
+t_tokens	*find_files(t_tokens *list, t_super *env)
 {
 	t_tokens	*head;
 	int			i;
@@ -79,7 +79,7 @@ t_tokens	*find_files(t_tokens *list)
 			else if (list->tokens[i] == RD_TIL_DELIM)
 			{
 				i = cut_off_file_symbol(list, i);
-				head = heredoc_func(list, head);
+				head = heredoc_func(list, head, env);
 				if (!head)
 					return (head);
 			}
